@@ -1,0 +1,54 @@
+
+/*  Modified CSS from Ole Begemann (http://oleb.net/blog/2014/07/swift-strings/) */
+
+html {
+     font-size: 1em;
+}
+
+body {
+    background-color: #fff;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: normal;
+    font-size: 1.1em;
+    line-height: 140%;
+    padding: 0 2em;
+}
+
+code {
+    font-family: "Menlo", monospace;
+    font-size: 1em;
+}
+
+section {
+    padding: 0.5em 0;
+    -webkit-overflow-scrolling: touch;
+}
+
+a:link {
+    color: #00f;
+    text-decoration: none;
+    border-bottom: 1px solid #00f;
+}
+
+h1 {
+    font-size: 1.8em;
+    padding: 0.7em 0 0 0;
+}
+
+h2 {
+    font-size: 1.5em;
+    padding: 0.7em 0 0 0;
+}
+
+h3 {
+    font-size: 1.0em;
+    padding: 0.7em 0 0 0;
+}
+
+blockquote {
+	font-style: italic;
+    font-size: 0.9em;
+    margin-left: 0;
+    padding-left: 2em;
+    border-left: 10px solid #eee;
+}

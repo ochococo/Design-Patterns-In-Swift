@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<playground version="3.0" sdk="macosx" allows-reset="YES">
+    <sections>
+        <code source-file-name="section-0.swift">
+        </code>
+        <documentation relative-path="section-1.html">
+        </documentation>
+        <code source-file-name="section-2.swift">
+        </code>
+        <documentation relative-path="section-3.html">
+        </documentation>
+        <code source-file-name="section-4.swift">
+        </code>
+        <documentation relative-path="section-5.html">
+        </documentation>
+        <code source-file-name="section-6.swift">
+        </code>
+        <documentation relative-path="section-7.html">
+        </documentation>
+        <code source-file-name="section-8.swift">
+        </code>
+        <documentation relative-path="section-9.html">
+        </documentation>
+        <code source-file-name="section-10.swift">
+        </code>
+        <documentation relative-path="section-11.html">
+        </documentation>
+        <code source-file-name="section-12.swift">
+        </code>
+        <documentation relative-path="section-13.html">
+        </documentation>
+        <code source-file-name="section-14.swift">
+        </code>
+        <documentation relative-path="section-15.html">
+        </documentation>
+        <code source-file-name="section-16.swift">
+        </code>
+        <documentation relative-path="section-17.html">
+        </documentation>
+        <code source-file-name="section-18.swift">
+        </code>
+        <documentation relative-path="section-19.html">
+        </documentation>
+    </sections>
+</playground>
