@@ -1,5 +1,7 @@
-var lower = Printer(strategy: LowerCaseStrategy())
-lower.printString("O tempora, o mores!")
+let simple = OhSoSimplePointConverter()
 
-var upper = Printer(strategy: UpperCaseStrategy())
-upper.printString("O tempora, o mores!")
+var tuple = simple.standarizedXYZFrom(x:1.1, y:2.2, z:3.3)
+
+tuple.x
+tuple.y
+tuple.z
