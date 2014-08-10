@@ -6,8 +6,7 @@ class Printer {
 
     let strategy: PrintStrategy
     
-    func printString(string:String)->String
-    {
+    func printString(string:String)->String{
         return self.strategy.printString(string);
     }
     
