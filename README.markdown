@@ -11,6 +11,8 @@ Project maintained by: [@nsmeme](http://twitter.com/nsmeme) (Oktawian Chojnacki)
 
 Playground generated with: [Swift Playground Builder](https://github.com/jas/swift-playground-builder) by [@jasonsandmeyer](http://twitter.com/jasonsandmeyer)
 
+How to generate playground (+zip) from this README: [GENERATE.markdown](https://github.com/ochococo/Design-Patterns-In-Swift/blob/master/GENERATE.markdown)
+
 # Creational
 
 > In software engineering, creational design patterns are design patterns that deal with object creation mechanisms, trying to create objects in a manner suitable to the situation. The basic form of object creation could result in design problems or added complexity to the design. Creational design patterns solve this problem by somehow controlling this object creation.
@@ -164,16 +166,13 @@ Eduardo.name = "Eduardo"
 class Eternal{
 
     class func setObject(value: AnyObject!, forKey defaultName: String!){
-
         let defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
         defaults.setObject(value,forKey:defaultName)
         defaults.synchronize()
     }
 
     class func objectForKey(defaultName: String!) -> AnyObject!{
-
         let defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
-
         return defaults.objectForKey(defaultName)
     }
 
@@ -183,7 +182,7 @@ class Eternal{
 ```swift
 Eternal.setObject("Disconnect me. I’d rather be nothing",forKey:"Bishop")
 
-var bishopSaid:AnyObject! = Eternal.objectForKey("Bishop")
+Eternal.objectForKey("Bishop")
 ```
 
 ##Adapter
@@ -322,4 +321,6 @@ let names = planets.map { (planet: Planet) -> String in
 	planet.accept(visitor)
 	return visitor.name
 }
+
+names
 ```

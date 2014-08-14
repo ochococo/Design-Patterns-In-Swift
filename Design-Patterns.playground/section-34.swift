@@ -5,3 +5,5 @@ let names = planets.map { (planet: Planet) -> String in
 	planet.accept(visitor)
 	return visitor.name
 }
+
+names
