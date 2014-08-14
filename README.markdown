@@ -158,36 +158,6 @@ Eduardo.name = "Eduardo"
 >**Source:** [wikipedia.org](http://en.wikipedia.org/wiki/Structural_pattern)
 
 ##Composite
-```swift
-class SafeString
-{
-    var embeddedString:String
-
-    init(_ string:String)
-    {
-        self.embeddedString = string.stringByReplacingOccurrencesOfString("\"", withString: "\\\"", options: NSStringCompareOptions.LiteralSearch, range: nil)
-    }
-
-    func convert()->String
-    {
-        return self.embeddedString;
-    }
-
-    func description()->String
-    {
-        return self.embeddedString;
-    }
-
-}
-
-```
-**Usage:**
-```swift
-var unsafe = "Watch this: \"; DELETE * FROM \"php.stupid\"; "
-var safe = SafeString(unsafe)
-
-safe// as String
-```
 ##Façade
 
 ```swift
