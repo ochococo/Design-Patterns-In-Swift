@@ -63,5 +63,13 @@
         </documentation>
         <code source-file-name="section-30.swift">
         </code>
+        <documentation relative-path="section-31.html">
+        </documentation>
+        <code source-file-name="section-32.swift">
+        </code>
+        <documentation relative-path="section-33.html">
+        </documentation>
+        <code source-file-name="section-34.swift">
+        </code>
     </sections>
 </playground>

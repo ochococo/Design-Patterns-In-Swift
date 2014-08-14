@@ -1,5 +1,3 @@
-var tuple = OhSoSimplePointConverter.standarizedXYZFrom(x:1.1, y:2.2, z:3.3)
+Eternal.setObject("Disconnect me. I’d rather be nothing",forKey:"Bishop")
 
-tuple.x
-tuple.y
-tuple.z
+var bishopSaid:AnyObject! = Eternal.objectForKey("Bishop")
