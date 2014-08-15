@@ -10,11 +10,10 @@ brew install node
 npm install -g swift-playground-builder
 ```
 
-Every time:
+every time:
 
 ```bash
-cd ./Design-Patterns-In-Swift
-
+cd Design-Patterns-In-Swift
 ./generate-playground.sh
 ```
 
