@@ -1,14 +1,42 @@
-class Eternal{
+protocol Currency {
+    func symbol() -> String
+    func code() -> String
+}
 
-    class func setObject(value: AnyObject!, forKey defaultName: String!){
-        let defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject(value,forKey:defaultName)
-        defaults.synchronize()
+class Euro : Currency {
+    func symbol() -> String {
+        return "€"
     }
-
-    class func objectForKey(defaultName: String!) -> AnyObject!{
-        let defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
-        return defaults.objectForKey(defaultName)
+    
+    func code() -> String {
+        return "EUR"
     }
+}
 
+class UnitedStatedDolar : Currency {
+    func symbol() -> String {
+        return "$"
+    }
+    
+    func code() -> String {
+        return "USD"
+    }
+}
+
+enum Country {
+    case UnitedStates, Spain, France, UK
+}
+
+class CurrencyFactory {
+    class func currencyForCountry(country:Country) -> Currency? {
+        switch country {
+        case .Spain, .France :
+            return Euro()
+        case .UnitedStates :
+            return UnitedStatedDolar()
+        default:
+            return nil
+        }
+        
+    }
 }
