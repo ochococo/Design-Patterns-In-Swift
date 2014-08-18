@@ -7,9 +7,11 @@ Design Patterns implemented in Swift
 ====================================
 A short cheat-sheet with Xcode 6 Playground ([Design-Patterns.playground.zip](https://raw.githubusercontent.com/ochococo/Design-Patterns-In-Swift/master/Design-Patterns.playground.zip)).
 
-Project maintained by: [@nsmeme](http://twitter.com/nsmeme) (Oktawian Chojnacki)
+👷 Project maintained by: [@nsmeme](http://twitter.com/nsmeme) (Oktawian Chojnacki)
 
-Playground generated with: [Swift Playground Builder](https://github.com/jas/swift-playground-builder) by [@jasonsandmeyer](http://twitter.com/jasonsandmeyer)
+🍺 Playground generated with: [Swift Playground Builder](https://github.com/jas/swift-playground-builder) by [@jasonsandmeyer](http://twitter.com/jasonsandmeyer)
+
+🚀 How to generate playground (+zip) from this README: [GENERATE.markdown](https://github.com/ochococo/Design-Patterns-In-Swift/blob/master/GENERATE.markdown)
 
 # Creational
 
@@ -21,7 +23,7 @@ Playground generated with: [Swift Playground Builder](https://github.com/jas/swi
 ```swift
 class SingletonClass {
     class var shared : SingletonClass {
-    
+
         struct Static {
             static let instance : SingletonClass = SingletonClass()
         }
@@ -161,44 +163,67 @@ Eduardo.name = "Eduardo"
 ##Façade
 
 ```swift
-let DEFAULT_POINT_BASE = 2.0
-let DEFAULT_POINT_POLARIZATION = false
+class Eternal{
 
-class NotSoSimplePointConverter{
-
-    class func pointFrom(#x:Double,y:Double,z:Double,base:Double,negative:Bool) -> Point{
-
-        var point = Point{
-            $0.x = (x*base) * (negative ? -1.0 : 1.0)
-            $0.y = (y*base) * (negative ? -1.0 : 1.0)
-            $0.z = (z*base) * (negative ? -1.0 : 1.0)
-        }
-        
-        return point
+    class func setObject(value: AnyObject!, forKey defaultName: String!){
+        let defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject(value,forKey:defaultName)
+        defaults.synchronize()
     }
-}
 
-class OhSoSimplePointConverter{
-    
-    class func standarizedXYZFrom(#x:Double,y:Double,z:Double) -> (x:Double!,y:Double!,z:Double!){
-        
-        var pointCalculated = NotSoSimplePointConverter.pointFrom(x:x,y:y,z:z,base:DEFAULT_POINT_BASE,negative:!DEFAULT_POINT_POLARIZATION)
-
-        return (pointCalculated.x,pointCalculated.y,pointCalculated.z)
+    class func objectForKey(defaultName: String!) -> AnyObject!{
+        let defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
+        return defaults.objectForKey(defaultName)
     }
-    
+
 }
 ```
 **Usage:**
 ```swift
-var tuple = OhSoSimplePointConverter.standarizedXYZFrom(x:1.1, y:2.2, z:3.3)
+Eternal.setObject("Disconnect me. I’d rather be nothing",forKey:"Bishop")
+
+Eternal.objectForKey("Bishop")
+```
+
+##Adapter
+```swift
+// WARNING: This example uses Point class from Builder pattern!
+
+class PointConverter{
+
+    class func convert(#point:Point, base:Double, negative:Bool) -> Point{
+
+        var pointConverted = Point{
+            if let x = point.x{ $0.x = x * base * (negative ? -1.0 : 1.0) }
+            if let y = point.y{ $0.y = y * base * (negative ? -1.0 : 1.0) }
+            if let z = point.z{ $0.z = z * base * (negative ? -1.0 : 1.0) }
+        }
+        
+        return pointConverted
+    }
+}
+
+extension PointConverter{
+    
+    class func convert(#x:Double!, y:Double!, z:Double!, base:Double!, negative:Bool!) -> (x:Double!,y:Double!,z:Double!){
+
+        var point = Point{ $0.x = x; $0.y = y; $0.z = z }
+        var pointCalculated = self.convert(point:point, base:base, negative:negative)
+
+        return (pointCalculated.x!,pointCalculated.y!,pointCalculated.z!)
+    }
+
+}
+```
+**Usage:**
+```swift
+var tuple = PointConverter.convert(x:1.1, y:2.2, z:3.3, base:2.0, negative:true)
 
 tuple.x
 tuple.y
 tuple.z
 ```
 
-##Adapter
 ##Bridge
 ##Decorator
 ##Proxy
@@ -296,4 +321,6 @@ let names = planets.map { (planet: Planet) -> String in
 	planet.accept(visitor)
 	return visitor.name
 }
+
+names
 ```
