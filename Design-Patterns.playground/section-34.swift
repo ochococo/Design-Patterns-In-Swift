@@ -1,9 +1,5 @@
-let planets: [Planet] = [PlanetEarth(), PlanetMars(), PlanetGliese581C()]
+var lower = Printer(strategy: LowerCaseStrategy())
+lower.printString("O tempora, o mores!")
 
-let names = planets.map { (planet: Planet) -> String in
-	let visitor = NameVisitor()
-	planet.accept(visitor)
-	return visitor.name
-}
-
-names
+var upper = Printer(strategy: UpperCaseStrategy())
+upper.printString("O tempora, o mores!")

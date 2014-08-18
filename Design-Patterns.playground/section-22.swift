@@ -1,3 +1,7 @@
-Eternal.setObject("Disconnect me. I’d rather be nothing",forKey:"Bishop")
+let spainCurrency = CurrencyFactory.currencyForCountry(.Spain)
+let unitedStatedCurrency = CurrencyFactory.currencyForCountry(.UnitedStates)
+let franceCurrency = CurrencyFactory.currencyForCountry(.France)
 
-Eternal.objectForKey("Bishop")
+spainCurrency?.code()
+unitedStatedCurrency?.symbol()
+franceCurrency?.symbol()
