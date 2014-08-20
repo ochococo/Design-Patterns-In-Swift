@@ -1,14 +1,38 @@
-class Eternal{
+/**
+ *  Component
+ */
+protocol Shape {
+    func draw(fillColor:String)
+}
 
-    class func setObject(value: AnyObject!, forKey defaultName: String!){
-        let defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject(value,forKey:defaultName)
-        defaults.synchronize()
+/**
+ * Leafs
+ */
+class Square : Shape {
+    func draw(fillColor: String) {
+        print("Drawing a Square with color \(fillColor)")
     }
+}
 
-    class func objectForKey(defaultName: String!) -> AnyObject!{
-        let defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
-        return defaults.objectForKey(defaultName)
+class Circle : Shape {
+    func draw(fillColor: String) {
+        print("Drawing a circle with color \(fillColor)")
     }
+}
 
+/**
+* Composite
+*/
+class Whiteboard : Shape {
+    lazy var shapes:[Shape] = []
+    
+    init(_ shapes:[Shape]) {
+        self.shapes = shapes
+    }
+    
+    func draw(fillColor:String) {
+        for shape in self.shapes {
+            shape.draw(fillColor)
+        }
+    }
 }
