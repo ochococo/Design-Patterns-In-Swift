@@ -1,3 +1,2 @@
-Eternal.setObject("Disconnect me. I’d rather be nothing",forKey:"Bishop")
-
-Eternal.objectForKey("Bishop")
+let whiteboard = Whiteboard([Circle(), Square()])
+whiteboard.draw("Red")

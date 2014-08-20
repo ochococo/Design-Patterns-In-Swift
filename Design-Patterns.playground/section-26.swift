@@ -1,5 +1,3 @@
-var tuple = PointConverter.convert(x:1.1, y:2.2, z:3.3, base:2.0, negative:true)
+Eternal.setObject("Disconnect me. I’d rather be nothing",forKey:"Bishop")
 
-tuple.x
-tuple.y
-tuple.z
+Eternal.objectForKey("Bishop")
