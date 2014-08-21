@@ -1,9 +1,5 @@
-let planets: [Planet] = [PlanetEarth(), PlanetMars(), PlanetGliese581C()]
+var tuple = PointConverter.convert(x:1.1, y:2.2, z:3.3, base:2.0, negative:true)
 
-let names = planets.map { (planet: Planet) -> String in
-	let visitor = NameVisitor()
-	planet.accept(visitor)
-	return visitor.name
-}
-
-names
+tuple.x
+tuple.y
+tuple.z
