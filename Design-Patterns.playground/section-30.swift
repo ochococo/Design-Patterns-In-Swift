@@ -1,5 +1,3 @@
-var lower = Printer(strategy: LowerCaseStrategy())
-lower.printString("O tempora, o mores!")
+Eternal.setObject("Disconnect me. I’d rather be nothing",forKey:"Bishop")
 
-var upper = Printer(strategy: UpperCaseStrategy())
-upper.printString("O tempora, o mores!")
+Eternal.objectForKey("Bishop")

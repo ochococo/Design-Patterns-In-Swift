@@ -1,3 +1,6 @@
-Eternal.setObject("Disconnect me. I’d rather be nothing",forKey:"Bishop")
+let noCurrencyCode = "No Currency Code Available"
 
-Eternal.objectForKey("Bishop")
+CurrencyFactory.currencyForCountry(.Spain)?.code() ?? noCurrencyCode
+CurrencyFactory.currencyForCountry(.UnitedStates)?.code() ?? noCurrencyCode
+CurrencyFactory.currencyForCountry(.France)?.code() ?? noCurrencyCode
+CurrencyFactory.currencyForCountry(.UK)?.code() ?? noCurrencyCode

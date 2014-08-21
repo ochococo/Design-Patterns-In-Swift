@@ -1,28 +1,14 @@
-protocol PrintStrategy {
-    func printString(string: String) -> String
-}
+class Eternal{
 
-class Printer {
+    class func setObject(value: AnyObject!, forKey defaultName: String!){
+        let defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject(value,forKey:defaultName)
+        defaults.synchronize()
+    }
 
-    let strategy: PrintStrategy
-    
-    func printString(string:String)->String{
-        return self.strategy.printString(string);
+    class func objectForKey(defaultName: String!) -> AnyObject!{
+        let defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
+        return defaults.objectForKey(defaultName)
     }
-    
-    init(strategy: PrintStrategy){
-        self.strategy = strategy
-    }
-}
 
-class UpperCaseStrategy: PrintStrategy{
-    func printString(string:String)->String{
-        return string.uppercaseString;
-    }
-}
-
-class LowerCaseStrategy: PrintStrategy{
-    func printString(string:String)->String{
-        return string.lowercaseString;
-    }
 }

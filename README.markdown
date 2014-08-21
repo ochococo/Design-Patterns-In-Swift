@@ -153,6 +153,63 @@ let Eduardo = Prototype.clone()
 Eduardo.name = "Eduardo"
 ```
 
+##Factory Method
+
+```swift
+protocol Currency {
+    func symbol() -> String
+    func code() -> String
+}
+
+class Euro : Currency {
+    func symbol() -> String {
+        return "€"
+    }
+    
+    func code() -> String {
+        return "EUR"
+    }
+}
+
+class UnitedStatedDolar : Currency {
+    func symbol() -> String {
+        return "$"
+    }
+    
+    func code() -> String {
+        return "USD"
+    }
+}
+
+enum Country {
+    case UnitedStates, Spain, France, UK
+}
+
+class CurrencyFactory {
+    class func currencyForCountry(country:Country) -> Currency? {
+        switch country {
+        case .Spain, .France :
+            return Euro()
+        case .UnitedStates :
+            return UnitedStatedDolar()
+        default:
+            return nil
+        }
+        
+    }
+}
+```
+**Usage:**
+```swift
+let noCurrencyCode = "No Currency Code Available"
+
+CurrencyFactory.currencyForCountry(.Spain)?.code() ?? noCurrencyCode
+CurrencyFactory.currencyForCountry(.UnitedStates)?.code() ?? noCurrencyCode
+CurrencyFactory.currencyForCountry(.France)?.code() ?? noCurrencyCode
+CurrencyFactory.currencyForCountry(.UK)?.code() ?? noCurrencyCode
+
+```
+
 #Structural
 
 >In software engineering, structural design patterns are design patterns that ease the design by identifying a simple way to realize relationships between entities.
@@ -160,6 +217,53 @@ Eduardo.name = "Eduardo"
 >**Source:** [wikipedia.org](http://en.wikipedia.org/wiki/Structural_pattern)
 
 ##Composite
+
+```swift
+/**
+ *  Component
+ */
+protocol Shape {
+    func draw(fillColor:String)
+}
+
+/**
+ * Leafs
+ */
+class Square : Shape {
+    func draw(fillColor: String) {
+        print("Drawing a Square with color \(fillColor)")
+    }
+}
+
+class Circle : Shape {
+    func draw(fillColor: String) {
+        print("Drawing a circle with color \(fillColor)")
+    }
+}
+
+/**
+* Composite
+*/
+class Whiteboard : Shape {
+    lazy var shapes = [Shape]()
+    
+    init(_ shapes:[Shape]) {
+        self.shapes = shapes
+    }
+    
+    func draw(fillColor:String) {
+        for shape in self.shapes {
+            shape.draw(fillColor)
+        }
+    }
+}
+```
+**Usage:**
+```swift
+var whiteboard = Whiteboard([Circle(), Square()])
+whiteboard.draw("Red")
+```
+
 ##Façade
 
 ```swift
