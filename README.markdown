@@ -382,12 +382,12 @@ class AuthorizedState: State {
 ```
 **Usage:**
 ```swift
-let c = Context()
-println("\(c.isAuthorized), \(c.userId)")
-c.changeStateToAuthorized(userId: "admin")
-println("\(c.isAuthorized), \(c.userId)")
-c.changeStateToUnauthorized()
-println("\(c.isAuthorized), \(c.userId)")
+let context = Context()
+(context.isAuthorized, context.userId)
+context.changeStateToAuthorized(userId: "admin")
+(context.isAuthorized, context.userId) // now logged in as "admin"
+context.changeStateToUnauthorized()
+(context.isAuthorized, context.userId)
 ```
 
 ##Strategy
