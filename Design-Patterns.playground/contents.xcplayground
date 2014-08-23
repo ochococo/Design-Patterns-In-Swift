@@ -87,5 +87,13 @@
         </documentation>
         <code source-file-name="section-42.swift">
         </code>
+        <documentation relative-path="section-43.html">
+        </documentation>
+        <code source-file-name="section-44.swift">
+        </code>
+        <documentation relative-path="section-45.html">
+        </documentation>
+        <code source-file-name="section-46.swift">
+        </code>
     </sections>
 </playground>

@@ -1,5 +1,6 @@
-var lower = Printer(strategy: LowerCaseStrategy())
-lower.printString("O tempora, o mores!")
-
-var upper = Printer(strategy: UpperCaseStrategy())
-upper.printString("O tempora, o mores!")
+let c = Context()
+println("\(c.isAuthorized), \(c.userId)")
+c.changeStateToAuthorized(userId: "admin")
+println("\(c.isAuthorized), \(c.userId)")
+c.changeStateToUnauthorized()
+println("\(c.isAuthorized), \(c.userId)")
