@@ -1,5 +1,5 @@
-var lower = Printer(strategy: LowerCaseStrategy())
-lower.printString("O tempora, o mores!")
+var fileManager = FileManager(operation: FileDeleteCommand())
+fileManager.executeOn(file: "/path/to/testfile")
 
-var upper = Printer(strategy: UpperCaseStrategy())
-upper.printString("O tempora, o mores!")
+fileManager = FileManager(operation: FileMoveCommand())
+fileManager.executeOn(file: "/path/to/testfile")

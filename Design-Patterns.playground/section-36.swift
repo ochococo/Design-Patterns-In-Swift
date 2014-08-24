@@ -1,28 +1,27 @@
-protocol PrintStrategy {
-    func printString(string: String) -> String
+protocol FileOperationCommand {
+    func execute(file: String)
 }
 
-class Printer {
-
-    let strategy: PrintStrategy
-    
-    func printString(string:String)->String{
-        return self.strategy.printString(string);
-    }
-    
-    init(strategy: PrintStrategy){
-        self.strategy = strategy
+class FileMoveCommand : FileOperationCommand {
+    func execute(file: String) {
+        print("\(file) moved")
     }
 }
 
-class UpperCaseStrategy: PrintStrategy{
-    func printString(string:String)->String{
-        return string.uppercaseString;
+class FileDeleteCommand : FileOperationCommand {
+    func execute(file: String) {
+        print("\(file) deleted")
     }
 }
 
-class LowerCaseStrategy: PrintStrategy{
-    func printString(string:String)->String{
-        return string.lowercaseString;
+class FileManager {
+    let operation: FileOperationCommand
+
+    init(operation: FileOperationCommand) {
+        self.operation = operation
+    }
+
+    func executeOn(# file:String) {
+        self.operation.execute(file)
     }
 }

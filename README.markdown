@@ -340,6 +340,46 @@ tuple.z
 
 ##Chain Of Responsibility
 ##Command
+
+```swift
+protocol FileOperationCommand {
+    func execute(file: String)
+}
+
+class FileMoveCommand : FileOperationCommand {
+    func execute(file: String) {
+        print("\(file) moved")
+    }
+}
+
+class FileDeleteCommand : FileOperationCommand {
+    func execute(file: String) {
+        print("\(file) deleted")
+    }
+}
+
+class FileManager {
+    let operation: FileOperationCommand
+
+    init(operation: FileOperationCommand) {
+        self.operation = operation
+    }
+
+    func executeOn(# file:String) {
+        self.operation.execute(file)
+    }
+}
+```
+
+**Usage:**
+```swift
+var fileManager = FileManager(operation: FileDeleteCommand())
+fileManager.executeOn(file: "/path/to/testfile")
+
+fileManager = FileManager(operation: FileMoveCommand())
+fileManager.executeOn(file: "/path/to/testfile")
+```
+
 ##Iterator
 ##Mediator
 ##Memento

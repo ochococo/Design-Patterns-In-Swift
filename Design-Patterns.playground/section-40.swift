@@ -1,26 +1,28 @@
-protocol PlanetVisitor {
-	func visit(planet: PlanetEarth)
-	func visit(planet: PlanetMars)
-	func visit(planet: PlanetGliese581C)
+protocol PrintStrategy {
+    func printString(string: String) -> String
 }
 
-protocol Planet {
-	func accept(visitor: PlanetVisitor)
+class Printer {
+
+    let strategy: PrintStrategy
+    
+    func printString(string:String)->String{
+        return self.strategy.printString(string);
+    }
+    
+    init(strategy: PrintStrategy){
+        self.strategy = strategy
+    }
 }
 
-class PlanetEarth: Planet {
-	func accept(visitor: PlanetVisitor) { visitor.visit(self) }
-}
-class PlanetMars: Planet {
-	func accept(visitor: PlanetVisitor) { visitor.visit(self) }
-}
-class PlanetGliese581C: Planet {
-	func accept(visitor: PlanetVisitor) { visitor.visit(self) }
+class UpperCaseStrategy: PrintStrategy{
+    func printString(string:String)->String{
+        return string.uppercaseString;
+    }
 }
 
-class NameVisitor: PlanetVisitor {
-	var name = ""
-	func visit(planet: PlanetEarth)      { name = "Earth" }
-	func visit(planet: PlanetMars)       { name = "Mars" }
-	func visit(planet: PlanetGliese581C) { name = "Gliese 581 C" }
+class LowerCaseStrategy: PrintStrategy{
+    func printString(string:String)->String{
+        return string.lowercaseString;
+    }
 }
