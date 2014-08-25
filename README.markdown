@@ -343,41 +343,59 @@ tuple.z
 
 ```swift
 protocol FileOperationCommand {
-    func execute(file: String)
+    init(file: String)
+    func execute()
 }
 
 class FileMoveCommand : FileOperationCommand {
-    func execute(file: String) {
+    let file:String
+    required init(file: String) {
+        self.file = file
+    }
+    
+    func execute() {
         print("\(file) moved")
     }
 }
 
 class FileDeleteCommand : FileOperationCommand {
-    func execute(file: String) {
+    let file:String
+    required init(file: String) {
+        self.file = file
+    }
+    
+    func execute() {
         print("\(file) deleted")
     }
 }
 
 class FileManager {
-    let operation: FileOperationCommand
-
-    init(operation: FileOperationCommand) {
-        self.operation = operation
+    var deleteCommand: FileOperationCommand
+    var moveCommand: FileOperationCommand
+    
+    init(deleteCommand: FileDeleteCommand, moveCommand: FileMoveCommand) {
+        self.deleteCommand = deleteCommand;
+        self.moveCommand = moveCommand;
     }
-
-    func executeOn(# file:String) {
-        self.operation.execute(file)
+    
+    func delete () {
+        deleteCommand.execute()
+    }
+    
+    func move () {
+        moveCommand.execute()
     }
 }
 ```
 
 **Usage:**
 ```swift
-var fileManager = FileManager(operation: FileDeleteCommand())
-fileManager.executeOn(file: "/path/to/testfile")
+let deleteCommand = FileDeleteCommand(file: "/path/to/testfile");
+let moveCommand = FileMoveCommand(file: "/path/to/testfile");
+let fileManager = FileManager(deleteCommand:deleteCommand , moveCommand: moveCommand)
 
-fileManager = FileManager(operation: FileMoveCommand())
-fileManager.executeOn(file: "/path/to/testfile")
+fileManager.delete()
+fileManager.move()
 ```
 
 ##Iterator

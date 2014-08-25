@@ -1,5 +1,6 @@
-var fileManager = FileManager(operation: FileDeleteCommand())
-fileManager.executeOn(file: "/path/to/testfile")
+let deleteCommand = FileDeleteCommand(file: "/path/to/testfile");
+let moveCommand = FileMoveCommand(file: "/path/to/testfile");
+let fileManager = FileManager(deleteCommand:deleteCommand , moveCommand: moveCommand)
 
-fileManager = FileManager(operation: FileMoveCommand())
-fileManager.executeOn(file: "/path/to/testfile")
+fileManager.delete()
+fileManager.move()
