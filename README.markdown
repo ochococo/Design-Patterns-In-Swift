@@ -19,7 +19,7 @@ A short cheat-sheet with Xcode 6 Playground ([Design-Patterns.playground.zip](ht
 >
 >**Source:** [wikipedia.org](http://en.wikipedia.org/wiki/Creational_pattern)
 
-## Singleton
+##💍 Singleton
 ```swift
 class SingletonClass {
     class var shared : SingletonClass {
@@ -37,24 +37,24 @@ class SingletonClass {
 let instance = SingletonClass.shared
 
 ```
-##Builder
+##👷 Builder
 
 ```swift
 protocol ThreeDimensions {
-    var x:Double? {get}
-    var y:Double? {get}
-    var z:Double? {get}
+    var x: Double? {get}
+    var y: Double? {get}
+    var z: Double? {get}
 }
 
-class Point:ThreeDimensions {
+class Point : ThreeDimensions {
 
-    var x:Double?
-    var y:Double?
-    var z:Double?
+    var x: Double?
+    var y: Double?
+    var z: Double?
 
     typealias PointBuilderClosure = (Point) -> ()
 
-    init(buildClosure:PointBuilderClosure){
+    init(buildClosure: PointBuilderClosure) {
         buildClosure(self)
     }
 }
@@ -62,7 +62,7 @@ class Point:ThreeDimensions {
 ```
 **Usage:**
 ```swift
-let fancyPoint = Point{ point in
+let fancyPoint = Point { point in
     point.x = 0.1
     point.y = 0.2
     point.z = 0.3
@@ -76,7 +76,7 @@ fancyPoint.z
 Shorter but oh-so-ugly alternative:
 
 ```swift
-let uglierPoint = Point{
+let uglierPoint = Point {
     $0.x = 0.1
     $0.y = 0.2
     $0.z = 0.3
@@ -84,31 +84,31 @@ let uglierPoint = Point{
 ```
 
 
-##Abstract Factory
+##🏭 Abstract Factory
 
 
 ```swift
 class Number
 {
-    var number:AnyObject
+    var number: AnyObject
 
     init(number:AnyObject){
         self.number = number
     }
 
-    convenience init(integer:Int){
-        self.init(number:integer)
+    convenience init(integer: Int) {
+        self.init(number: integer)
     }
 
-    convenience init(double:Double){
-        self.init(number:double)
+    convenience init(double: Double) {
+        self.init(number: double)
     }
 
-    func integerValue() -> Int{
+    func integerValue() -> Int {
         return self.number as Int
     }
 
-    func doubleValue() -> Double{
+    func doubleValue() -> Double {
         return self.number as Double
     }
 }
@@ -122,20 +122,20 @@ let integer = number.integerValue()
 
 ```
 
-##Prototype
+##🃏 Prototype
 
 ```swift
-class ThieveryCorporationPersonDisplay{
+class ThieveryCorporationPersonDisplay {
 
-    var name:String?
-    let font:String
+    var name: String?
+    let font: String
 
-    init(font:String){
+    init(font: String) {
         self.font = font
     }
 
-    func clone() -> ThieveryCorporationPersonDisplay{
-        return ThieveryCorporationPersonDisplay(font: self.font)
+    func clone() -> ThieveryCorporationPersonDisplay {
+        return ThieveryCorporationPersonDisplay(font:self.font)
     }
 }
 ```
@@ -153,7 +153,7 @@ let Eduardo = Prototype.clone()
 Eduardo.name = "Eduardo"
 ```
 
-##Factory Method
+## Factory Method
 
 ```swift
 protocol Currency {
@@ -216,14 +216,14 @@ CurrencyFactory.currencyForCountry(.UK)?.code() ?? noCurrencyCode
 >
 >**Source:** [wikipedia.org](http://en.wikipedia.org/wiki/Structural_pattern)
 
-##Composite
+##🌰 Composite
 
 ```swift
 /**
  *  Component
  */
 protocol Shape {
-    func draw(fillColor:String)
+    func draw(fillColor: String)
 }
 
 /**
@@ -264,18 +264,18 @@ var whiteboard = Whiteboard([Circle(), Square()])
 whiteboard.draw("Red")
 ```
 
-##Façade
+##👫 Façade
 
 ```swift
-class Eternal{
+class Eternal {
 
-    class func setObject(value: AnyObject!, forKey defaultName: String!){
+    class func setObject(value: AnyObject!, forKey defaultName: String!) {
         let defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject(value,forKey:defaultName)
+        defaults.setObject(value, forKey:defaultName)
         defaults.synchronize()
     }
 
-    class func objectForKey(defaultName: String!) -> AnyObject!{
+    class func objectForKey(defaultName: String!) -> AnyObject! {
         let defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
         return defaults.objectForKey(defaultName)
     }
@@ -284,16 +284,16 @@ class Eternal{
 ```
 **Usage:**
 ```swift
-Eternal.setObject("Disconnect me. I’d rather be nothing",forKey:"Bishop")
+Eternal.setObject("Disconnect me. I’d rather be nothing", forKey:"Bishop")
 
 Eternal.objectForKey("Bishop")
 ```
 
-##Adapter
+##🔌 Adapter
 ```swift
 // WARNING: This example uses Point class from Builder pattern!
 
-class PointConverter{
+class PointConverter {
 
     class func convert(#point:Point, base:Double, negative:Bool) -> Point{
 
@@ -339,7 +339,7 @@ tuple.z
 >**Source:** [wikipedia.org](http://en.wikipedia.org/wiki/Behavioral_pattern)
 
 ##Chain Of Responsibility
-##Command
+##🐜 Command
 
 ```swift
 protocol FileOperationCommand {
@@ -402,7 +402,7 @@ fileManager.move()
 ##Mediator
 ##Memento
 ##Observer
-##State
+##🐉 State
 
 ```swift
 class Context {
@@ -448,7 +448,7 @@ context.changeStateToUnauthorized()
 (context.isAuthorized, context.userId)
 ```
 
-##Strategy
+##💡 Strategy
 
 ```swift
 protocol PrintStrategy {
@@ -459,23 +459,23 @@ class Printer {
 
     let strategy: PrintStrategy
     
-    func printString(string:String)->String{
+    func printString(string:String) -> String {
         return self.strategy.printString(string)
     }
     
-    init(strategy: PrintStrategy){
+    init(strategy: PrintStrategy) {
         self.strategy = strategy
     }
 }
 
-class UpperCaseStrategy: PrintStrategy{
-    func printString(string:String)->String{
+class UpperCaseStrategy: PrintStrategy {
+    func printString(string:String) -> String {
         return string.uppercaseString
     }
 }
 
-class LowerCaseStrategy: PrintStrategy{
-    func printString(string:String)->String{
+class LowerCaseStrategy: PrintStrategy {
+    func printString(string:String) -> String {
         return string.lowercaseString
     }
 }
@@ -489,7 +489,7 @@ var upper = Printer(strategy: UpperCaseStrategy())
 upper.printString("O tempora, o mores!")
 ```
 
-##Visitor
+##✈ Visitor
 
 ```swift
 protocol PlanetVisitor {
