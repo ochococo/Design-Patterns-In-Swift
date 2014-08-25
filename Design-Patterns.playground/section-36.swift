@@ -26,12 +26,12 @@ class FileDeleteCommand : FileOperationCommand {
 }
 
 class FileManager {
-    var deleteCommand: FileOperationCommand
-    var moveCommand: FileOperationCommand
+    let deleteCommand: FileOperationCommand
+    let moveCommand: FileOperationCommand
     
     init(deleteCommand: FileDeleteCommand, moveCommand: FileMoveCommand) {
-        self.deleteCommand = deleteCommand;
-        self.moveCommand = moveCommand;
+        self.deleteCommand = deleteCommand
+        self.moveCommand = moveCommand
     }
     
     func delete () {
