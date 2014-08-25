@@ -1,99 +1,57 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<playground version="3.0" sdk="macosx" allows-reset="YES">
+<playground version='3.0' sdk='macosx' allows-reset='YES'>
     <sections>
-        <code source-file-name="section-0.swift">
-        </code>
-        <documentation relative-path="section-1.html">
-        </documentation>
-        <code source-file-name="section-2.swift">
-        </code>
-        <documentation relative-path="section-3.html">
-        </documentation>
-        <code source-file-name="section-4.swift">
-        </code>
-        <documentation relative-path="section-5.html">
-        </documentation>
-        <code source-file-name="section-6.swift">
-        </code>
-        <documentation relative-path="section-7.html">
-        </documentation>
-        <code source-file-name="section-8.swift">
-        </code>
-        <documentation relative-path="section-9.html">
-        </documentation>
-        <code source-file-name="section-10.swift">
-        </code>
-        <documentation relative-path="section-11.html">
-        </documentation>
-        <code source-file-name="section-12.swift">
-        </code>
-        <documentation relative-path="section-13.html">
-        </documentation>
-        <code source-file-name="section-14.swift">
-        </code>
-        <documentation relative-path="section-15.html">
-        </documentation>
-        <code source-file-name="section-16.swift">
-        </code>
-        <documentation relative-path="section-17.html">
-        </documentation>
-        <code source-file-name="section-18.swift">
-        </code>
-        <documentation relative-path="section-19.html">
-        </documentation>
-        <code source-file-name="section-20.swift">
-        </code>
-        <documentation relative-path="section-21.html">
-        </documentation>
-        <code source-file-name="section-22.swift">
-        </code>
-        <documentation relative-path="section-23.html">
-        </documentation>
-        <code source-file-name="section-24.swift">
-        </code>
-        <documentation relative-path="section-25.html">
-        </documentation>
-        <code source-file-name="section-26.swift">
-        </code>
-        <documentation relative-path="section-27.html">
-        </documentation>
-        <code source-file-name="section-28.swift">
-        </code>
-        <documentation relative-path="section-29.html">
-        </documentation>
-        <code source-file-name="section-30.swift">
-        </code>
-        <documentation relative-path="section-31.html">
-        </documentation>
-        <code source-file-name="section-32.swift">
-        </code>
-        <documentation relative-path="section-33.html">
-        </documentation>
-        <code source-file-name="section-34.swift">
-        </code>
-        <documentation relative-path="section-35.html">
-        </documentation>
-        <code source-file-name="section-36.swift">
-        </code>
-        <documentation relative-path="section-37.html">
-        </documentation>
-        <code source-file-name="section-38.swift">
-        </code>
-        <documentation relative-path="section-39.html">
-        </documentation>
-        <code source-file-name="section-40.swift">
-        </code>
-        <documentation relative-path="section-41.html">
-        </documentation>
-        <code source-file-name="section-42.swift">
-        </code>
-        <documentation relative-path="section-43.html">
-        </documentation>
-        <code source-file-name="section-44.swift">
-        </code>
-        <documentation relative-path="section-45.html">
-        </documentation>
-        <code source-file-name="section-46.swift">
-        </code>
+        <code source-file-name='section-1.swift'/>
+        <documentation relative-path='section-1.html'/>
+        <code source-file-name='section-3.swift'/>
+        <documentation relative-path='section-3.html'/>
+        <code source-file-name='section-5.swift'/>
+        <documentation relative-path='section-5.html'/>
+        <code source-file-name='section-7.swift'/>
+        <documentation relative-path='section-7.html'/>
+        <code source-file-name='section-9.swift'/>
+        <documentation relative-path='section-9.html'/>
+        <code source-file-name='section-11.swift'/>
+        <documentation relative-path='section-11.html'/>
+        <code source-file-name='section-13.swift'/>
+        <documentation relative-path='section-13.html'/>
+        <code source-file-name='section-15.swift'/>
+        <documentation relative-path='section-15.html'/>
+        <code source-file-name='section-17.swift'/>
+        <documentation relative-path='section-17.html'/>
+        <code source-file-name='section-19.swift'/>
+        <documentation relative-path='section-19.html'/>
+        <code source-file-name='section-21.swift'/>
+        <documentation relative-path='section-21.html'/>
+        <code source-file-name='section-23.swift'/>
+        <documentation relative-path='section-23.html'/>
+        <code source-file-name='section-25.swift'/>
+        <documentation relative-path='section-25.html'/>
+        <code source-file-name='section-27.swift'/>
+        <documentation relative-path='section-27.html'/>
+        <code source-file-name='section-29.swift'/>
+        <documentation relative-path='section-29.html'/>
+        <code source-file-name='section-31.swift'/>
+        <documentation relative-path='section-31.html'/>
+        <code source-file-name='section-33.swift'/>
+        <documentation relative-path='section-33.html'/>
+        <code source-file-name='section-35.swift'/>
+        <documentation relative-path='section-35.html'/>
+        <code source-file-name='section-37.swift'/>
+        <documentation relative-path='section-37.html'/>
+        <code source-file-name='section-39.swift'/>
+        <documentation relative-path='section-39.html'/>
+        <code source-file-name='section-41.swift'/>
+        <documentation relative-path='section-41.html'/>
+        <code source-file-name='section-43.swift'/>
+        <documentation relative-path='section-43.html'/>
+        <code source-file-name='section-45.swift'/>
+        <documentation relative-path='section-45.html'/>
+        <code source-file-name='section-47.swift'/>
+        <documentation relative-path='section-47.html'/>
+        <code source-file-name='section-49.swift'/>
+        <documentation relative-path='section-49.html'/>
+        <code source-file-name='section-51.swift'/>
     </sections>
+    <timeline fileName='timeline.xctimeline'/>
 </playground>
