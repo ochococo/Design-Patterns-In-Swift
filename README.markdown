@@ -83,16 +83,13 @@ let uglierPoint = Point {
 }
 ```
 
-
-##🏭 Abstract Factory
-
+##🌰 Abstract Factory
 
 ```swift
-class Number
-{
+class Number {
     var number: AnyObject
 
-    init(number:AnyObject){
+    init(number:AnyObject) {
         self.number = number
     }
 
@@ -153,7 +150,7 @@ let Eduardo = Prototype.clone()
 Eduardo.name = "Eduardo"
 ```
 
-## Factory Method
+##🏭 Factory Method
 
 ```swift
 protocol Currency {
@@ -188,12 +185,12 @@ enum Country {
 class CurrencyFactory {
     class func currencyForCountry(country:Country) -> Currency? {
         switch country {
-        case .Spain, .France :
-            return Euro()
-        case .UnitedStates :
-            return UnitedStatedDolar()
-        default:
-            return nil
+            case .Spain, .France :
+                return Euro()
+            case .UnitedStates :
+                return UnitedStatedDolar()
+            default:
+                return nil
         }
         
     }
@@ -216,7 +213,7 @@ CurrencyFactory.currencyForCountry(.UK)?.code() ?? noCurrencyCode
 >
 >**Source:** [wikipedia.org](http://en.wikipedia.org/wiki/Structural_pattern)
 
-##🌰 Composite
+##🌿 Composite
 
 ```swift
 /**
@@ -264,7 +261,7 @@ var whiteboard = Whiteboard([Circle(), Square()])
 whiteboard.draw("Red")
 ```
 
-##👫 Façade
+##🎁 Façade
 
 ```swift
 class Eternal {
@@ -328,9 +325,9 @@ tuple.y
 tuple.z
 ```
 
-##Bridge
-##Decorator
-##Proxy
+##🚧  Bridge
+##🚧  Decorator
+##🚧  Proxy
 
 #Behavioral
 
@@ -338,8 +335,8 @@ tuple.z
 >
 >**Source:** [wikipedia.org](http://en.wikipedia.org/wiki/Behavioral_pattern)
 
-##Chain Of Responsibility
-##🐜 Command
+##🚧 Chain Of Responsibility
+##👫 Command
 
 ```swift
 protocol FileOperationCommand {
@@ -398,10 +395,10 @@ fileManager.delete()
 fileManager.move()
 ```
 
-##Iterator
-##Mediator
-##Memento
-##Observer
+##🚧  Iterator
+##🚧  Mediator
+##🚧  Memento
+##🚧  Observer
 ##🐉 State
 
 ```swift
@@ -489,7 +486,7 @@ var upper = Printer(strategy: UpperCaseStrategy())
 upper.printString("O tempora, o mores!")
 ```
 
-##✈ Visitor
+##🏃 Visitor
 
 ```swift
 protocol PlanetVisitor {

@@ -30,12 +30,12 @@ enum Country {
 class CurrencyFactory {
     class func currencyForCountry(country:Country) -> Currency? {
         switch country {
-        case .Spain, .France :
-            return Euro()
-        case .UnitedStates :
-            return UnitedStatedDolar()
-        default:
-            return nil
+            case .Spain, .France :
+                return Euro()
+            case .UnitedStates :
+                return UnitedStatedDolar()
+            default:
+                return nil
         }
         
     }

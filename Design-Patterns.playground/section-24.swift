@@ -2,7 +2,7 @@
  *  Component
  */
 protocol Shape {
-    func draw(fillColor:String)
+    func draw(fillColor: String)
 }
 
 /**
