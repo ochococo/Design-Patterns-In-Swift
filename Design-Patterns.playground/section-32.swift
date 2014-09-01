@@ -1,6 +1,6 @@
 // WARNING: This example uses Point class from Builder pattern!
 
-class PointConverter{
+class PointConverter {
 
     class func convert(#point:Point, base:Double, negative:Bool) -> Point{
 

@@ -1,18 +1,18 @@
 protocol ThreeDimensions {
-    var x:Double? {get}
-    var y:Double? {get}
-    var z:Double? {get}
+    var x: Double? {get}
+    var y: Double? {get}
+    var z: Double? {get}
 }
 
-class Point:ThreeDimensions {
+class Point : ThreeDimensions {
 
-    var x:Double?
-    var y:Double?
-    var z:Double?
+    var x: Double?
+    var y: Double?
+    var z: Double?
 
     typealias PointBuilderClosure = (Point) -> ()
 
-    init(buildClosure:PointBuilderClosure){
+    init(buildClosure: PointBuilderClosure) {
         buildClosure(self)
     }
 }

@@ -1,24 +1,23 @@
-class Number
-{
-    var number:AnyObject
+class Number {
+    var number: AnyObject
 
-    init(number:AnyObject){
+    init(number:AnyObject) {
         self.number = number
     }
 
-    convenience init(integer:Int){
-        self.init(number:integer)
+    convenience init(integer: Int) {
+        self.init(number: integer)
     }
 
-    convenience init(double:Double){
-        self.init(number:double)
+    convenience init(double: Double) {
+        self.init(number: double)
     }
 
-    func integerValue() -> Int{
+    func integerValue() -> Int {
         return self.number as Int
     }
 
-    func doubleValue() -> Double{
+    func doubleValue() -> Double {
         return self.number as Double
     }
 }
