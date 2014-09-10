@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<playground version="3.0" sdk="macosx" allows-reset="YES">
+<playground version="3.0" sdk="iphonesimulator" allows-reset="YES">
     <sections>
         <code source-file-name="section-0.swift">
         </code>
