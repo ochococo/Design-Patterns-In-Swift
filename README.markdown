@@ -335,7 +335,122 @@ tuple.z
 >
 >**Source:** [wikipedia.org](http://en.wikipedia.org/wiki/Behavioral_pattern)
 
-##🚧 Chain Of Responsibility
+##🔗 Chain Of Responsibility
+
+>In object-oriented design, the chain-of-responsibility pattern is a design pattern consisting of a source of command objects and a series of processing objects.[1] Each processing object contains logic that defines the types of command objects that it can handle; the rest are passed to the next processing object in the chain. A mechanism also exists for adding new processing objects to the end of this chain.
+>
+>**Source:** [wikipedia.org](http://en.wikipedia.org/wiki/Chain-of-responsibility_pattern)
+
+```swift
+
+class Order{
+    let orderText : String
+    required init(_ orderText : String){
+        self.orderText = orderText
+    }
+}
+
+
+protocol ChainProtocol{
+    var nextInChain : ChainProtocol? {get}
+    func handleOrder(order : Order)
+    func passOrder(order : Order)
+}
+
+
+class Navigator : ChainProtocol{
+    var nextInChain : ChainProtocol?
+    
+    
+    init(nextInChain : ChainProtocol?){
+        self.nextInChain = nextInChain;
+    }
+
+    func handleOrder(order: Order) {
+        if order.orderText.rangeOfString("navigate to") != nil{
+            println("Navigator execute the order \(order.orderText)")
+        }else{
+            passOrder(order)
+        }
+    }
+    
+    func passOrder(order : Order){
+        self.nextInChain?.handleOrder(order)
+    }
+}
+
+class AirGunner : ChainProtocol {
+    var nextInChain : ChainProtocol?
+    
+    
+    init(nextInChain : ChainProtocol?){
+        self.nextInChain = nextInChain;
+    }
+    
+    
+    func handleOrder(order: Order) {
+        if order.orderText.rangeOfString("shoot at") != nil {
+            println("Air Gunner execute the order \(order.orderText)")
+        }else{
+            passOrder(order)
+        }
+    }
+    
+    func passOrder(order : Order){
+        self.nextInChain?.handleOrder(order)
+    }
+}
+
+class Captain : ChainProtocol {
+    var nextInChain : ChainProtocol?
+    
+    
+    init(nextInChain : ChainProtocol?){
+        self.nextInChain = nextInChain;
+    }
+    func handleOrder(order: Order) {
+        println("Captain executes the order \(order.orderText)")
+    }
+    
+    func passOrder(order : Order){
+        self.nextInChain?.handleOrder(order)
+    }
+}
+
+
+class PlaneCrew{
+
+    let captain : Captain
+    let airGunner : AirGunner
+    let navigator : Navigator
+    
+    init(){
+        self.captain = Captain(nextInChain: nil)
+        self.airGunner = AirGunner(nextInChain: self.captain)
+        self.navigator = Navigator(nextInChain: self.airGunner)
+    }
+    
+    func reciveOrder(order: Order){
+        self.navigator.handleOrder(order);
+    }
+}
+```
+
+**Usage:**
+
+```swift
+
+let planeCrew = PlaneCrew()
+
+let order1 = Order("navigate to enemy base")
+let order2 = Order("shoot at enemy plane")
+let order3 = Order("stop attack!")
+
+planeCrew.reciveOrder(order1)
+planeCrew.reciveOrder(order2)
+planeCrew.reciveOrder(order3)
+
+```
 ##👫 Command
 
 ```swift
