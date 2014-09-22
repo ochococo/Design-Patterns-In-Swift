@@ -1,32 +1,17 @@
-class Context {
-	private var state: State = UnauthorizedState()
-	func changeStateToAuthorized(#userId: String) {
-		state = AuthorizedState(userId: userId)
-	}
-	func changeStateToUnauthorized() {
-		state = UnauthorizedState()
-	}
-	var isAuthorized: Bool {
-		get { return state.isAuthorized(self) }
-	}
-	var userId: String? {
-		get { return state.userId(self) }
-	}
-}
 
-protocol State {
-	func isAuthorized(context: Context) -> Bool
-	func userId(context: Context) -> String?
-}
+let tower = Tower()
 
-class UnauthorizedState: State {
-	func isAuthorized(context: Context) -> Bool { return false }
-	func userId(context: Context) -> String? { return nil }
-}
+let plane1 = Plane(flightNumber: "123")
+let plane2 = Plane(flightNumber: "451")
+let plane3 = Plane(flightNumber: "610")
+let plane4 = Plane(flightNumber: "999")
 
-class AuthorizedState: State {
-	let userId: String
-	init(userId: String) { self.userId = userId }
-	func isAuthorized(context: Context) -> Bool { return true }
-	func userId(context: Context) -> String? { return userId }
-}
+plane1.registerToTower(tower)
+plane2.registerToTower(tower)
+plane3.registerToTower(tower)
+plane4.registerToTower(tower)
+
+plane1.requestPermissionToStart()
+plane2.requestPermissionToLand()
+plane4.requestPermissionToStart()
+plane3.requestPermissionToLand()

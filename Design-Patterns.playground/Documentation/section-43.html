@@ -12,10 +12,124 @@
 <div class="content-wrapper">
   <section class="section">
     <h2 id="-iterator">🚧  Iterator</h2>
-<h2 id="-mediator">🚧  Mediator</h2>
-<h2 id="-memento">🚧  Memento</h2>
-<h2 id="-observer">🚧  Observer</h2>
-<h2 id="-state">🐉 State</h2>
+<h2 id="-mediator">👨  Mediator</h2>
+<blockquote>
+<p>The Mediator defines an object that controls how a set of objects interact. Loose coupling between colleague objects is achieved by having colleagues communicate with the Mediator, rather than with each other. The control tower at a controlled airport demonstrates this pattern very well. The pilots of the planes approaching or departing the terminal area communicate with the tower rather than explicitly communicating with one another. The constraints on who can take off or land are enforced by the tower. It is important to note that the tower does not control the whole flight. It exists only to enforce constraints in the terminal area.</p>
+<p><strong>Source:</strong> <a href="http://sourcemaking.com/design_patterns/mediator">sourcemaking.com</a></p>
+</blockquote>
+<p>This source code will not work in Playground since it uses async calls - please create new project with those classes and then try it out.</p>
+<pre><code>import UIKit
+
+class Tower{
+
+    var planesLandingQueue : Array&lt;Plane&gt;
+    var planesStartingQueue : Array&lt;Plane&gt;
+
+
+    init(){
+        planesLandingQueue = []
+        planesStartingQueue = []
+    }
+
+    func requestPermissionToLand( plane: Plane ) -&gt; Bool{
+        println(&quot;Tower recived request for permission to land from flight: \(plane.flightNumber)&quot;)
+        planesLandingQueue.append(plane)
+
+        return planesLandingQueue.count == 1 &amp;&amp; planesStartingQueue.isEmpty
+    }
+
+    func requestPermissionToStart(plane: Plane)-&gt; Bool{
+        println(&quot;Tower recived request for permission to start2 from flight: \(plane.flightNumber)&quot;)
+        planesStartingQueue.append(plane)
+
+        return planesStartingQueue.count == 1 &amp;&amp; planesLandingQueue.isEmpty
+    }
+
+    func registerTakeOff(flightNumber : String){
+        planesStartingQueue = planesStartingQueue.filter({ (plane : Plane) -&gt; Bool in
+            return plane.flightNumber != flightNumber;
+        })
+        handleNextPlane()
+    }
+
+    func registerTouchDown(flightNumber : String){
+        planesLandingQueue = planesLandingQueue.filter({ (plane : Plane) -&gt; Bool in
+            return plane.flightNumber != flightNumber;
+        })
+        handleNextPlane()
+    }
+
+    func handleNextPlane(){
+        //landing planes are handle with higher priority since they can run out of fuel
+        if let nextLandingPlane = planesLandingQueue.first  {
+            nextLandingPlane.startTouchDown()
+        }else if let nextStartingPlane = planesStartingQueue.first {
+            nextStartingPlane.startTakeOff()
+        }
+    }
+
+}
+
+protocol PlaneActions {
+    var mediator : Tower? {get}
+    func startTakeOff()
+    func startTouchDown()
+}
+
+class Plane : PlaneActions {
+    let flightNumber : String
+    var mediator : Tower?
+
+    func requestPermissionToStart() {
+
+        if mediator!.requestPermissionToStart(self) {
+            self.startTakeOff()
+        }
+
+    }
+
+    func requestPermissionToLand() {
+        if mediator!.requestPermissionToLand(self) {
+            self.startTouchDown()
+        }
+    }
+
+
+    init(flightNumber : String){
+        self.flightNumber = flightNumber
+    }
+
+    func registerToTower(tower : Tower){
+        mediator = tower;
+    }
+
+    func startTakeOff() {
+        println(&quot;flight \(flightNumber) is taking of&quot;)
+        dispatch_after(20000, dispatch_get_main_queue()) { () -&gt; Void in
+            self.didTakeOff()
+        }
+
+    }
+
+    func didTakeOff(){
+        println(&quot;flight \(self.flightNumber) is in the air&quot;)
+        self.mediator?.registerTakeOff(self.flightNumber)
+    }
+
+    func startTouchDown() {
+        println(&quot;flight \(flightNumber) is approaching to land&quot;)
+        dispatch_after(10000, dispatch_get_main_queue()) { () -&gt; Void in
+            self.didTouchDown()
+        }
+    }
+
+
+    func didTouchDown(){
+        println(&quot;flight \(self.flightNumber) safe and sound on the ground&quot;)
+        self.mediator?.registerTouchDown(self.flightNumber)
+    }
+}
+</code></pre><p><strong>Usage:</strong></p>
 
   </section>
 </div>
