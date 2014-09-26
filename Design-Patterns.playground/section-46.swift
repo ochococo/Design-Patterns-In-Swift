@@ -1,5 +1,10 @@
-var lower = Printer(strategy: LowerCaseStrategy())
-lower.printString("O tempora, o mores!")
-
-var upper = Printer(strategy: UpperCaseStrategy())
-upper.printString("O tempora, o mores!")
+let stepCounter = StepCounter()
+stepCounter.totalSteps = 200
+// About to set totalSteps to 200
+// Added 200 steps
+stepCounter.totalSteps = 360
+// About to set totalSteps to 360
+// Added 160 steps
+stepCounter.totalSteps = 896
+// About to set totalSteps to 896
+// Added 536 steps

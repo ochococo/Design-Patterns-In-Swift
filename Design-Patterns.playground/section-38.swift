@@ -1,6 +1,6 @@
-let deleteCommand = FileDeleteCommand(file: "/path/to/testfile")
-let moveCommand = FileMoveCommand(file: "/path/to/testfile")
-let fileManager = FileManager(deleteCommand:deleteCommand , moveCommand: moveCommand)
-
-fileManager.delete()
-fileManager.move()
+var someCoffee: Coffee = SimpleCoffee()
+println("Cost : \(someCoffee.getCost()); Ingredients: \(someCoffee.getIngredients())")
+someCoffee = Milk(decoratedCoffee: someCoffee)
+println("Cost : \(someCoffee.getCost()); Ingredients: \(someCoffee.getIngredients())")
+someCoffee = WhipCoffee(decoratedCoffee: someCoffee)
+println("Cost : \(someCoffee.getCost()); Ingredients: \(someCoffee.getIngredients())")

@@ -1,44 +1,52 @@
-protocol FileOperationCommand {
-    init(file: String)
-    func execute()
+protocol Coffee {
+    func getCost() -> Double
+    func getIngredients() -> String
 }
 
-class FileMoveCommand : FileOperationCommand {
-    let file:String
-    required init(file: String) {
-        self.file = file
+class SimpleCoffee: Coffee {
+    func getCost() -> Double {
+        return 1.0
     }
-    
-    func execute() {
-        print("\(file) moved")
-    }
-}
-
-class FileDeleteCommand : FileOperationCommand {
-    let file:String
-    required init(file: String) {
-        self.file = file
-    }
-    
-    func execute() {
-        print("\(file) deleted")
+    func getIngredients() -> String {
+        return "Coffee"
     }
 }
 
-class FileManager {
-    let deleteCommand: FileOperationCommand
-    let moveCommand: FileOperationCommand
-    
-    init(deleteCommand: FileDeleteCommand, moveCommand: FileMoveCommand) {
-        self.deleteCommand = deleteCommand
-        self.moveCommand = moveCommand
+class CoffeeDecorator: Coffee {
+    private let decoratedCoffee: Coffee
+    private let ingredientSeparator: String = ", "
+
+    required init(decoratedCoffee: Coffee) {
+        self.decoratedCoffee = decoratedCoffee
     }
-    
-    func delete () {
-        deleteCommand.execute()
+    func getCost() -> Double {
+        return decoratedCoffee.getCost()
     }
-    
-    func move () {
-        moveCommand.execute()
+    func getIngredients() -> String {
+        return decoratedCoffee.getIngredients()
+    }
+}
+
+class Milk: CoffeeDecorator {
+    required init(decoratedCoffee: Coffee) {
+        super.init(decoratedCoffee: decoratedCoffee)
+    }
+    override func getCost() -> Double {
+        return super.getCost() + 0.5
+    }
+    override func getIngredients() -> String {
+        return super.getIngredients() + ingredientSeparator + "Milk"
+    }
+}
+
+class WhipCoffee: CoffeeDecorator {
+    required init(decoratedCoffee: Coffee) {
+        super.init(decoratedCoffee: decoratedCoffee)
+    }
+    override func getCost() -> Double {
+        return super.getCost() + 0.7
+    }
+    override func getIngredients() -> String {
+        return super.getIngredients() + ingredientSeparator + "Whip"
     }
 }
