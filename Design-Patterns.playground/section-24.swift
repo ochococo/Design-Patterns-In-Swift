@@ -26,7 +26,7 @@ class Circle : Shape {
 class Whiteboard : Shape {
     lazy var shapes = [Shape]()
     
-    init(_ shapes:[Shape]) {
+    init(_ shapes:Shape...) {
         self.shapes = shapes
     }
     

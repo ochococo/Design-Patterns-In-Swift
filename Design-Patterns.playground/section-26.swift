@@ -1,2 +1,2 @@
-var whiteboard = Whiteboard([Circle(), Square()])
+var whiteboard = Whiteboard(Circle(), Square())
 whiteboard.draw("Red")
