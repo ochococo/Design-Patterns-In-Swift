@@ -508,7 +508,7 @@ fileManager.move()
 ##🚧  Iterator
 ##🚧  Mediator
 ##🚧  Memento
-##📩 Observer
+##👓 Observer
 
 ```swift
 class StepCounter {
