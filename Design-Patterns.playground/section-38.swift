@@ -1,6 +1,5 @@
-var someCoffee: Coffee = SimpleCoffee()
-println("Cost : \(someCoffee.getCost()); Ingredients: \(someCoffee.getIngredients())")
-someCoffee = Milk(decoratedCoffee: someCoffee)
-println("Cost : \(someCoffee.getCost()); Ingredients: \(someCoffee.getIngredients())")
-someCoffee = WhipCoffee(decoratedCoffee: someCoffee)
-println("Cost : \(someCoffee.getCost()); Ingredients: \(someCoffee.getIngredients())")
+var tvRemoteControl = RemoteControl(appliance: TV())
+tvRemoteControl.turnOn()
+
+var fancyVacuumCleanerRemoteControl = RemoteControl(appliance: VacuumCleaner())
+fancyVacuumCleanerRemoteControl.turnOn()

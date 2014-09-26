@@ -1,52 +1,31 @@
-protocol Coffee {
-    func getCost() -> Double
-    func getIngredients() -> String
+protocol Switch {
+    var appliance: Appliance {get set}
+    func turnOn()
 }
 
-class SimpleCoffee: Coffee {
-    func getCost() -> Double {
-        return 1.0
-    }
-    func getIngredients() -> String {
-        return "Coffee"
-    }
+protocol Appliance {
+    func run()
 }
 
-class CoffeeDecorator: Coffee {
-    private let decoratedCoffee: Coffee
-    private let ingredientSeparator: String = ", "
-
-    required init(decoratedCoffee: Coffee) {
-        self.decoratedCoffee = decoratedCoffee
+class RemoteControl: Switch {
+    var appliance: Appliance
+    func turnOn() {
+        self.appliance.run()
     }
-    func getCost() -> Double {
-        return decoratedCoffee.getCost()
-    }
-    func getIngredients() -> String {
-        return decoratedCoffee.getIngredients()
+    
+    init(appliance: Appliance) {
+        self.appliance = appliance
     }
 }
 
-class Milk: CoffeeDecorator {
-    required init(decoratedCoffee: Coffee) {
-        super.init(decoratedCoffee: decoratedCoffee)
-    }
-    override func getCost() -> Double {
-        return super.getCost() + 0.5
-    }
-    override func getIngredients() -> String {
-        return super.getIngredients() + ingredientSeparator + "Milk"
+class TV: Appliance {
+    func run() {
+        println("tv turned on");
     }
 }
 
-class WhipCoffee: CoffeeDecorator {
-    required init(decoratedCoffee: Coffee) {
-        super.init(decoratedCoffee: decoratedCoffee)
-    }
-    override func getCost() -> Double {
-        return super.getCost() + 0.7
-    }
-    override func getIngredients() -> String {
-        return super.getIngredients() + ingredientSeparator + "Whip"
+class VacuumCleaner: Appliance {
+    func run() {
+        println("vacuum cleaner turned on")
     }
 }
