@@ -1,9 +1,28 @@
-let planets: [Planet] = [PlanetEarth(), PlanetMars(), PlanetGliese581C()]
-
-let names = planets.map { (planet: Planet) -> String in
-	let visitor = NameVisitor()
-	planet.accept(visitor)
-	return visitor.name
+protocol PrintStrategy {
+    func printString(string: String) -> String
 }
 
-names
+class Printer {
+
+    let strategy: PrintStrategy
+    
+    func printString(string:String) -> String {
+        return self.strategy.printString(string)
+    }
+    
+    init(strategy: PrintStrategy) {
+        self.strategy = strategy
+    }
+}
+
+class UpperCaseStrategy: PrintStrategy {
+    func printString(string:String) -> String {
+        return string.uppercaseString
+    }
+}
+
+class LowerCaseStrategy: PrintStrategy {
+    func printString(string:String) -> String {
+        return string.lowercaseString
+    }
+}
