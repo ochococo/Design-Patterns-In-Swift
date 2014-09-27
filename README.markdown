@@ -467,6 +467,85 @@ println("Cost : \(someCoffee.getCost()); Ingredients: \(someCoffee.getIngredient
 
 ##🚧  Proxy
 
+**Virtual Proxy**
+
+**Source:**
+```swift
+protocol P {
+    func action()
+}
+
+class A: P {
+    func action() {
+        println("A: action performed")
+    }
+}
+
+class AProxy: P {
+    lazy private var a: A = {
+        return A()
+    }()
+    
+    func action() {
+        println("AProxy: Some action performed in proxy.")
+        self.a.action()
+    }
+}
+```
+
+**Usage:**
+```swift
+var p = AProxy()
+p.action()
+```
+
+
+**Protection Proxy**
+
+**Source:**
+```swift
+protocol P {
+    func action()
+}
+
+class A: P {
+    func action() {
+        println("A: Action")
+    }
+}
+
+class AProxy: P {
+    private var a: A!
+    
+    func authenticate(pass: String) -> Bool {
+        if pass != "pass" {
+            return false
+        }
+        
+        a = A()
+        return true
+    }
+    
+    func action() {
+        if (a == nil) {
+            println("Action denied")
+            return;
+        }
+        
+        println("Action allowed")
+        a.action()
+    }
+}
+```
+
+**Usage:**
+```swift
+var proxy = AProxy()
+proxy.authenticate("pass")
+proxy.action()
+```
+
+
 #Behavioral
 
 >In software engineering, behavioral design patterns are design patterns that identify common communication patterns between objects and realize these patterns. By doing so, these patterns increase flexibility in carrying out this communication.
