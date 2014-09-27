@@ -86,38 +86,70 @@ let uglierPoint = Point {
 ##🌰 Abstract Factory
 
 ```swift
-class Number {
-    var number: AnyObject
+// Protocols.
 
-    init(number:AnyObject) {
-        self.number = number
-    }
+protocol Decimal {
+    func stringValue() -> String
+}
 
-    convenience init(integer: Int) {
-        self.init(number: integer)
-    }
+protocol NumberFactoryProtocol {
+    func numberFromString(string : String) -> Decimal
+}
 
-    convenience init(double: Double) {
-        self.init(number: double)
-    }
+// Number implementations.
 
-    func integerValue() -> Int {
-        return self.number as Int
-    }
+struct NextStepNumber : Decimal {
+    private var nextStepNumber : NSNumber
+    func stringValue() -> String { return nextStepNumber.stringValue }
+}
 
-    func doubleValue() -> Double {
-        return self.number as Double
+struct SwiftNumber : Decimal {
+    private var swiftInt : Int
+    func stringValue() -> String { return "\(swiftInt)" }
+}
+
+// Factories.
+
+class NextStepNumberFactory : NumberFactoryProtocol {
+    func numberFromString(string : String) -> Decimal {
+        return NextStepNumber(nextStepNumber:NSNumber(longLong:(string as NSString).longLongValue))
     }
 }
 
+class SwiftNumberFactory : NumberFactoryProtocol {
+    func numberFromString(string : String) -> Decimal {
+        return SwiftNumber(swiftInt:(string as NSString).integerValue)
+    }
+}
+
+// Abstract factory.
+
+enum NumberType {
+    case NextStep, Swift
+}
+
+class NumberAbstractFactory {
+    class func numberFactoryType(type : NumberType) -> NumberFactoryProtocol {
+        switch (type) {
+            case .NextStep:
+                    return NextStepNumberFactory()
+            case .Swift:
+                    return SwiftNumberFactory()
+        }
+    }
+}
 ```
 **Usage:**
 ```swift
-let number = Number(double: 12.1)
-let double = number.doubleValue()
-let integer = number.integerValue()
+let factoryOne = NumberAbstractFactory.numberFactoryType(.NextStep)
+let numberOne = factoryOne.numberFromString("1")
+numberOne.stringValue()
 
+let factoryTwo = NumberAbstractFactory.numberFactoryType(.Swift)
+let numberTwo = factoryTwo.numberFromString("2")
+numberTwo.stringValue()
 ```
+
 
 ##🃏 Prototype
 

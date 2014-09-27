@@ -1,3 +1,7 @@
-let number = Number(double: 12.1)
-let double = number.doubleValue()
-let integer = number.integerValue()
+let factoryOne = NumberAbstractFactory.numberFactoryType(.NextStep)
+let numberOne = factoryOne.numberFromString("1")
+numberOne.stringValue()
+
+let factoryTwo = NumberAbstractFactory.numberFactoryType(.Swift)
+let numberTwo = factoryTwo.numberFromString("2")
+numberTwo.stringValue()
