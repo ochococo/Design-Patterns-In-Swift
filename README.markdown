@@ -86,37 +86,103 @@ let uglierPoint = Point {
 ##🌰 Abstract Factory
 
 ```swift
-class Number {
-    var number: AnyObject
+protocol Shape {
+    func draw()
+}
+class Rectangle: Shape {
+    func draw() { println("Inside Rectangle draw method") }
+}
+class Square: Shape {
+    func draw() { println("Inside Square draw method") }
+}
+class Circle: Shape {
+    func draw() { println("Inside Circle draw method") }
+}
 
-    init(number:AnyObject) {
-        self.number = number
+protocol Color {
+    func fill()
+}
+class Red: Color {
+    func fill() { println("Inside Red fill method") }
+}
+class Green: Color {
+    func fill() { println("Inside Green fill method") }
+}
+
+class Blue: Color {
+    func fill() { println("Inside Blue fill method") }
+}
+
+protocol AbstractFactory {
+    func getColor(color: String) -> Color?
+    func getShape(shape: String) -> Shape?
+}
+
+class ShapeFactory: AbstractFactory {
+    func getShape(shape: String) -> Shape? {
+        switch shape {
+        case "Circle":
+            return Circle()
+        case "Rectangle":
+            return Rectangle()
+        case "Square":
+            return Square()
+        default:
+            return nil
+        }
     }
-
-    convenience init(integer: Int) {
-        self.init(number: integer)
-    }
-
-    convenience init(double: Double) {
-        self.init(number: double)
-    }
-
-    func integerValue() -> Int {
-        return self.number as Int
-    }
-
-    func doubleValue() -> Double {
-        return self.number as Double
+    func getColor(color: String) -> Color? {
+        return nil
     }
 }
 
+class ColorFactory: AbstractFactory {
+    func getColor(color: String) -> Color? {
+        switch color {
+        case "Red":
+            return Red()
+        case "Blue":
+            return Blue()
+        case "Green":
+            return Green()
+        default:
+            return nil
+        }
+    }
+    func getShape(shape: String) -> Shape? {
+        return nil
+    }
+}
+
+class FactoryProducer {
+    class func getFactory(choice: String) -> AbstractFactory? {
+        if choice == "Shape" {
+            return ShapeFactory()
+        } else if choice == "Color" {
+            return ColorFactory()
+        } else {
+            return nil
+        }
+    }
+}
 ```
 **Usage:**
 ```swift
-let number = Number(double: 12.1)
-let double = number.doubleValue()
-let integer = number.integerValue()
+let shapeFactory: AbstractFactory? = FactoryProducer.getFactory("Shape")
+let someCircle = shapeFactory?.getShape("Circle")
+someCircle?.draw()
+let someRectangle = shapeFactory?.getShape("Rectangle")
+someRectangle?.draw()
+let someSquare = shapeFactory?.getShape("Square")
+someSquare?.draw()
 
+let colorFactory: AbstractFactory? = FactoryProducer.getFactory("Color")
+let someRed: Color? = colorFactory?.getColor("Red")
+someRed?.fill()
+let someBlue: Color? = colorFactory?.getColor("Blue")
+someBlue?.fill()
+let someGreen: Color? = colorFactory?.getColor("Green")
+someGreen?.fill()
 ```
 
 ##🃏 Prototype
