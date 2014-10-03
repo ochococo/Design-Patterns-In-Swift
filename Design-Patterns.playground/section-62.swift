@@ -1,9 +1,6 @@
-let planets: [Planet] = [PlanetEarth(), PlanetMars(), PlanetGliese581C()]
-
-let names = planets.map { (planet: Planet) -> String in
-	let visitor = NameVisitor()
-	planet.accept(visitor)
-	return visitor.name
-}
-
-names
+let context = Context()
+(context.isAuthorized, context.userId)
+context.changeStateToAuthorized(userId: "admin")
+(context.isAuthorized, context.userId) // now logged in as "admin"
+context.changeStateToUnauthorized()
+(context.isAuthorized, context.userId)

@@ -465,84 +465,84 @@ println("Cost : \(someCoffee.getCost()); Ingredients: \(someCoffee.getIngredient
 ```
 
 
-##🚧  Proxy
-
-**Virtual Proxy**
+##🍬  Virtual Proxy
 
 **Source:**
 ```swift
-protocol P {
-    func action()
+protocol HEVSuitMedicalAid {
+    func administerMorphine() -> String
 }
 
-class A: P {
-    func action() {
-        println("A: action performed")
+class HEVSuit : HEVSuitMedicalAid {
+    func administerMorphine() -> String {
+        return "Morphine aministered."
     }
 }
 
-class AProxy: P {
-    lazy private var a: A = {
-        return A()
-    }()
+class HEVSuitHumanInterface : HEVSuitMedicalAid {
     
-    func action() {
-        println("AProxy: Some action performed in proxy.")
-        self.a.action()
+    lazy private var physicalSuit: HEVSuit = HEVSuit()
+
+    func administerMorphine() -> String {
+        return physicalSuit.administerMorphine()
     }
 }
 ```
 
 **Usage:**
 ```swift
-var p = AProxy()
-p.action()
+let humanInterface = HEVSuitHumanInterface()
+humanInterface.administerMorphine()
 ```
 
-
-**Protection Proxy**
+##☔  Protection Proxy
 
 **Source:**
 ```swift
-protocol P {
-    func action()
+protocol DoorOperator {
+    func openDoors(doors: String) -> String
 }
 
-class A: P {
-    func action() {
-        println("A: Action")
+class HAL9000 : DoorOperator {
+    func openDoors(doors: String) -> String {
+        return ("HAL9000: Affirmative, Dave. I read you. Opened \(doors).")
     }
 }
 
-class AProxy: P {
-    private var a: A!
+class CurrentComputer : DoorOperator {
+
+    private var computer: HAL9000!
     
-    func authenticate(pass: String) -> Bool {
+    func authenticateWithPassword(pass: String) -> Bool {
+
         if pass != "pass" {
             return false
         }
-        
-        a = A()
+        computer = HAL9000()
+
         return true
     }
     
-    func action() {
-        if (a == nil) {
-            println("Action denied")
-            return;
+    func openDoors(doors: String) -> String {
+
+        if (computer == nil) {
+            return "Access Denied. I'm afraid I can't do that."
         }
         
-        println("Action allowed")
-        a.action()
+        return computer.openDoors(doors)
     }
 }
 ```
 
 **Usage:**
 ```swift
-var proxy = AProxy()
-proxy.authenticate("pass")
-proxy.action()
+let computer = CurrentComputer()
+let doors = "Pod Bay Doors"
+
+computer.openDoors(doors)
+
+computer.authenticateWithPassword("pass")
+computer.openDoors(doors)
 ```
 
 

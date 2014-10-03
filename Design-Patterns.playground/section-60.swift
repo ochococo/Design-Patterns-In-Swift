@@ -1,26 +1,32 @@
-protocol PlanetVisitor {
-	func visit(planet: PlanetEarth)
-	func visit(planet: PlanetMars)
-	func visit(planet: PlanetGliese581C)
+class Context {
+	private var state: State = UnauthorizedState()
+	func changeStateToAuthorized(#userId: String) {
+		state = AuthorizedState(userId: userId)
+	}
+	func changeStateToUnauthorized() {
+		state = UnauthorizedState()
+	}
+	var isAuthorized: Bool {
+		get { return state.isAuthorized(self) }
+	}
+	var userId: String? {
+		get { return state.userId(self) }
+	}
 }
 
-protocol Planet {
-	func accept(visitor: PlanetVisitor)
+protocol State {
+	func isAuthorized(context: Context) -> Bool
+	func userId(context: Context) -> String?
 }
 
-class PlanetEarth: Planet {
-	func accept(visitor: PlanetVisitor) { visitor.visit(self) }
-}
-class PlanetMars: Planet {
-	func accept(visitor: PlanetVisitor) { visitor.visit(self) }
-}
-class PlanetGliese581C: Planet {
-	func accept(visitor: PlanetVisitor) { visitor.visit(self) }
+class UnauthorizedState: State {
+	func isAuthorized(context: Context) -> Bool { return false }
+	func userId(context: Context) -> String? { return nil }
 }
 
-class NameVisitor: PlanetVisitor {
-	var name = ""
-	func visit(planet: PlanetEarth)      { name = "Earth" }
-	func visit(planet: PlanetMars)       { name = "Mars" }
-	func visit(planet: PlanetGliese581C) { name = "Gliese 581 C" }
+class AuthorizedState: State {
+	let userId: String
+	init(userId: String) { self.userId = userId }
+	func isAuthorized(context: Context) -> Bool { return true }
+	func userId(context: Context) -> String? { return userId }
 }

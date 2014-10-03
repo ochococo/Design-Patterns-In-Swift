@@ -1,44 +1,18 @@
-protocol FileOperationCommand {
-    init(file: String)
-    func execute()
+protocol HEVSuitMedicalAid {
+    func administerMorphine() -> String
 }
 
-class FileMoveCommand : FileOperationCommand {
-    let file:String
-    required init(file: String) {
-        self.file = file
-    }
-    
-    func execute() {
-        print("\(file) moved")
+class HEVSuit : HEVSuitMedicalAid {
+    func administerMorphine() -> String {
+        return "Morphine aministered."
     }
 }
 
-class FileDeleteCommand : FileOperationCommand {
-    let file:String
-    required init(file: String) {
-        self.file = file
-    }
+class HEVSuitHumanInterface : HEVSuitMedicalAid {
     
-    func execute() {
-        print("\(file) deleted")
-    }
-}
+    lazy private var physicalSuit: HEVSuit = HEVSuit()
 
-class FileManager {
-    let deleteCommand: FileOperationCommand
-    let moveCommand: FileOperationCommand
-    
-    init(deleteCommand: FileDeleteCommand, moveCommand: FileMoveCommand) {
-        self.deleteCommand = deleteCommand
-        self.moveCommand = moveCommand
-    }
-    
-    func delete () {
-        deleteCommand.execute()
-    }
-    
-    func move () {
-        moveCommand.execute()
+    func administerMorphine() -> String {
+        return physicalSuit.administerMorphine()
     }
 }

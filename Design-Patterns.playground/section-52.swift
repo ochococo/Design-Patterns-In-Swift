@@ -1,32 +1,44 @@
-class Context {
-	private var state: State = UnauthorizedState()
-	func changeStateToAuthorized(#userId: String) {
-		state = AuthorizedState(userId: userId)
-	}
-	func changeStateToUnauthorized() {
-		state = UnauthorizedState()
-	}
-	var isAuthorized: Bool {
-		get { return state.isAuthorized(self) }
-	}
-	var userId: String? {
-		get { return state.userId(self) }
-	}
+protocol FileOperationCommand {
+    init(file: String)
+    func execute()
 }
 
-protocol State {
-	func isAuthorized(context: Context) -> Bool
-	func userId(context: Context) -> String?
+class FileMoveCommand : FileOperationCommand {
+    let file:String
+    required init(file: String) {
+        self.file = file
+    }
+    
+    func execute() {
+        print("\(file) moved")
+    }
 }
 
-class UnauthorizedState: State {
-	func isAuthorized(context: Context) -> Bool { return false }
-	func userId(context: Context) -> String? { return nil }
+class FileDeleteCommand : FileOperationCommand {
+    let file:String
+    required init(file: String) {
+        self.file = file
+    }
+    
+    func execute() {
+        print("\(file) deleted")
+    }
 }
 
-class AuthorizedState: State {
-	let userId: String
-	init(userId: String) { self.userId = userId }
-	func isAuthorized(context: Context) -> Bool { return true }
-	func userId(context: Context) -> String? { return userId }
+class FileManager {
+    let deleteCommand: FileOperationCommand
+    let moveCommand: FileOperationCommand
+    
+    init(deleteCommand: FileDeleteCommand, moveCommand: FileMoveCommand) {
+        self.deleteCommand = deleteCommand
+        self.moveCommand = moveCommand
+    }
+    
+    func delete () {
+        deleteCommand.execute()
+    }
+    
+    func move () {
+        moveCommand.execute()
+    }
 }
