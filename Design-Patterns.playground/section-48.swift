@@ -16,6 +16,7 @@ class CurrentComputer : DoorOperator {
         if pass != "pass" {
             return false
         }
+
         computer = HAL9000()
 
         return true

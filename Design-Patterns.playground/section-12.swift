@@ -45,7 +45,7 @@ enum NumberType {
 class NumberAbstractFactory {
     class func numberFactoryType(type : NumberType) -> NumberFactoryProtocol {
         
-        switch (type) {
+        switch type {
             case .NextStep:
                     return NextStepNumberFactory()
             case .Swift:

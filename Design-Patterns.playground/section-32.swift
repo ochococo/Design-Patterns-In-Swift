@@ -3,10 +3,11 @@
 class PointConverter {
 
     class func convert(#point:Point, base:Double, negative:Bool) -> Point {
+
         var pointConverted = Point{
-            if let x = point.x{ $0.x = x * base * (negative ? -1.0 : 1.0) }
-            if let y = point.y{ $0.y = y * base * (negative ? -1.0 : 1.0) }
-            if let z = point.z{ $0.z = z * base * (negative ? -1.0 : 1.0) }
+            if let x = point.x { $0.x = x * base * (negative ? -1.0 : 1.0) }
+            if let y = point.y { $0.y = y * base * (negative ? -1.0 : 1.0) }
+            if let z = point.z { $0.z = z * base * (negative ? -1.0 : 1.0) }
         }
         
         return pointConverted
