@@ -559,6 +559,89 @@ computer.openDoors(doors)
 >**Source:** [wikipedia.org](http://en.wikipedia.org/wiki/Behavioral_pattern)
 
 ##🚧 Chain Of Responsibility
+```swift
+class MoneyPile {
+    let value: Int
+    var quantity: Int
+    var nextPile: MoneyPile?
+    
+    init(value: Int, quantity: Int, nextPile: MoneyPile?) {
+        self.value = value
+        self.quantity = quantity
+        self.nextPile = nextPile
+    }
+    
+    func canWithdraw(var v: Int) -> Bool {
+        println("value to withdraw: \(v)")
+
+        func canTakeSomeBill(want: Int) -> Bool {
+            return (want / self.value) > 0
+        }
+        
+        var q = self.quantity
+        while canTakeSomeBill(v) {
+            if (q == 0) {
+                break
+            }
+            
+            v -= self.value
+            q--
+            println("- \(self.value)")
+        }
+
+        if (v == 0) {
+            return true
+        } else if let next = self.nextPile {
+            return next.canWithdraw(v)
+        }
+
+        println("rest: \(v)")
+        return false
+    }
+}
+
+class ATM {
+    private var hundred: MoneyPile
+    private var fifty: MoneyPile
+    private var twenty: MoneyPile
+    private var ten: MoneyPile
+    
+    private var startPile: MoneyPile {
+        return self.hundred
+    }
+    
+    init(hundred: MoneyPile, fifty: MoneyPile, twenty: MoneyPile, ten: MoneyPile) {
+        self.hundred = hundred
+        self.fifty = fifty
+        self.twenty = twenty
+        self.ten = ten
+    }
+    
+    func canWithdraw(value: Int) -> Bool {
+        return self.startPile.canWithdraw(value)
+    }
+}
+```
+
+**Usage:**
+```swift
+/// Create piles of money and link them together 10 < 20 < 50 < 100
+var ten = MoneyPile(value: 10, quantity: 6, nextPile: nil)
+var twenty = MoneyPile(value: 20, quantity: 2, nextPile: ten)
+var fifty = MoneyPile(value: 50, quantity: 2, nextPile: twenty)
+var hundred = MoneyPile(value: 100, quantity: 1, nextPile: fifty)
+
+/// build atm
+var atm = ATM(hundred: hundred, fifty: fifty, twenty: twenty, ten: ten)
+var canWithdraw = atm.canWithdraw
+
+println("Can withdraw = \(canWithdraw(310))") // false, 1x100, 2x50, 2x20, 6x10. 10 is missing
+println("Can withdraw = \(canWithdraw(100))") // true, 1x100
+println("Can withdraw = \(canWithdraw(165))") // false, cannot withdraw because no 5 bill inside
+println("Can withdraw = \(canWithdraw(30))") // true, 1x20, 1x10
+```
+
+
 ##👫 Command
 
 ```swift
