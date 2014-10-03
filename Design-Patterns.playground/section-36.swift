@@ -9,6 +9,7 @@ protocol Appliance {
 
 class RemoteControl: Switch {
     var appliance: Appliance
+
     func turnOn() {
         self.appliance.run()
     }

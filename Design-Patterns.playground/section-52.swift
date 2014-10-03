@@ -5,6 +5,7 @@ protocol FileOperationCommand {
 
 class FileMoveCommand : FileOperationCommand {
     let file:String
+
     required init(file: String) {
         self.file = file
     }
@@ -16,6 +17,7 @@ class FileMoveCommand : FileOperationCommand {
 
 class FileDeleteCommand : FileOperationCommand {
     let file:String
+
     required init(file: String) {
         self.file = file
     }
@@ -34,11 +36,11 @@ class FileManager {
         self.moveCommand = moveCommand
     }
     
-    func delete () {
+    func delete() {
         deleteCommand.execute()
     }
     
-    func move () {
+    func move() {
         moveCommand.execute()
     }
 }

@@ -8,6 +8,7 @@ class Eternal {
 
     class func objectForKey(defaultName: String!) -> AnyObject! {
         let defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
+
         return defaults.objectForKey(defaultName)
     }
 

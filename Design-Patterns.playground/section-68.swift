@@ -20,6 +20,7 @@ class PlanetGliese581C: Planet {
 
 class NameVisitor: PlanetVisitor {
 	var name = ""
+
 	func visit(planet: PlanetEarth)      { name = "Earth" }
 	func visit(planet: PlanetMars)       { name = "Mars" }
 	func visit(planet: PlanetGliese581C) { name = "Gliese 581 C" }

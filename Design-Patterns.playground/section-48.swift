@@ -9,9 +9,8 @@ class HAL9000 : DoorOperator {
 }
 
 class CurrentComputer : DoorOperator {
-
     private var computer: HAL9000!
-    
+
     func authenticateWithPassword(pass: String) -> Bool {
 
         if pass != "pass" {

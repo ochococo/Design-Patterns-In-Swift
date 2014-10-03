@@ -1,5 +1,4 @@
 class ThieveryCorporationPersonDisplay {
-
     var name: String?
     let font: String
 

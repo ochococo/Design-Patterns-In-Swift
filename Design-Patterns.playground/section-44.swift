@@ -9,7 +9,6 @@ class HEVSuit : HEVSuitMedicalAid {
 }
 
 class HEVSuitHumanInterface : HEVSuitMedicalAid {
-    
     lazy private var physicalSuit: HEVSuit = HEVSuit()
 
     func administerMorphine() -> String {

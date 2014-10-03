@@ -12,11 +12,13 @@ protocol NumberFactoryProtocol {
 
 struct NextStepNumber : Decimal {
     private var nextStepNumber : NSNumber
+
     func stringValue() -> String { return nextStepNumber.stringValue }
 }
 
 struct SwiftNumber : Decimal {
     private var swiftInt : Int
+
     func stringValue() -> String { return "\(swiftInt)" }
 }
 
@@ -42,6 +44,7 @@ enum NumberType {
 
 class NumberAbstractFactory {
     class func numberFactoryType(type : NumberType) -> NumberFactoryProtocol {
+        
         switch (type) {
             case .NextStep:
                     return NextStepNumberFactory()

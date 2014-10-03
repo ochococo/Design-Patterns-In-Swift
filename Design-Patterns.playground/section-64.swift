@@ -6,7 +6,7 @@ class Printer {
 
     let strategy: PrintStrategy
     
-    func printString(string:String) -> String {
+    func printString(string: String) -> String {
         return self.strategy.printString(string)
     }
     
@@ -15,13 +15,13 @@ class Printer {
     }
 }
 
-class UpperCaseStrategy: PrintStrategy {
+class UpperCaseStrategy : PrintStrategy {
     func printString(string:String) -> String {
         return string.uppercaseString
     }
 }
 
-class LowerCaseStrategy: PrintStrategy {
+class LowerCaseStrategy : PrintStrategy {
     func printString(string:String) -> String {
         return string.lowercaseString
     }

@@ -43,7 +43,6 @@ protocol ThreeDimensions {
 }
 
 class Point : ThreeDimensions {
-
     var x: Double?
     var y: Double?
     var z: Double?
@@ -96,11 +95,13 @@ protocol NumberFactoryProtocol {
 
 struct NextStepNumber : Decimal {
     private var nextStepNumber : NSNumber
+
     func stringValue() -> String { return nextStepNumber.stringValue }
 }
 
 struct SwiftNumber : Decimal {
     private var swiftInt : Int
+
     func stringValue() -> String { return "\(swiftInt)" }
 }
 
@@ -126,6 +127,7 @@ enum NumberType {
 
 class NumberAbstractFactory {
     class func numberFactoryType(type : NumberType) -> NumberFactoryProtocol {
+        
         switch (type) {
             case .NextStep:
                     return NextStepNumberFactory()
@@ -151,7 +153,6 @@ numberTwo.stringValue()
 
 ```swift
 class ThieveryCorporationPersonDisplay {
-
     var name: String?
     let font: String
 
@@ -212,6 +213,7 @@ enum Country {
 
 class CurrencyFactory {
     class func currencyForCountry(country:Country) -> Currency? {
+
         switch country {
             case .Spain, .France :
                 return Euro()
@@ -302,6 +304,7 @@ class Eternal {
 
     class func objectForKey(defaultName: String!) -> AnyObject! {
         let defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
+
         return defaults.objectForKey(defaultName)
     }
 
@@ -310,7 +313,6 @@ class Eternal {
 **Usage:**
 ```swift
 Eternal.setObject("Disconnect me. I’d rather be nothing", forKey:"Bishop")
-
 Eternal.objectForKey("Bishop")
 ```
 
@@ -320,8 +322,7 @@ Eternal.objectForKey("Bishop")
 
 class PointConverter {
 
-    class func convert(#point:Point, base:Double, negative:Bool) -> Point{
-
+    class func convert(#point:Point, base:Double, negative:Bool) -> Point {
         var pointConverted = Point{
             if let x = point.x{ $0.x = x * base * (negative ? -1.0 : 1.0) }
             if let y = point.y{ $0.y = y * base * (negative ? -1.0 : 1.0) }
@@ -334,8 +335,7 @@ class PointConverter {
 
 extension PointConverter{
     
-    class func convert(#x:Double!, y:Double!, z:Double!, base:Double!, negative:Bool!) -> (x:Double!,y:Double!,z:Double!){
-
+    class func convert(#x:Double!, y:Double!, z:Double!, base:Double!, negative:Bool!) -> (x:Double!,y:Double!,z:Double!) {
         var point = Point{ $0.x = x; $0.y = y; $0.z = z }
         var pointCalculated = self.convert(point:point, base:base, negative:negative)
 
@@ -366,6 +366,7 @@ protocol Appliance {
 
 class RemoteControl: Switch {
     var appliance: Appliance
+
     func turnOn() {
         self.appliance.run()
     }
@@ -409,6 +410,7 @@ class SimpleCoffee: Coffee {
     func getCost() -> Double {
         return 1.0
     }
+
     func getIngredients() -> String {
         return "Coffee"
     }
@@ -421,9 +423,11 @@ class CoffeeDecorator: Coffee {
     required init(decoratedCoffee: Coffee) {
         self.decoratedCoffee = decoratedCoffee
     }
+
     func getCost() -> Double {
         return decoratedCoffee.getCost()
     }
+
     func getIngredients() -> String {
         return decoratedCoffee.getIngredients()
     }
@@ -433,9 +437,11 @@ class Milk: CoffeeDecorator {
     required init(decoratedCoffee: Coffee) {
         super.init(decoratedCoffee: decoratedCoffee)
     }
+
     override func getCost() -> Double {
         return super.getCost() + 0.5
     }
+
     override func getIngredients() -> String {
         return super.getIngredients() + ingredientSeparator + "Milk"
     }
@@ -445,9 +451,11 @@ class WhipCoffee: CoffeeDecorator {
     required init(decoratedCoffee: Coffee) {
         super.init(decoratedCoffee: decoratedCoffee)
     }
+
     override func getCost() -> Double {
         return super.getCost() + 0.7
     }
+
     override func getIngredients() -> String {
         return super.getIngredients() + ingredientSeparator + "Whip"
     }
@@ -480,7 +488,6 @@ class HEVSuit : HEVSuitMedicalAid {
 }
 
 class HEVSuitHumanInterface : HEVSuitMedicalAid {
-    
     lazy private var physicalSuit: HEVSuit = HEVSuit()
 
     func administerMorphine() -> String {
@@ -510,9 +517,8 @@ class HAL9000 : DoorOperator {
 }
 
 class CurrentComputer : DoorOperator {
-
     private var computer: HAL9000!
-    
+
     func authenticateWithPassword(pass: String) -> Bool {
 
         if pass != "pass" {
@@ -563,6 +569,7 @@ protocol FileOperationCommand {
 
 class FileMoveCommand : FileOperationCommand {
     let file:String
+
     required init(file: String) {
         self.file = file
     }
@@ -574,6 +581,7 @@ class FileMoveCommand : FileOperationCommand {
 
 class FileDeleteCommand : FileOperationCommand {
     let file:String
+
     required init(file: String) {
         self.file = file
     }
@@ -592,11 +600,11 @@ class FileManager {
         self.moveCommand = moveCommand
     }
     
-    func delete () {
+    func delete() {
         deleteCommand.execute()
     }
     
-    func move () {
+    func move() {
         moveCommand.execute()
     }
 }
@@ -649,18 +657,24 @@ stepCounter.totalSteps = 896
 ```swift
 class Context {
 	private var state: State = UnauthorizedState()
+
+    var isAuthorized: Bool {
+        get { return state.isAuthorized(self) }
+    }
+
+    var userId: String? {
+        get { return state.userId(self) }
+    }
+
 	func changeStateToAuthorized(#userId: String) {
 		state = AuthorizedState(userId: userId)
 	}
+
 	func changeStateToUnauthorized() {
 		state = UnauthorizedState()
 	}
-	var isAuthorized: Bool {
-		get { return state.isAuthorized(self) }
-	}
-	var userId: String? {
-		get { return state.userId(self) }
-	}
+
+
 }
 
 protocol State {
@@ -670,13 +684,17 @@ protocol State {
 
 class UnauthorizedState: State {
 	func isAuthorized(context: Context) -> Bool { return false }
+
 	func userId(context: Context) -> String? { return nil }
 }
 
 class AuthorizedState: State {
 	let userId: String
+
 	init(userId: String) { self.userId = userId }
+
 	func isAuthorized(context: Context) -> Bool { return true }
+
 	func userId(context: Context) -> String? { return userId }
 }
 ```
@@ -701,7 +719,7 @@ class Printer {
 
     let strategy: PrintStrategy
     
-    func printString(string:String) -> String {
+    func printString(string: String) -> String {
         return self.strategy.printString(string)
     }
     
@@ -710,13 +728,13 @@ class Printer {
     }
 }
 
-class UpperCaseStrategy: PrintStrategy {
+class UpperCaseStrategy : PrintStrategy {
     func printString(string:String) -> String {
         return string.uppercaseString
     }
 }
 
-class LowerCaseStrategy: PrintStrategy {
+class LowerCaseStrategy : PrintStrategy {
     func printString(string:String) -> String {
         return string.lowercaseString
     }
@@ -724,10 +742,10 @@ class LowerCaseStrategy: PrintStrategy {
 ```
 **Usage:**
 ```swift
-var lower = Printer(strategy: LowerCaseStrategy())
+var lower = Printer(strategy:LowerCaseStrategy())
 lower.printString("O tempora, o mores!")
 
-var upper = Printer(strategy: UpperCaseStrategy())
+var upper = Printer(strategy:UpperCaseStrategy())
 upper.printString("O tempora, o mores!")
 ```
 
@@ -756,6 +774,7 @@ class PlanetGliese581C: Planet {
 
 class NameVisitor: PlanetVisitor {
 	var name = ""
+
 	func visit(planet: PlanetEarth)      { name = "Earth" }
 	func visit(planet: PlanetMars)       { name = "Mars" }
 	func visit(planet: PlanetGliese581C) { name = "Gliese 581 C" }

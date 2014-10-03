@@ -5,7 +5,6 @@ protocol ThreeDimensions {
 }
 
 class Point : ThreeDimensions {
-
     var x: Double?
     var y: Double?
     var z: Double?
