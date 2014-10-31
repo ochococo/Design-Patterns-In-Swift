@@ -5,4 +5,4 @@ playground ./README.markdown -p ios -s ./stylesheet.css && mv ./README.playgroun
 # no playground?
 #
 # brew install node
-# npm install -g swift-playground-builder
+# npm install -g playground

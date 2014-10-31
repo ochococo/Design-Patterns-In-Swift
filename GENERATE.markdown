@@ -7,7 +7,7 @@ Once:
 
 ```bash
 brew install node
-npm install -g swift-playground-builder
+npm install -g playground
 ```
 
 every time:
