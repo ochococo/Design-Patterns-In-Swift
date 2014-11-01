@@ -26,3 +26,4 @@ class HEVSuitHumanInterface : HEVSuitMedicalAid {
 let humanInterface = HEVSuitHumanInterface()
 humanInterface.administerMorphine()
 ```
+
