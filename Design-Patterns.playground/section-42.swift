@@ -1,6 +1,6 @@
-var someCoffee: Coffee = SimpleCoffee()
-println("Cost : \(someCoffee.getCost()); Ingredients: \(someCoffee.getIngredients())")
-someCoffee = Milk(decoratedCoffee: someCoffee)
-println("Cost : \(someCoffee.getCost()); Ingredients: \(someCoffee.getIngredients())")
-someCoffee = WhipCoffee(decoratedCoffee: someCoffee)
-println("Cost : \(someCoffee.getCost()); Ingredients: \(someCoffee.getIngredients())")
+let noCurrencyCode = "No Currency Code Available"
+
+CurrencyFactory.currencyForCountry(.Spain)?.code() ?? noCurrencyCode
+CurrencyFactory.currencyForCountry(.UnitedStates)?.code() ?? noCurrencyCode
+CurrencyFactory.currencyForCountry(.France)?.code() ?? noCurrencyCode
+CurrencyFactory.currencyForCountry(.UK)?.code() ?? noCurrencyCode

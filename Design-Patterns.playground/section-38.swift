@@ -1,5 +1,5 @@
-var tvRemoteControl = RemoteControl(appliance: TV())
-tvRemoteControl.turnOn()
-
-var fancyVacuumCleanerRemoteControl = RemoteControl(appliance: VacuumCleaner())
-fancyVacuumCleanerRemoteControl.turnOn()
+let uglierPoint = Point {
+    $0.x = 0.1
+    $0.y = 0.2
+    $0.z = 0.3
+}

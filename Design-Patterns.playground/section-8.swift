@@ -1,9 +1,6 @@
-let fancyPoint = Point { point in
-    point.x = 0.1
-    point.y = 0.2
-    point.z = 0.3
-}
+let deleteCommand = FileDeleteCommand(file: "/path/to/testfile")
+let moveCommand = FileMoveCommand(file: "/path/to/testfile")
+let fileManager = FileManager(deleteCommand:deleteCommand , moveCommand: moveCommand)
 
-fancyPoint.x
-fancyPoint.y
-fancyPoint.z
+fileManager.delete()
+fileManager.move()

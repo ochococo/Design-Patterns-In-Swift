@@ -1,7 +1,15 @@
-let factoryOne = NumberAbstractFactory.numberFactoryType(.NextStep)
-let numberOne = factoryOne.numberFromString("1")
-numberOne.stringValue()
+class StepCounter {
+    var totalSteps: Int = 0 {
+        
+        willSet(newTotalSteps) {
+            println("About to set totalSteps to \(newTotalSteps)")
+        }
 
-let factoryTwo = NumberAbstractFactory.numberFactoryType(.Swift)
-let numberTwo = factoryTwo.numberFromString("2")
-numberTwo.stringValue()
+        didSet {
+
+            if totalSteps > oldValue  {
+                println("Added \(totalSteps - oldValue) steps")
+            }
+        }
+    }
+}

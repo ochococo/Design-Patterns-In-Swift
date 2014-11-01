@@ -1,6 +1,2 @@
-let context = Context()
-(context.isAuthorized, context.userId)
-context.changeStateToAuthorized(userId: "admin")
-(context.isAuthorized, context.userId) // now logged in as "admin"
-context.changeStateToUnauthorized()
-(context.isAuthorized, context.userId)
+Eternal.setObject("Disconnect me. I’d rather be nothing", forKey:"Bishop")
+Eternal.objectForKey("Bishop")

@@ -1,64 +1,26 @@
-class MoneyPile {
-    let value: Int
-    var quantity: Int
-    var nextPile: MoneyPile?
-    
-    init(value: Int, quantity: Int, nextPile: MoneyPile?) {
-        self.value = value
-        self.quantity = quantity
-        self.nextPile = nextPile
-    }
-    
-    func canWithdraw(var v: Int) -> Bool {
+// WARNING: This example uses Point class from Builder pattern!
 
-        func canTakeSomeBill(want: Int) -> Bool {
-            return (want / self.value) > 0
+class PointConverter {
+
+    class func convert(#point:Point, base:Double, negative:Bool) -> Point {
+
+        var pointConverted = Point{
+            if let x = point.x { $0.x = x * base * (negative ? -1.0 : 1.0) }
+            if let y = point.y { $0.y = y * base * (negative ? -1.0 : 1.0) }
+            if let z = point.z { $0.z = z * base * (negative ? -1.0 : 1.0) }
         }
         
-        var q = self.quantity
-
-        while canTakeSomeBill(v) {
-
-            if (q == 0) {
-                break
-            }
-
-            v -= self.value
-            q -= 1
-        }
-
-        if v == 0 {
-            return true
-        } else if let next = self.nextPile {
-            return next.canWithdraw(v)
-        }
-
-        return false
+        return pointConverted
     }
 }
 
-class ATM {
-    private var hundred: MoneyPile
-    private var fifty: MoneyPile
-    private var twenty: MoneyPile
-    private var ten: MoneyPile
+extension PointConverter{
     
-    private var startPile: MoneyPile {
-        return self.hundred
-    }
-    
-    init(hundred: MoneyPile, 
-           fifty: MoneyPile, 
-          twenty: MoneyPile, 
-             ten: MoneyPile) {
+    class func convert(#x:Double!, y:Double!, z:Double!, base:Double!, negative:Bool!) -> (x:Double!,y:Double!,z:Double!) {
+        var point = Point{ $0.x = x; $0.y = y; $0.z = z }
+        var pointCalculated = self.convert(point:point, base:base, negative:negative)
 
-        self.hundred = hundred
-        self.fifty = fifty
-        self.twenty = twenty
-        self.ten = ten
+        return (pointCalculated.x!,pointCalculated.y!,pointCalculated.z!)
     }
-    
-    func canWithdraw(value: Int) -> String {
-        return "Can withdraw: \(self.startPile.canWithdraw(value))"
-    }
+
 }

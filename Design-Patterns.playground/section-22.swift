@@ -1,6 +1,28 @@
-let noCurrencyCode = "No Currency Code Available"
+protocol PrintStrategy {
+    func printString(string: String) -> String
+}
 
-CurrencyFactory.currencyForCountry(.Spain)?.code() ?? noCurrencyCode
-CurrencyFactory.currencyForCountry(.UnitedStates)?.code() ?? noCurrencyCode
-CurrencyFactory.currencyForCountry(.France)?.code() ?? noCurrencyCode
-CurrencyFactory.currencyForCountry(.UK)?.code() ?? noCurrencyCode
+class Printer {
+
+    let strategy: PrintStrategy
+    
+    func printString(string: String) -> String {
+        return self.strategy.printString(string)
+    }
+    
+    init(strategy: PrintStrategy) {
+        self.strategy = strategy
+    }
+}
+
+class UpperCaseStrategy : PrintStrategy {
+    func printString(string:String) -> String {
+        return string.uppercaseString
+    }
+}
+
+class LowerCaseStrategy : PrintStrategy {
+    func printString(string:String) -> String {
+        return string.lowercaseString
+    }
+}

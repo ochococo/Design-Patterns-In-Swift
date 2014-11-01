@@ -1,35 +1,38 @@
-typealias Memento = Dictionary<NSObject, AnyObject>
+/**
+ *  Component
+ */
+protocol Shape {
+    func draw(fillColor: String)
+}
 
 /**
-* Originator
-*/
-class GameState {
-    var gameLevel: Int = 1
-    var playerScore: Int = 0
-
-    func saveToMemeto() -> Memento {
-        return ["gameLevel": gameLevel, "playerScore": playerScore] 
+ * Leafs
+ */
+class Square : Shape {
+    func draw(fillColor: String) {
+        print("Drawing a Square with color \(fillColor)")
     }
+}
 
-    func restoreFromMemeto(memento: Memento) {
-        gameLevel = memento["gameLevel"]! as Int
-        playerScore = memento["playerScore"]! as Int
+class Circle : Shape {
+    func draw(fillColor: String) {
+        print("Drawing a circle with color \(fillColor)")
     }
 }
 
 /**
-* Caretaker
+* Composite
 */
-class CheckPoint {
-    class func saveState(memento: Memento, keyName: String = "gameState") {
-        let defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject(memento, forKey: keyName)
-        defaults.synchronize()
+class Whiteboard : Shape {
+    lazy var shapes = [Shape]()
+    
+    init(_ shapes:Shape...) {
+        self.shapes = shapes
     }
-
-    class func restorePreviousState(keyName: String = "gameState") -> Memento {
-        let defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
-
-        return defaults.objectForKey(keyName) as Memento
+    
+    func draw(fillColor:String) {
+        for shape in self.shapes {
+            shape.draw(fillColor)
+        }
     }
 }

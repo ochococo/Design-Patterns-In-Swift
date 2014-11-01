@@ -1,46 +1,32 @@
-protocol FileOperationCommand {
-    init(file: String)
-    func execute()
+protocol Switch {
+    var appliance: Appliance {get set}
+    func turnOn()
 }
 
-class FileMoveCommand : FileOperationCommand {
-    let file:String
-
-    required init(file: String) {
-        self.file = file
-    }
-    
-    func execute() {
-        print("\(file) moved")
-    }
+protocol Appliance {
+    func run()
 }
 
-class FileDeleteCommand : FileOperationCommand {
-    let file:String
+class RemoteControl: Switch {
+    var appliance: Appliance
 
-    required init(file: String) {
-        self.file = file
+    func turnOn() {
+        self.appliance.run()
     }
     
-    func execute() {
-        print("\(file) deleted")
+    init(appliance: Appliance) {
+        self.appliance = appliance
     }
 }
 
-class FileManager {
-    let deleteCommand: FileOperationCommand
-    let moveCommand: FileOperationCommand
-    
-    init(deleteCommand: FileDeleteCommand, moveCommand: FileMoveCommand) {
-        self.deleteCommand = deleteCommand
-        self.moveCommand = moveCommand
+class TV: Appliance {
+    func run() {
+        println("tv turned on");
     }
-    
-    func delete() {
-        deleteCommand.execute()
-    }
-    
-    func move() {
-        moveCommand.execute()
+}
+
+class VacuumCleaner: Appliance {
+    func run() {
+        println("vacuum cleaner turned on")
     }
 }

@@ -1,55 +1,26 @@
-// Protocols.
+var gameState = GameState()
+gameState.gameLevel = 2
+gameState.playerScore = 200
 
-protocol Decimal {
-    func stringValue() -> String
-}
+// Saves state: {gameLevel 2 playerScore 200}
+CheckPoint.saveState(gameState.saveToMemeto())
 
-protocol NumberFactoryProtocol {
-    func numberFromString(string : String) -> Decimal
-}
+gameState.gameLevel = 3
+gameState.gameLevel = 250
 
-// Number implementations.
+// Restores state: {gameLevel 2 playerScore 200}
+gameState.restoreFromMemeto(CheckPoint.restorePreviousState())
 
-struct NextStepNumber : Decimal {
-    private var nextStepNumber : NSNumber
+gameState.gameLevel = 4
 
-    func stringValue() -> String { return nextStepNumber.stringValue }
-}
+// Saves state - gameState2: {gameLevel 4 playerScore 200}
+CheckPoint.saveState(gameState.saveToMemeto(), keyName: "gameState2")
 
-struct SwiftNumber : Decimal {
-    private var swiftInt : Int
+gameState.gameLevel = 5
+gameState.playerScore = 300
 
-    func stringValue() -> String { return "\(swiftInt)" }
-}
+// Saves state - gameState3: {gameLevel 5 playerScore 300}
+CheckPoint.saveState(gameState.saveToMemeto(), keyName: "gameState3")
 
-// Factories.
-
-class NextStepNumberFactory : NumberFactoryProtocol {
-    func numberFromString(string : String) -> Decimal {
-        return NextStepNumber(nextStepNumber:NSNumber(longLong:(string as NSString).longLongValue))
-    }
-}
-
-class SwiftNumberFactory : NumberFactoryProtocol {
-    func numberFromString(string : String) -> Decimal {
-        return SwiftNumber(swiftInt:(string as NSString).integerValue)
-    }
-}
-
-// Abstract factory.
-
-enum NumberType {
-    case NextStep, Swift
-}
-
-class NumberAbstractFactory {
-    class func numberFactoryType(type : NumberType) -> NumberFactoryProtocol {
-        
-        switch type {
-            case .NextStep:
-                    return NextStepNumberFactory()
-            case .Swift:
-                    return SwiftNumberFactory()
-        }
-    }
-}
+// Restores state - gameState2: {gameLevel 4 playerScore 200}
+gameState.restoreFromMemeto(CheckPoint.restorePreviousState(keyName: "gameState2"))

@@ -1,5 +1,7 @@
-var lower = Printer(strategy:LowerCaseStrategy())
-lower.printString("O tempora, o mores!")
+let computer = CurrentComputer()
+let doors = "Pod Bay Doors"
 
-var upper = Printer(strategy:UpperCaseStrategy())
-upper.printString("O tempora, o mores!")
+computer.openDoors(doors)
+
+computer.authenticateWithPassword("pass")
+computer.openDoors(doors)

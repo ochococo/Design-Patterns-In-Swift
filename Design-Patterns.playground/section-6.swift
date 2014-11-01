@@ -1,17 +1,46 @@
-protocol ThreeDimensions {
-    var x: Double? {get}
-    var y: Double? {get}
-    var z: Double? {get}
+protocol FileOperationCommand {
+    init(file: String)
+    func execute()
 }
 
-class Point : ThreeDimensions {
-    var x: Double?
-    var y: Double?
-    var z: Double?
+class FileMoveCommand : FileOperationCommand {
+    let file:String
 
-    typealias PointBuilderClosure = (Point) -> ()
+    required init(file: String) {
+        self.file = file
+    }
+    
+    func execute() {
+        print("\(file) moved")
+    }
+}
 
-    init(buildClosure: PointBuilderClosure) {
-        buildClosure(self)
+class FileDeleteCommand : FileOperationCommand {
+    let file:String
+
+    required init(file: String) {
+        self.file = file
+    }
+    
+    func execute() {
+        print("\(file) deleted")
+    }
+}
+
+class FileManager {
+    let deleteCommand: FileOperationCommand
+    let moveCommand: FileOperationCommand
+    
+    init(deleteCommand: FileDeleteCommand, moveCommand: FileMoveCommand) {
+        self.deleteCommand = deleteCommand
+        self.moveCommand = moveCommand
+    }
+    
+    func delete() {
+        deleteCommand.execute()
+    }
+    
+    func move() {
+        moveCommand.execute()
     }
 }

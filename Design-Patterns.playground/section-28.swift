@@ -1,15 +1,9 @@
-class Eternal {
+let planets: [Planet] = [PlanetEarth(), PlanetMars(), PlanetGliese581C()]
 
-    class func setObject(value: AnyObject!, forKey defaultName: String!) {
-        let defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject(value, forKey:defaultName)
-        defaults.synchronize()
-    }
-
-    class func objectForKey(defaultName: String!) -> AnyObject! {
-        let defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
-
-        return defaults.objectForKey(defaultName)
-    }
-
+let names = planets.map { (planet: Planet) -> String in
+	let visitor = NameVisitor()
+	planet.accept(visitor)
+	return visitor.name
 }
+
+names

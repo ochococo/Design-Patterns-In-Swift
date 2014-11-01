@@ -1,17 +1,12 @@
-protocol HEVSuitMedicalAid {
-    func administerMorphine() -> String
-}
+class ThieveryCorporationPersonDisplay {
+    var name: String?
+    let font: String
 
-class HEVSuit : HEVSuitMedicalAid {
-    func administerMorphine() -> String {
-        return "Morphine aministered."
+    init(font: String) {
+        self.font = font
     }
-}
 
-class HEVSuitHumanInterface : HEVSuitMedicalAid {
-    lazy private var physicalSuit: HEVSuit = HEVSuit()
-
-    func administerMorphine() -> String {
-        return physicalSuit.administerMorphine()
+    func clone() -> ThieveryCorporationPersonDisplay {
+        return ThieveryCorporationPersonDisplay(font:self.font)
     }
 }

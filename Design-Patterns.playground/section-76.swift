@@ -1,27 +1,17 @@
-protocol PlanetVisitor {
-	func visit(planet: PlanetEarth)
-	func visit(planet: PlanetMars)
-	func visit(planet: PlanetGliese581C)
+protocol HEVSuitMedicalAid {
+    func administerMorphine() -> String
 }
 
-protocol Planet {
-	func accept(visitor: PlanetVisitor)
+class HEVSuit : HEVSuitMedicalAid {
+    func administerMorphine() -> String {
+        return "Morphine aministered."
+    }
 }
 
-class PlanetEarth: Planet {
-	func accept(visitor: PlanetVisitor) { visitor.visit(self) }
-}
-class PlanetMars: Planet {
-	func accept(visitor: PlanetVisitor) { visitor.visit(self) }
-}
-class PlanetGliese581C: Planet {
-	func accept(visitor: PlanetVisitor) { visitor.visit(self) }
-}
+class HEVSuitHumanInterface : HEVSuitMedicalAid {
+    lazy private var physicalSuit: HEVSuit = HEVSuit()
 
-class NameVisitor: PlanetVisitor {
-	var name = ""
-
-	func visit(planet: PlanetEarth)      { name = "Earth" }
-	func visit(planet: PlanetMars)       { name = "Mars" }
-	func visit(planet: PlanetGliese581C) { name = "Gliese 581 C" }
+    func administerMorphine() -> String {
+        return physicalSuit.administerMorphine()
+    }
 }

@@ -1,0 +1,61 @@
+##👫 Command
+
+```swift
+protocol FileOperationCommand {
+    init(file: String)
+    func execute()
+}
+
+class FileMoveCommand : FileOperationCommand {
+    let file:String
+
+    required init(file: String) {
+        self.file = file
+    }
+    
+    func execute() {
+        print("\(file) moved")
+    }
+}
+
+class FileDeleteCommand : FileOperationCommand {
+    let file:String
+
+    required init(file: String) {
+        self.file = file
+    }
+    
+    func execute() {
+        print("\(file) deleted")
+    }
+}
+
+class FileManager {
+    let deleteCommand: FileOperationCommand
+    let moveCommand: FileOperationCommand
+    
+    init(deleteCommand: FileDeleteCommand, moveCommand: FileMoveCommand) {
+        self.deleteCommand = deleteCommand
+        self.moveCommand = moveCommand
+    }
+    
+    func delete() {
+        deleteCommand.execute()
+    }
+    
+    func move() {
+        moveCommand.execute()
+    }
+}
+```
+
+**Usage:**
+```swift
+let deleteCommand = FileDeleteCommand(file: "/path/to/testfile")
+let moveCommand = FileMoveCommand(file: "/path/to/testfile")
+let fileManager = FileManager(deleteCommand:deleteCommand , moveCommand: moveCommand)
+
+fileManager.delete()
+fileManager.move()
+```
+

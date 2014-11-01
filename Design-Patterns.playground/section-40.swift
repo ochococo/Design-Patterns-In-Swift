@@ -1,59 +1,43 @@
-protocol Coffee {
-    func getCost() -> Double
-    func getIngredients() -> String
+protocol Currency {
+    func symbol() -> String
+    func code() -> String
 }
 
-class SimpleCoffee: Coffee {
-    func getCost() -> Double {
-        return 1.0
+class Euro : Currency {
+    func symbol() -> String {
+        return "€"
     }
-
-    func getIngredients() -> String {
-        return "Coffee"
-    }
-}
-
-class CoffeeDecorator: Coffee {
-    private let decoratedCoffee: Coffee
-    private let ingredientSeparator: String = ", "
-
-    required init(decoratedCoffee: Coffee) {
-        self.decoratedCoffee = decoratedCoffee
-    }
-
-    func getCost() -> Double {
-        return decoratedCoffee.getCost()
-    }
-
-    func getIngredients() -> String {
-        return decoratedCoffee.getIngredients()
+    
+    func code() -> String {
+        return "EUR"
     }
 }
 
-class Milk: CoffeeDecorator {
-    required init(decoratedCoffee: Coffee) {
-        super.init(decoratedCoffee: decoratedCoffee)
+class UnitedStatesDolar : Currency {
+    func symbol() -> String {
+        return "$"
     }
-
-    override func getCost() -> Double {
-        return super.getCost() + 0.5
-    }
-
-    override func getIngredients() -> String {
-        return super.getIngredients() + ingredientSeparator + "Milk"
+    
+    func code() -> String {
+        return "USD"
     }
 }
 
-class WhipCoffee: CoffeeDecorator {
-    required init(decoratedCoffee: Coffee) {
-        super.init(decoratedCoffee: decoratedCoffee)
-    }
+enum Country {
+    case UnitedStates, Spain, France, UK
+}
 
-    override func getCost() -> Double {
-        return super.getCost() + 0.7
-    }
+class CurrencyFactory {
+    class func currencyForCountry(country:Country) -> Currency? {
 
-    override func getIngredients() -> String {
-        return super.getIngredients() + ingredientSeparator + "Whip"
+        switch country {
+            case .Spain, .France :
+                return Euro()
+            case .UnitedStates :
+                return UnitedStatesDolar()
+            default:
+                return nil
+        }
+        
     }
 }

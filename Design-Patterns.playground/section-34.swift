@@ -1,5 +1,17 @@
-var tuple = PointConverter.convert(x:1.1, y:2.2, z:3.3, base:2.0, negative:true)
+protocol ThreeDimensions {
+    var x: Double? {get}
+    var y: Double? {get}
+    var z: Double? {get}
+}
 
-tuple.x
-tuple.y
-tuple.z
+class Point : ThreeDimensions {
+    var x: Double?
+    var y: Double?
+    var z: Double?
+
+    typealias PointBuilderClosure = (Point) -> ()
+
+    init(buildClosure: PointBuilderClosure) {
+        buildClosure(self)
+    }
+}
