@@ -14,7 +14,6 @@ A short cheat-sheet with Xcode 6 Playground ([Design-Patterns.playground.zip](ht
 * [Behavioral](#behavioral)
 * [Creational](#creational)
 * [Structural](#structural)
-
 #Behavioral
 
 >In software engineering, behavioral design patterns are design patterns that identify common communication patterns between objects and realize these patterns. By doing so, these patterns increase flexibility in carrying out this communication.
@@ -741,6 +740,11 @@ tuple.y
 tuple.z
 ```
 ##🌉  Bridge
+
+The bridge pattern is used to separate the abstract elements of a class from the implementation details, providing the means to replace the implementation details without modifying the abstraction.
+
+**Example:**
+
 ```swift
 protocol Switch {
     var appliance: Appliance {get set}
@@ -786,6 +790,10 @@ fancyVacuumCleanerRemoteControl.turnOn()
 ```
 
 ##🌿 Composite
+
+The composite pattern is used to create hierarchical, recursive tree structures of related objects where any element of the structure may be accessed and utilised in a standard manner.
+
+**Example:**
 
 ```swift
 /**
@@ -833,6 +841,11 @@ var whiteboard = Whiteboard(Circle(), Square())
 whiteboard.draw("Red")
 ```
 ##🍧 Decorator
+
+The decorator pattern is used to extend or alter the functionality of objects at run- time by wrapping them in an object of a decorator class. 
+This provides a flexible alternative to using inheritance to modify behaviour.
+
+**Example:**
 
 ```swift
 protocol Coffee {
@@ -908,6 +921,10 @@ println("Cost : \(someCoffee.getCost()); Ingredients: \(someCoffee.getIngredient
 
 ##🎁 Façade
 
+The facade pattern is used to define a simplified interface to a more complex subsystem.
+
+**Example:**
+
 ```swift
 class Eternal {
 
@@ -932,7 +949,11 @@ Eternal.objectForKey("Bishop")
 ```
 ##☔ Protection Proxy
 
-**Source:**
+The proxy pattern is used to provide a surrogate or placeholder object, which references an underlying object. 
+Protection proxy is restricting access.
+
+**Example:**
+
 ```swift
 protocol DoorOperator {
     func openDoors(doors: String) -> String
@@ -982,7 +1003,11 @@ computer.openDoors(doors)
 
 ##🍬 Virtual Proxy
 
-**Source:**
+The proxy pattern is used to provide a surrogate or placeholder object, which references an underlying object. 
+Virtual proxy is used for loading object on demand.
+
+**Example:**
+
 ```swift
 protocol HEVSuitMedicalAid {
     func administerMorphine() -> String
