@@ -1,4 +1,9 @@
 ##🔌 Adapter
+
+The adapter pattern is used to provide a link between two otherwise incompatible types by wrapping the "adaptee" with a class that supports the interface required by the client.
+
+**Example:**
+
 ```swift
 // WARNING: This example uses Point class from Builder pattern!
 
@@ -27,6 +32,7 @@ extension PointConverter{
 
 }
 ```
+
 **Usage:**
 ```swift
 var tuple = PointConverter.convert(x:1.1, y:2.2, z:3.3, base:2.0, negative:true)

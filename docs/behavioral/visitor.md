@@ -1,5 +1,9 @@
 ##🏃 Visitor
 
+The visitor pattern is used to separate a relatively complex set of structured data classes from the functionality that may be performed upon the data that they hold.
+
+**Example:**
+
 ```swift
 protocol PlanetVisitor {
 	func visit(planet: PlanetEarth)
@@ -41,4 +45,3 @@ let names = planets.map { (planet: Planet) -> String in
 
 names
 ```
-

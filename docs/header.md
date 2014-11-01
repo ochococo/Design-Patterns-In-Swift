@@ -14,4 +14,3 @@ A short cheat-sheet with Xcode 6 Playground ([Design-Patterns.playground.zip](ht
 * [Behavioral](#behavioral)
 * [Creational](#creational)
 * [Structural](#structural)
-
