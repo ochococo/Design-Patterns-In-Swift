@@ -1,6 +1,10 @@
 ##☔ Protection Proxy
 
-**Source:**
+The proxy pattern is used to provide a surrogate or placeholder object, which references an underlying object. 
+Protection proxy is restricting access.
+
+**Example:**
+
 ```swift
 protocol DoorOperator {
     func openDoors(doors: String) -> String
