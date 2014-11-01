@@ -11,9 +11,9 @@ A short cheat-sheet with Xcode 6 Playground ([Design-Patterns.playground.zip](ht
 
 ## Table of Contents
 
-[Behavioral](#behavioral)
-[Creational](#creational)
-[Structural](#structural)
+* [Behavioral](#behavioral)
+* [Creational](#creational)
+* [Structural](#structural)
 
 #Behavioral
 

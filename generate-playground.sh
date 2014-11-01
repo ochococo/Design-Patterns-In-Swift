@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# concatenate all docs together into README.markdown
+cat docs/header.md docs/*/* docs/footer.md > README.markdown
+
 # remove the old Design-Patterns.playground
 rm -R ./Design-Patterns.playground
 
