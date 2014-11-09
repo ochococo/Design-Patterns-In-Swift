@@ -1,2 +1,5 @@
-var whiteboard = Whiteboard(Circle(), Square())
-whiteboard.draw("Red")
+var tvRemoteControl = RemoteControl(appliance: TV())
+tvRemoteControl.turnOn()
+
+var fancyVacuumCleanerRemoteControl = RemoteControl(appliance: VacuumCleaner())
+fancyVacuumCleanerRemoteControl.turnOn()

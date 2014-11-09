@@ -1,32 +1,26 @@
-protocol Switch {
-    var appliance: Appliance {get set}
-    func turnOn()
-}
+// WARNING: This example uses Point class from Builder pattern!
 
-protocol Appliance {
-    func run()
-}
+class PointConverter {
 
-class RemoteControl: Switch {
-    var appliance: Appliance
+    class func convert(#point:Point, base:Double, negative:Bool) -> Point {
 
-    func turnOn() {
-        self.appliance.run()
+        var pointConverted = Point{
+            if let x = point.x { $0.x = x * base * (negative ? -1.0 : 1.0) }
+            if let y = point.y { $0.y = y * base * (negative ? -1.0 : 1.0) }
+            if let z = point.z { $0.z = z * base * (negative ? -1.0 : 1.0) }
+        }
+        
+        return pointConverted
     }
+}
+
+extension PointConverter{
     
-    init(appliance: Appliance) {
-        self.appliance = appliance
-    }
-}
+    class func convert(#x:Double!, y:Double!, z:Double!, base:Double!, negative:Bool!) -> (x:Double!,y:Double!,z:Double!) {
+        var point = Point{ $0.x = x; $0.y = y; $0.z = z }
+        var pointCalculated = self.convert(point:point, base:base, negative:negative)
 
-class TV: Appliance {
-    func run() {
-        println("tv turned on");
+        return (pointCalculated.x!,pointCalculated.y!,pointCalculated.z!)
     }
-}
 
-class VacuumCleaner: Appliance {
-    func run() {
-        println("vacuum cleaner turned on")
-    }
 }

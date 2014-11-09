@@ -1,6 +1,5 @@
-let noCurrencyCode = "No Currency Code Available"
-
-CurrencyFactory.currencyForCountry(.Spain)?.code() ?? noCurrencyCode
-CurrencyFactory.currencyForCountry(.UnitedStates)?.code() ?? noCurrencyCode
-CurrencyFactory.currencyForCountry(.France)?.code() ?? noCurrencyCode
-CurrencyFactory.currencyForCountry(.UK)?.code() ?? noCurrencyCode
+let uglierPoint = Point {
+    $0.x = 0.1
+    $0.y = 0.2
+    $0.z = 0.3
+}

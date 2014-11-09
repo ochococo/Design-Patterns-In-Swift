@@ -1,10 +1,12 @@
-class SingletonClass {
-    class var shared : SingletonClass {
+class ThieveryCorporationPersonDisplay {
+    var name: String?
+    let font: String
 
-        struct Static {
-            static let instance : SingletonClass = SingletonClass()
-        }
+    init(font: String) {
+        self.font = font
+    }
 
-        return Static.instance
+    func clone() -> ThieveryCorporationPersonDisplay {
+        return ThieveryCorporationPersonDisplay(font:self.font)
     }
 }

@@ -1,35 +1,12 @@
-typealias Memento = Dictionary<NSObject, AnyObject>
-
-/**
-* Originator
-*/
-class GameState {
-    var gameLevel: Int = 1
-    var playerScore: Int = 0
-
-    func saveToMemeto() -> Memento {
-        return ["gameLevel": gameLevel, "playerScore": playerScore] 
-    }
-
-    func restoreFromMemeto(memento: Memento) {
-        gameLevel = memento["gameLevel"]! as Int
-        playerScore = memento["playerScore"]! as Int
-    }
+struct Cart<T> {
+    let items: [T]
 }
 
-/**
-* Caretaker
-*/
-class CheckPoint {
-    class func saveState(memento: Memento, keyName: String = "gameState") {
-        let defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject(memento, forKey: keyName)
-        defaults.synchronize()
-    }
-
-    class func restorePreviousState(keyName: String = "gameState") -> Memento {
-        let defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
-
-        return defaults.objectForKey(keyName) as Memento
+extension Cart: SequenceType {
+    typealias Generator = GeneratorOf<T>
+    
+    func generate() -> GeneratorOf<T> {
+        var i = 0
+        return GeneratorOf { return i >= self.items.count ? nil : self.items[i++] }
     }
 }
