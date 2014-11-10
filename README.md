@@ -200,11 +200,11 @@ class GameState {
     var gameLevel: Int = 1
     var playerScore: Int = 0
 
-    func saveToMemeto() -> Memento {
+    func saveToMemento() -> Memento {
         return ["gameLevel": gameLevel, "playerScore": playerScore] 
     }
 
-    func restoreFromMemeto(memento: Memento) {
+    func restoreFromMemento(memento: Memento) {
         gameLevel = memento["gameLevel"]! as Int
         playerScore = memento["playerScore"]! as Int
     }
@@ -234,27 +234,27 @@ gameState.gameLevel = 2
 gameState.playerScore = 200
 
 // Saves state: {gameLevel 2 playerScore 200}
-CheckPoint.saveState(gameState.saveToMemeto())
+CheckPoint.saveState(gameState.saveToMemento())
 
 gameState.gameLevel = 3
 gameState.gameLevel = 250
 
 // Restores state: {gameLevel 2 playerScore 200}
-gameState.restoreFromMemeto(CheckPoint.restorePreviousState())
+gameState.restoreFromMemento(CheckPoint.restorePreviousState())
 
 gameState.gameLevel = 4
 
 // Saves state - gameState2: {gameLevel 4 playerScore 200}
-CheckPoint.saveState(gameState.saveToMemeto(), keyName: "gameState2")
+CheckPoint.saveState(gameState.saveToMemento(), keyName: "gameState2")
 
 gameState.gameLevel = 5
 gameState.playerScore = 300
 
 // Saves state - gameState3: {gameLevel 5 playerScore 300}
-CheckPoint.saveState(gameState.saveToMemeto(), keyName: "gameState3")
+CheckPoint.saveState(gameState.saveToMemento(), keyName: "gameState3")
 
 // Restores state - gameState2: {gameLevel 4 playerScore 200}
-gameState.restoreFromMemeto(CheckPoint.restorePreviousState(keyName: "gameState2"))
+gameState.restoreFromMemento(CheckPoint.restorePreviousState(keyName: "gameState2"))
 ```
 ##👓 Observer
 
