@@ -1,15 +1,59 @@
-class Eternal {
+protocol Coffee {
+    func getCost() -> Double
+    func getIngredients() -> String
+}
 
-    class func setObject(value: AnyObject!, forKey defaultName: String!) {
-        let defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject(value, forKey:defaultName)
-        defaults.synchronize()
+class SimpleCoffee: Coffee {
+    func getCost() -> Double {
+        return 1.0
     }
 
-    class func objectForKey(defaultName: String!) -> AnyObject! {
-        let defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
+    func getIngredients() -> String {
+        return "Coffee"
+    }
+}
 
-        return defaults.objectForKey(defaultName)
+class CoffeeDecorator: Coffee {
+    private let decoratedCoffee: Coffee
+    private let ingredientSeparator: String = ", "
+
+    required init(decoratedCoffee: Coffee) {
+        self.decoratedCoffee = decoratedCoffee
     }
 
+    func getCost() -> Double {
+        return decoratedCoffee.getCost()
+    }
+
+    func getIngredients() -> String {
+        return decoratedCoffee.getIngredients()
+    }
+}
+
+class Milk: CoffeeDecorator {
+    required init(decoratedCoffee: Coffee) {
+        super.init(decoratedCoffee: decoratedCoffee)
+    }
+
+    override func getCost() -> Double {
+        return super.getCost() + 0.5
+    }
+
+    override func getIngredients() -> String {
+        return super.getIngredients() + ingredientSeparator + "Milk"
+    }
+}
+
+class WhipCoffee: CoffeeDecorator {
+    required init(decoratedCoffee: Coffee) {
+        super.init(decoratedCoffee: decoratedCoffee)
+    }
+
+    override func getCost() -> Double {
+        return super.getCost() + 0.7
+    }
+
+    override func getIngredients() -> String {
+        return super.getIngredients() + ingredientSeparator + "Whip"
+    }
 }

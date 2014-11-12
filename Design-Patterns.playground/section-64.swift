@@ -1,59 +1,38 @@
-protocol Coffee {
-    func getCost() -> Double
-    func getIngredients() -> String
+/**
+ *  Component
+ */
+protocol Shape {
+    func draw(fillColor: String)
 }
 
-class SimpleCoffee: Coffee {
-    func getCost() -> Double {
-        return 1.0
-    }
-
-    func getIngredients() -> String {
-        return "Coffee"
-    }
-}
-
-class CoffeeDecorator: Coffee {
-    private let decoratedCoffee: Coffee
-    private let ingredientSeparator: String = ", "
-
-    required init(decoratedCoffee: Coffee) {
-        self.decoratedCoffee = decoratedCoffee
-    }
-
-    func getCost() -> Double {
-        return decoratedCoffee.getCost()
-    }
-
-    func getIngredients() -> String {
-        return decoratedCoffee.getIngredients()
+/**
+ * Leafs
+ */
+class Square : Shape {
+    func draw(fillColor: String) {
+        print("Drawing a Square with color \(fillColor)")
     }
 }
 
-class Milk: CoffeeDecorator {
-    required init(decoratedCoffee: Coffee) {
-        super.init(decoratedCoffee: decoratedCoffee)
-    }
-
-    override func getCost() -> Double {
-        return super.getCost() + 0.5
-    }
-
-    override func getIngredients() -> String {
-        return super.getIngredients() + ingredientSeparator + "Milk"
+class Circle : Shape {
+    func draw(fillColor: String) {
+        print("Drawing a circle with color \(fillColor)")
     }
 }
 
-class WhipCoffee: CoffeeDecorator {
-    required init(decoratedCoffee: Coffee) {
-        super.init(decoratedCoffee: decoratedCoffee)
+/**
+* Composite
+*/
+class Whiteboard : Shape {
+    lazy var shapes = [Shape]()
+    
+    init(_ shapes:Shape...) {
+        self.shapes = shapes
     }
-
-    override func getCost() -> Double {
-        return super.getCost() + 0.7
-    }
-
-    override func getIngredients() -> String {
-        return super.getIngredients() + ingredientSeparator + "Whip"
+    
+    func draw(fillColor:String) {
+        for shape in self.shapes {
+            shape.draw(fillColor)
+        }
     }
 }

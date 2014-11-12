@@ -1,28 +1,41 @@
-protocol PrintStrategy {
-    func printString(string: String) -> String
-}
+class Context {
+	private var state: State = UnauthorizedState()
 
-class Printer {
+    var isAuthorized: Bool {
+        get { return state.isAuthorized(self) }
+    }
 
-    let strategy: PrintStrategy
+    var userId: String? {
+        get { return state.userId(self) }
+    }
+
+	func changeStateToAuthorized(#userId: String) {
+		state = AuthorizedState(userId: userId)
+	}
+
+	func changeStateToUnauthorized() {
+		state = UnauthorizedState()
+	}
     
-    func printString(string: String) -> String {
-        return self.strategy.printString(string)
-    }
-    
-    init(strategy: PrintStrategy) {
-        self.strategy = strategy
-    }
 }
 
-class UpperCaseStrategy : PrintStrategy {
-    func printString(string:String) -> String {
-        return string.uppercaseString
-    }
+protocol State {
+	func isAuthorized(context: Context) -> Bool
+	func userId(context: Context) -> String?
 }
 
-class LowerCaseStrategy : PrintStrategy {
-    func printString(string:String) -> String {
-        return string.lowercaseString
-    }
+class UnauthorizedState: State {
+	func isAuthorized(context: Context) -> Bool { return false }
+
+	func userId(context: Context) -> String? { return nil }
+}
+
+class AuthorizedState: State {
+	let userId: String
+
+	init(userId: String) { self.userId = userId }
+
+	func isAuthorized(context: Context) -> Bool { return true }
+
+	func userId(context: Context) -> String? { return userId }
 }
