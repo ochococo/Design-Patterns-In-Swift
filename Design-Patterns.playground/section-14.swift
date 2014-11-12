@@ -7,11 +7,11 @@ class GameState {
     var gameLevel: Int = 1
     var playerScore: Int = 0
 
-    func saveToMemeto() -> Memento {
+    func saveToMemento() -> Memento {
         return ["gameLevel": gameLevel, "playerScore": playerScore] 
     }
 
-    func restoreFromMemeto(memento: Memento) {
+    func restoreFromMemento(memento: Memento) {
         gameLevel = memento["gameLevel"]! as Int
         playerScore = memento["playerScore"]! as Int
     }
