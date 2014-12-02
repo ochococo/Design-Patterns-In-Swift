@@ -1,33 +1,15 @@
-protocol DoorOperator {
-    func openDoors(doors: String) -> String
-}
+class Eternal {
 
-class HAL9000 : DoorOperator {
-    func openDoors(doors: String) -> String {
-        return ("HAL9000: Affirmative, Dave. I read you. Opened \(doors).")
+    class func setObject(value: AnyObject!, forKey defaultName: String!) {
+        let defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject(value, forKey:defaultName)
+        defaults.synchronize()
     }
-}
 
-class CurrentComputer : DoorOperator {
-    private var computer: HAL9000!
+    class func objectForKey(defaultName: String!) -> AnyObject! {
+        let defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
 
-    func authenticateWithPassword(pass: String) -> Bool {
-
-        if pass != "pass" {
-            return false
-        }
-
-        computer = HAL9000()
-
-        return true
+        return defaults.objectForKey(defaultName)
     }
-    
-    func openDoors(doors: String) -> String {
 
-        if (computer == nil) {
-            return "Access Denied. I'm afraid I can't do that."
-        }
-        
-        return computer.openDoors(doors)
-    }
 }

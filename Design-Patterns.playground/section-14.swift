@@ -1,35 +1,41 @@
-typealias Memento = Dictionary<NSObject, AnyObject>
-
-/**
-* Originator
-*/
-class GameState {
-    var gameLevel: Int = 1
-    var playerScore: Int = 0
-
-    func saveToMemento() -> Memento {
-        return ["gameLevel": gameLevel, "playerScore": playerScore] 
+class Colleague {
+    let mediator: Mediator
+    
+    init(mediator: Mediator) {
+        self.mediator = mediator
     }
-
-    func restoreFromMemento(memento: Memento) {
-        gameLevel = memento["gameLevel"]! as Int
-        playerScore = memento["playerScore"]! as Int
+    
+    func send(message: String) {
+        mediator.send(message, colleague: self)
+    }
+    
+    func receive(message: String) {
+        assert(false, "Method should be overriden")
     }
 }
 
-/**
-* Caretaker
-*/
-class CheckPoint {
-    class func saveState(memento: Memento, keyName: String = "gameState") {
-        let defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject(memento, forKey: keyName)
-        defaults.synchronize()
+protocol Mediator {
+    func send(message: String, colleague: Colleague)
+}
+
+class MessageMediator: Mediator {
+    private var colleagues: [Colleague] = []
+    
+    func addColleague(colleague: Colleague) {
+        colleagues.append(colleague)
     }
+    
+    func send(message: String, colleague: Colleague) {
+        for c in colleagues {
+            if c !== colleague { //for simplicity we compare object references
+                colleague.receive(message)
+            }
+        }
+    }
+}
 
-    class func restorePreviousState(keyName: String = "gameState") -> Memento {
-        let defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
-
-        return defaults.objectForKey(keyName) as Memento
+class ConcreteColleague: Colleague {
+    override func receive(message: String) {
+        println("Colleague received: \(message)")
     }
 }

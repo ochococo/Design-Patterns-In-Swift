@@ -1,55 +1,27 @@
-// Protocols.
-
-protocol Decimal {
-    func stringValue() -> String
+protocol PlanetVisitor {
+	func visit(planet: PlanetEarth)
+	func visit(planet: PlanetMars)
+	func visit(planet: PlanetGliese581C)
 }
 
-protocol NumberFactoryProtocol {
-    func numberFromString(string : String) -> Decimal
+protocol Planet {
+	func accept(visitor: PlanetVisitor)
 }
 
-// Number implementations.
-
-struct NextStepNumber : Decimal {
-    private var nextStepNumber : NSNumber
-
-    func stringValue() -> String { return nextStepNumber.stringValue }
+class PlanetEarth: Planet {
+	func accept(visitor: PlanetVisitor) { visitor.visit(self) }
+}
+class PlanetMars: Planet {
+	func accept(visitor: PlanetVisitor) { visitor.visit(self) }
+}
+class PlanetGliese581C: Planet {
+	func accept(visitor: PlanetVisitor) { visitor.visit(self) }
 }
 
-struct SwiftNumber : Decimal {
-    private var swiftInt : Int
+class NameVisitor: PlanetVisitor {
+	var name = ""
 
-    func stringValue() -> String { return "\(swiftInt)" }
-}
-
-// Factories.
-
-class NextStepNumberFactory : NumberFactoryProtocol {
-    func numberFromString(string : String) -> Decimal {
-        return NextStepNumber(nextStepNumber:NSNumber(longLong:(string as NSString).longLongValue))
-    }
-}
-
-class SwiftNumberFactory : NumberFactoryProtocol {
-    func numberFromString(string : String) -> Decimal {
-        return SwiftNumber(swiftInt:(string as NSString).integerValue)
-    }
-}
-
-// Abstract factory.
-
-enum NumberType {
-    case NextStep, Swift
-}
-
-class NumberAbstractFactory {
-    class func numberFactoryType(type : NumberType) -> NumberFactoryProtocol {
-        
-        switch type {
-            case .NextStep:
-                    return NextStepNumberFactory()
-            case .Swift:
-                    return SwiftNumberFactory()
-        }
-    }
+	func visit(planet: PlanetEarth)      { name = "Earth" }
+	func visit(planet: PlanetMars)       { name = "Mars" }
+	func visit(planet: PlanetGliese581C) { name = "Gliese 581 C" }
 }

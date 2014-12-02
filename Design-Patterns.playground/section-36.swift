@@ -1,7 +1,9 @@
-let factoryOne = NumberAbstractFactory.numberFactoryType(.NextStep)
-let numberOne = factoryOne.numberFromString("1")
-numberOne.stringValue()
+let planets: [Planet] = [PlanetEarth(), PlanetMars(), PlanetGliese581C()]
 
-let factoryTwo = NumberAbstractFactory.numberFactoryType(.Swift)
-let numberTwo = factoryTwo.numberFromString("2")
-numberTwo.stringValue()
+let names = planets.map { (planet: Planet) -> String in
+	let visitor = NameVisitor()
+	planet.accept(visitor)
+	return visitor.name
+}
+
+names
