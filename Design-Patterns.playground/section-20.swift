@@ -1,10 +1,26 @@
-let stepCounter = StepCounter()
-stepCounter.totalSteps = 200
-// About to set totalSteps to 200
-// Added 200 steps
-stepCounter.totalSteps = 360
-// About to set totalSteps to 360
-// Added 160 steps
-stepCounter.totalSteps = 896
-// About to set totalSteps to 896
-// Added 536 steps
+var gameState = GameState()
+gameState.gameLevel = 2
+gameState.playerScore = 200
+
+// Saves state: {gameLevel 2 playerScore 200}
+CheckPoint.saveState(gameState.saveToMemento())
+
+gameState.gameLevel = 3
+gameState.gameLevel = 250
+
+// Restores state: {gameLevel 2 playerScore 200}
+gameState.restoreFromMemento(CheckPoint.restorePreviousState())
+
+gameState.gameLevel = 4
+
+// Saves state - gameState2: {gameLevel 4 playerScore 200}
+CheckPoint.saveState(gameState.saveToMemento(), keyName: "gameState2")
+
+gameState.gameLevel = 5
+gameState.playerScore = 300
+
+// Saves state - gameState3: {gameLevel 5 playerScore 300}
+CheckPoint.saveState(gameState.saveToMemento(), keyName: "gameState3")
+
+// Restores state - gameState2: {gameLevel 4 playerScore 200}
+gameState.restoreFromMemento(CheckPoint.restorePreviousState(keyName: "gameState2"))

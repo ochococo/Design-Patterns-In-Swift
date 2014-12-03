@@ -1,12 +1,43 @@
-class ThieveryCorporationPersonDisplay {
-    var name: String?
-    let font: String
+protocol Currency {
+    func symbol() -> String
+    func code() -> String
+}
 
-    init(font: String) {
-        self.font = font
+class Euro : Currency {
+    func symbol() -> String {
+        return "€"
     }
+    
+    func code() -> String {
+        return "EUR"
+    }
+}
 
-    func clone() -> ThieveryCorporationPersonDisplay {
-        return ThieveryCorporationPersonDisplay(font:self.font)
+class UnitedStatesDolar : Currency {
+    func symbol() -> String {
+        return "$"
+    }
+    
+    func code() -> String {
+        return "USD"
+    }
+}
+
+enum Country {
+    case UnitedStates, Spain, France, UK
+}
+
+class CurrencyFactory {
+    class func currencyForCountry(country:Country) -> Currency? {
+
+        switch country {
+            case .Spain, .France :
+                return Euro()
+            case .UnitedStates :
+                return UnitedStatesDolar()
+            default:
+                return nil
+        }
+        
     }
 }

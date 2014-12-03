@@ -1,10 +1,6 @@
-let Prototype = ThieveryCorporationPersonDisplay(font:"Ubuntu")
+let noCurrencyCode = "No Currency Code Available"
 
-let Philippe = Prototype.clone()
-Philippe.name = "Philippe"
-
-let Christoph = Prototype.clone()
-Christoph.name = "Christoph"
-
-let Eduardo = Prototype.clone()
-Eduardo.name = "Eduardo"
+CurrencyFactory.currencyForCountry(.Spain)?.code() ?? noCurrencyCode
+CurrencyFactory.currencyForCountry(.UnitedStates)?.code() ?? noCurrencyCode
+CurrencyFactory.currencyForCountry(.France)?.code() ?? noCurrencyCode
+CurrencyFactory.currencyForCountry(.UK)?.code() ?? noCurrencyCode

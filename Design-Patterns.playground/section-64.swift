@@ -1,38 +1,32 @@
-/**
- *  Component
- */
-protocol Shape {
-    func draw(fillColor: String)
+protocol Switch {
+    var appliance: Appliance {get set}
+    func turnOn()
 }
 
-/**
- * Leafs
- */
-class Square : Shape {
-    func draw(fillColor: String) {
-        print("Drawing a Square with color \(fillColor)")
-    }
+protocol Appliance {
+    func run()
 }
 
-class Circle : Shape {
-    func draw(fillColor: String) {
-        print("Drawing a circle with color \(fillColor)")
-    }
-}
+class RemoteControl: Switch {
+    var appliance: Appliance
 
-/**
-* Composite
-*/
-class Whiteboard : Shape {
-    lazy var shapes = [Shape]()
-    
-    init(_ shapes:Shape...) {
-        self.shapes = shapes
+    func turnOn() {
+        self.appliance.run()
     }
     
-    func draw(fillColor:String) {
-        for shape in self.shapes {
-            shape.draw(fillColor)
-        }
+    init(appliance: Appliance) {
+        self.appliance = appliance
+    }
+}
+
+class TV: Appliance {
+    func run() {
+        println("tv turned on");
+    }
+}
+
+class VacuumCleaner: Appliance {
+    func run() {
+        println("vacuum cleaner turned on")
     }
 }
