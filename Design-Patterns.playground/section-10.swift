@@ -3,7 +3,6 @@ struct Cart<T> {
 }
 
 extension Cart: SequenceType {
-    typealias Generator = GeneratorOf<T>
     
     func generate() -> GeneratorOf<T> {
         var i = 0
