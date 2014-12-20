@@ -26,7 +26,7 @@ class MoneyPile {
 
         while canTakeSomeBill(v) {
 
-            if (q == 0) {
+            if q == 0 {
                 break
             }
 
