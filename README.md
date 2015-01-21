@@ -650,6 +650,9 @@ let uglierPoint = Point {
     $0.y = 0.2
     $0.z = 0.3
 }
+
+let alsoUglyPoint = Point { ($0.x, $0.y, $0.z) = (0.1, 0.2, 0.3) }
+
 ```
 ##🏭 Factory Method
 
@@ -1121,4 +1124,4 @@ Info
 
 📖 Descriptions from: [Gang of Four Design Patterns Reference Sheet](http://www.blackwasp.co.uk/GangOfFour.aspx)
 
-🚀 How to generate playground (+zip) from this README: [GENERATE.markdown](https://github.com/ochococo/Design-Patterns-In-Swift/blob/master/GENERATE.markdown)
+🚀 How to generate playground (+zip) from this README: [GENERATE.md](https://github.com/ochococo/Design-Patterns-In-Swift/blob/master/GENERATE.md)
