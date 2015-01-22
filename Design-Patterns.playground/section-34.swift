@@ -1,27 +1,27 @@
 protocol PlanetVisitor {
-	func visit(planet: PlanetEarth)
-	func visit(planet: PlanetMars)
-	func visit(planet: PlanetGliese581C)
+	func visit(planet: PlanetAlderaan)
+	func visit(planet: PlanetCoruscant)
+	func visit(planet: PlanetTatooine)
 }
 
 protocol Planet {
 	func accept(visitor: PlanetVisitor)
 }
 
-class PlanetEarth: Planet {
+class PlanetAlderaan: Planet {
 	func accept(visitor: PlanetVisitor) { visitor.visit(self) }
 }
-class PlanetMars: Planet {
+class PlanetCoruscant: Planet {
 	func accept(visitor: PlanetVisitor) { visitor.visit(self) }
 }
-class PlanetGliese581C: Planet {
+class PlanetTatooine: Planet {
 	func accept(visitor: PlanetVisitor) { visitor.visit(self) }
 }
 
 class NameVisitor: PlanetVisitor {
 	var name = ""
 
-	func visit(planet: PlanetEarth)      { name = "Earth" }
-	func visit(planet: PlanetMars)       { name = "Mars" }
-	func visit(planet: PlanetGliese581C) { name = "Gliese 581 C" }
+	func visit(planet: PlanetAlderaan)  { name = "Alderaan" }
+	func visit(planet: PlanetCoruscant) { name = "Coruscant" }
+	func visit(planet: PlanetTatooine)  { name = "Tatooine" }
 }

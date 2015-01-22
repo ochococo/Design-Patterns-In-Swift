@@ -7,20 +7,24 @@ The memento pattern is used to capture the current state of an object and store 
 ```swift
 typealias Memento = Dictionary<NSObject, AnyObject>
 
+let DPMementoKeyChapter = "com.valve.halflife.chapter"
+let DPMementoKeyWeapon = "com.valve.halflife.weapon"
+let DPMementoGameState = "com.valve.halflife.state"
+
 /**
 * Originator
 */
 class GameState {
-    var gameLevel: Int = 1
-    var playerScore: Int = 0
+    var chapter: String = ""
+    var weapon: String = ""
 
-    func saveToMemento() -> Memento {
-        return ["gameLevel": gameLevel, "playerScore": playerScore] 
+    func toMemento() -> Memento {
+        return [ DPMementoKeyChapter:chapter, DPMementoKeyWeapon:weapon ]
     }
 
     func restoreFromMemento(memento: Memento) {
-        gameLevel = memento["gameLevel"]! as Int
-        playerScore = memento["playerScore"]! as Int
+        chapter = memento[DPMementoKeyChapter] as String? ?? "n/a"
+        weapon = memento[DPMementoKeyWeapon] as String? ?? "n/a"
     }
 }
 
@@ -28,45 +32,39 @@ class GameState {
 * Caretaker
 */
 class CheckPoint {
-    class func saveState(memento: Memento, keyName: String = "gameState") {
-        let defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
+    class func saveState(memento: Memento, keyName: String = DPMementoGameState) {
+        let defaults = NSUserDefaults.standardUserDefaults()
         defaults.setObject(memento, forKey: keyName)
         defaults.synchronize()
     }
 
-    class func restorePreviousState(keyName: String = "gameState") -> Memento {
-        let defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
+    class func restorePreviousState(keyName: String = DPMementoGameState) -> Memento {
+        let defaults = NSUserDefaults.standardUserDefaults()
 
-        return defaults.objectForKey(keyName) as Memento
+        return defaults.objectForKey(keyName) as Memento! ?? Memento()
     }
 }
 ```
 ***Usage:***
 ```swift
 var gameState = GameState()
-gameState.gameLevel = 2
-gameState.playerScore = 200
-
-// Saves state: {gameLevel 2 playerScore 200}
-CheckPoint.saveState(gameState.saveToMemento())
-
-gameState.gameLevel = 3
-gameState.gameLevel = 250
-
-// Restores state: {gameLevel 2 playerScore 200}
 gameState.restoreFromMemento(CheckPoint.restorePreviousState())
 
-gameState.gameLevel = 4
+gameState.chapter = "Black Mesa Inbound"
+gameState.weapon = "Crowbar"
+CheckPoint.saveState(gameState.toMemento())
 
-// Saves state - gameState2: {gameLevel 4 playerScore 200}
-CheckPoint.saveState(gameState.saveToMemento(), keyName: "gameState2")
+gameState.chapter = "Anomalous Materials"
+gameState.weapon = "Glock 17"
+gameState.restoreFromMemento(CheckPoint.restorePreviousState())
 
-gameState.gameLevel = 5
-gameState.playerScore = 300
+gameState.chapter = "Unforeseen Consequences"
+gameState.weapon = "MP5"
+CheckPoint.saveState(gameState.toMemento(), keyName: "gameState2")
 
-// Saves state - gameState3: {gameLevel 5 playerScore 300}
-CheckPoint.saveState(gameState.saveToMemento(), keyName: "gameState3")
+gameState.chapter = "Office Complex"
+gameState.weapon = "Crossbow"
+CheckPoint.saveState(gameState.toMemento())
 
-// Restores state - gameState2: {gameLevel 4 playerScore 200}
 gameState.restoreFromMemento(CheckPoint.restorePreviousState(keyName: "gameState2"))
 ```

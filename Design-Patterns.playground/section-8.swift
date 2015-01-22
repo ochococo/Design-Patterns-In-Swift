@@ -1,6 +1,5 @@
-let deleteCommand = FileDeleteCommand(file: "/path/to/testfile")
-let moveCommand = FileMoveCommand(file: "/path/to/testfile")
-let fileManager = FileManager(deleteCommand:deleteCommand , moveCommand: moveCommand)
+let podBayDoors = "Pod Bay Doors"
+let doorModule = HAL9000DoorsOperations(doors:podBayDoors)
 
-fileManager.delete()
-fileManager.move()
+doorModule.open()
+doorModule.close()

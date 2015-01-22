@@ -1,4 +1,4 @@
-let planets: [Planet] = [PlanetEarth(), PlanetMars(), PlanetGliese581C()]
+let planets: [Planet] = [PlanetAlderaan(), PlanetCoruscant(), PlanetTatooine()]
 
 let names = planets.map { (planet: Planet) -> String in
 	let visitor = NameVisitor()

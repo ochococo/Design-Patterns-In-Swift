@@ -1,5 +1,5 @@
-let cart = Cart(items: ["foo", "bar", "baz"])
+let greatNovellas = NovellasCollection(novellas:["Mist"])
 
-for item in cart {
-    println(item)
+for novella in greatNovellas {
+    println("I've read: \(novella)")
 }

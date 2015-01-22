@@ -5,25 +5,25 @@ The iterator pattern is used to provide a standard interface for traversing a co
 **Example:**
 
 ```swift
-struct Cart<T> {
-    let items: [T]
+struct NovellasCollection<T> {
+    let novellas: [T]
 }
 
-extension Cart: SequenceType {
+extension NovellasCollection: SequenceType {
     typealias Generator = GeneratorOf<T>
     
     func generate() -> GeneratorOf<T> {
         var i = 0
-        return GeneratorOf { return i >= self.items.count ? nil : self.items[i++] }
+        return GeneratorOf { return i >= self.novellas.count ? nil : self.novellas[i++] }
     }
 }
 ```
 
 ***Usage***
 ```swift
-let cart = Cart(items: ["foo", "bar", "baz"])
+let greatNovellas = NovellasCollection(novellas:["Mist"])
 
-for item in cart {
-    println(item)
+for novella in greatNovellas {
+    println("I've read: \(novella)")
 }
 ```

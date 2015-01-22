@@ -6,32 +6,44 @@ Other objects subscribe to be immediately notified of any changes.
 **Example:**
 
 ```swift
-class StepCounter {
-    var totalSteps: Int = 0 {
-        
-        willSet(newTotalSteps) {
-            println("About to set totalSteps to \(newTotalSteps)")
+protocol PropertyObserver : class {
+    func willChangePropertyName(propertyName:String, newPropertyValue:AnyObject?)
+    func didChangePropertyName(propertyName:String, oldPropertyValue:AnyObject?)
+}
+
+class TestChambers {
+
+    weak var observer:PropertyObserver?
+
+    var testChamberNumber: Int = 0 {
+        willSet(newValue) {
+            observer?.willChangePropertyName("testChamberNumber", newPropertyValue:newValue)
         }
-
         didSet {
+            observer?.didChangePropertyName("testChamberNumber", oldPropertyValue:oldValue)
+        }
+    }
+}
 
-            if totalSteps > oldValue  {
-                println("Added \(totalSteps - oldValue) steps")
-            }
+class Observer : PropertyObserver {
+    func willChangePropertyName(propertyName: String, newPropertyValue: AnyObject?) {
+        if newPropertyValue as Int? == 1 {
+            println("Okay. Look. We both said a lot of things that you're going to regret.")
+        }
+    }
+
+    func didChangePropertyName(propertyName: String, oldPropertyValue: AnyObject?) {
+        if oldPropertyValue as Int? == 0 {
+            println("Sorry about the mess. I've really let the place go since you killed me.")
         }
     }
 }
 ```
 **Usage:**
 ```swift
-let stepCounter = StepCounter()
-stepCounter.totalSteps = 200
-// About to set totalSteps to 200
-// Added 200 steps
-stepCounter.totalSteps = 360
-// About to set totalSteps to 360
-// Added 160 steps
-stepCounter.totalSteps = 896
-// About to set totalSteps to 896
-// Added 536 steps
+var observerInstance = Observer()
+var testChambers = TestChambers()
+testChambers.observer = observerInstance
+testChambers.testChamberNumber++
+
 ```

@@ -1,46 +1,45 @@
-protocol FileOperationCommand {
-    init(file: String)
-    func execute()
+protocol DoorCommand {
+    func execute() -> String
 }
 
-class FileMoveCommand : FileOperationCommand {
-    let file:String
+class OpenCommand : DoorCommand {
+    let doors:String
 
-    required init(file: String) {
-        self.file = file
+    required init(doors: String) {
+        self.doors = doors
     }
     
-    func execute() {
-        print("\(file) moved")
-    }
-}
-
-class FileDeleteCommand : FileOperationCommand {
-    let file:String
-
-    required init(file: String) {
-        self.file = file
-    }
-    
-    func execute() {
-        print("\(file) deleted")
+    func execute() -> String {
+        return "Opened \(doors)"
     }
 }
 
-class FileManager {
-    let deleteCommand: FileOperationCommand
-    let moveCommand: FileOperationCommand
-    
-    init(deleteCommand: FileDeleteCommand, moveCommand: FileMoveCommand) {
-        self.deleteCommand = deleteCommand
-        self.moveCommand = moveCommand
+class CloseCommand : DoorCommand {
+    let doors:String
+
+    required init(doors: String) {
+        self.doors = doors
     }
     
-    func delete() {
-        deleteCommand.execute()
+    func execute() -> String {
+        return "Closed \(doors)"
+    }
+}
+
+class HAL9000DoorsOperations {
+    let openCommand: DoorCommand
+    let closeCommand: DoorCommand
+    
+    init(doors: String) {
+        self.openCommand = OpenCommand(doors:doors)
+        self.closeCommand = CloseCommand(doors:doors)
     }
     
-    func move() {
-        moveCommand.execute()
+    func close() -> String {
+        return closeCommand.execute()
+    }
+    
+    func open() -> String {
+        return openCommand.execute()
     }
 }

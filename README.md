@@ -116,62 +116,61 @@ The command pattern is used to express a request, including the call to be made 
 **Example:**
 
 ```swift
-protocol FileOperationCommand {
-    init(file: String)
-    func execute()
+protocol DoorCommand {
+    func execute() -> String
 }
 
-class FileMoveCommand : FileOperationCommand {
-    let file:String
+class OpenCommand : DoorCommand {
+    let doors:String
 
-    required init(file: String) {
-        self.file = file
+    required init(doors: String) {
+        self.doors = doors
     }
     
-    func execute() {
-        print("\(file) moved")
-    }
-}
-
-class FileDeleteCommand : FileOperationCommand {
-    let file:String
-
-    required init(file: String) {
-        self.file = file
-    }
-    
-    func execute() {
-        print("\(file) deleted")
+    func execute() -> String {
+        return "Opened \(doors)"
     }
 }
 
-class FileManager {
-    let deleteCommand: FileOperationCommand
-    let moveCommand: FileOperationCommand
-    
-    init(deleteCommand: FileDeleteCommand, moveCommand: FileMoveCommand) {
-        self.deleteCommand = deleteCommand
-        self.moveCommand = moveCommand
+class CloseCommand : DoorCommand {
+    let doors:String
+
+    required init(doors: String) {
+        self.doors = doors
     }
     
-    func delete() {
-        deleteCommand.execute()
-    }
-    
-    func move() {
-        moveCommand.execute()
+    func execute() -> String {
+        return "Closed \(doors)"
     }
 }
+
+class HAL9000DoorsOperations {
+    let openCommand: DoorCommand
+    let closeCommand: DoorCommand
+    
+    init(doors: String) {
+        self.openCommand = OpenCommand(doors:doors)
+        self.closeCommand = CloseCommand(doors:doors)
+    }
+    
+    func close() -> String {
+        return closeCommand.execute()
+    }
+    
+    func open() -> String {
+        return openCommand.execute()
+    }
+}
+
 ```
 
 **Usage:**
 ```swift
-let deleteCommand = FileDeleteCommand(file: "/path/to/testfile")
-let moveCommand = FileMoveCommand(file: "/path/to/testfile")
-let fileManager = FileManager(deleteCommand:deleteCommand , moveCommand: moveCommand)
+let podBayDoors = "Pod Bay Doors"
+let doorModule = HAL9000DoorsOperations(doors:podBayDoors)
 
-fileManager.delete()
-fileManager.move()
+doorModule.open()
+doorModule.close()
 ```
 
 ##🍫 Iterator
@@ -181,26 +180,26 @@ The iterator pattern is used to provide a standard interface for traversing a co
 **Example:**
 
 ```swift
-struct Cart<T> {
-    let items: [T]
+struct NovellasCollection<T> {
+    let novellas: [T]
 }
 
-extension Cart: SequenceType {
+extension NovellasCollection: SequenceType {
     typealias Generator = GeneratorOf<T>
     
     func generate() -> GeneratorOf<T> {
         var i = 0
-        return GeneratorOf { return i >= self.items.count ? nil : self.items[i++] }
+        return GeneratorOf { return i >= self.novellas.count ? nil : self.novellas[i++] }
     }
 }
 ```
 
 ***Usage***
 ```swift
-let cart = Cart(items: ["foo", "bar", "baz"])
+let greatNovellas = NovellasCollection(novellas:["Mist"])
 
-for item in cart {
-    println(item)
+for novella in greatNovellas {
+    println("I've read: \(novella)")
 }
 ```
 ##🚧  Mediator
@@ -272,20 +271,24 @@ The memento pattern is used to capture the current state of an object and store 
 ```swift
 typealias Memento = Dictionary<NSObject, AnyObject>
 
+let DPMementoKeyChapter = "com.valve.halflife.chapter"
+let DPMementoKeyWeapon = "com.valve.halflife.weapon"
+let DPMementoGameState = "com.valve.halflife.state"
+
 /**
 * Originator
 */
 class GameState {
-    var gameLevel: Int = 1
-    var playerScore: Int = 0
+    var chapter: String = ""
+    var weapon: String = ""
 
-    func saveToMemento() -> Memento {
-        return ["gameLevel": gameLevel, "playerScore": playerScore] 
+    func toMemento() -> Memento {
+        return [ DPMementoKeyChapter:chapter, DPMementoKeyWeapon:weapon ]
     }
 
     func restoreFromMemento(memento: Memento) {
-        gameLevel = memento["gameLevel"]! as Int
-        playerScore = memento["playerScore"]! as Int
+        chapter = memento[DPMementoKeyChapter] as String? ?? "n/a"
+        weapon = memento[DPMementoKeyWeapon] as String? ?? "n/a"
     }
 }
 
@@ -293,46 +296,40 @@ class GameState {
 * Caretaker
 */
 class CheckPoint {
-    class func saveState(memento: Memento, keyName: String = "gameState") {
-        let defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
+    class func saveState(memento: Memento, keyName: String = DPMementoGameState) {
+        let defaults = NSUserDefaults.standardUserDefaults()
         defaults.setObject(memento, forKey: keyName)
         defaults.synchronize()
     }
 
-    class func restorePreviousState(keyName: String = "gameState") -> Memento {
-        let defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
+    class func restorePreviousState(keyName: String = DPMementoGameState) -> Memento {
+        let defaults = NSUserDefaults.standardUserDefaults()
 
-        return defaults.objectForKey(keyName) as Memento
+        return defaults.objectForKey(keyName) as Memento! ?? Memento()
     }
 }
 ```
 ***Usage:***
 ```swift
 var gameState = GameState()
-gameState.gameLevel = 2
-gameState.playerScore = 200
-
-// Saves state: {gameLevel 2 playerScore 200}
-CheckPoint.saveState(gameState.saveToMemento())
-
-gameState.gameLevel = 3
-gameState.gameLevel = 250
-
-// Restores state: {gameLevel 2 playerScore 200}
 gameState.restoreFromMemento(CheckPoint.restorePreviousState())
 
-gameState.gameLevel = 4
+gameState.chapter = "Black Mesa Inbound"
+gameState.weapon = "Crowbar"
+CheckPoint.saveState(gameState.toMemento())
 
-// Saves state - gameState2: {gameLevel 4 playerScore 200}
-CheckPoint.saveState(gameState.saveToMemento(), keyName: "gameState2")
+gameState.chapter = "Anomalous Materials"
+gameState.weapon = "Glock 17"
+gameState.restoreFromMemento(CheckPoint.restorePreviousState())
 
-gameState.gameLevel = 5
-gameState.playerScore = 300
+gameState.chapter = "Unforeseen Consequences"
+gameState.weapon = "MP5"
+CheckPoint.saveState(gameState.toMemento(), keyName: "gameState2")
 
-// Saves state - gameState3: {gameLevel 5 playerScore 300}
-CheckPoint.saveState(gameState.saveToMemento(), keyName: "gameState3")
+gameState.chapter = "Office Complex"
+gameState.weapon = "Crossbow"
+CheckPoint.saveState(gameState.toMemento())
 
-// Restores state - gameState2: {gameLevel 4 playerScore 200}
 gameState.restoreFromMemento(CheckPoint.restorePreviousState(keyName: "gameState2"))
 ```
 ##👓 Observer
@@ -343,34 +340,46 @@ Other objects subscribe to be immediately notified of any changes.
 **Example:**
 
 ```swift
-class StepCounter {
-    var totalSteps: Int = 0 {
-        
-        willSet(newTotalSteps) {
-            println("About to set totalSteps to \(newTotalSteps)")
+protocol PropertyObserver : class {
+    func willChangePropertyName(propertyName:String, newPropertyValue:AnyObject?)
+    func didChangePropertyName(propertyName:String, oldPropertyValue:AnyObject?)
+}
+
+class TestChambers {
+
+    weak var observer:PropertyObserver?
+
+    var testChamberNumber: Int = 0 {
+        willSet(newValue) {
+            observer?.willChangePropertyName("testChamberNumber", newPropertyValue:newValue)
         }
-
         didSet {
+            observer?.didChangePropertyName("testChamberNumber", oldPropertyValue:oldValue)
+        }
+    }
+}
 
-            if totalSteps > oldValue  {
-                println("Added \(totalSteps - oldValue) steps")
-            }
+class Observer : PropertyObserver {
+    func willChangePropertyName(propertyName: String, newPropertyValue: AnyObject?) {
+        if newPropertyValue as Int? == 1 {
+            println("Okay. Look. We both said a lot of things that you're going to regret.")
+        }
+    }
+
+    func didChangePropertyName(propertyName: String, oldPropertyValue: AnyObject?) {
+        if oldPropertyValue as Int? == 0 {
+            println("Sorry about the mess. I've really let the place go since you killed me.")
         }
     }
 }
 ```
 **Usage:**
 ```swift
-let stepCounter = StepCounter()
-stepCounter.totalSteps = 200
-// About to set totalSteps to 200
-// Added 200 steps
-stepCounter.totalSteps = 360
-// About to set totalSteps to 360
-// Added 160 steps
-stepCounter.totalSteps = 896
-// About to set totalSteps to 896
-// Added 536 steps
+var observerInstance = Observer()
+var testChambers = TestChambers()
+testChambers.observer = observerInstance
+testChambers.testChamberNumber++
+
 ```
 ##🐉 State
 
@@ -483,36 +492,36 @@ The visitor pattern is used to separate a relatively complex set of structured d
 
 ```swift
 protocol PlanetVisitor {
-	func visit(planet: PlanetEarth)
-	func visit(planet: PlanetMars)
-	func visit(planet: PlanetGliese581C)
+	func visit(planet: PlanetAlderaan)
+	func visit(planet: PlanetCoruscant)
+	func visit(planet: PlanetTatooine)
 }
 
 protocol Planet {
 	func accept(visitor: PlanetVisitor)
 }
 
-class PlanetEarth: Planet {
+class PlanetAlderaan: Planet {
 	func accept(visitor: PlanetVisitor) { visitor.visit(self) }
 }
-class PlanetMars: Planet {
+class PlanetCoruscant: Planet {
 	func accept(visitor: PlanetVisitor) { visitor.visit(self) }
 }
-class PlanetGliese581C: Planet {
+class PlanetTatooine: Planet {
 	func accept(visitor: PlanetVisitor) { visitor.visit(self) }
 }
 
 class NameVisitor: PlanetVisitor {
 	var name = ""
 
-	func visit(planet: PlanetEarth)      { name = "Earth" }
-	func visit(planet: PlanetMars)       { name = "Mars" }
-	func visit(planet: PlanetGliese581C) { name = "Gliese 581 C" }
+	func visit(planet: PlanetAlderaan)  { name = "Alderaan" }
+	func visit(planet: PlanetCoruscant) { name = "Coruscant" }
+	func visit(planet: PlanetTatooine)  { name = "Tatooine" }
 }
 ```
 **Usage:**
 ```swift
-let planets: [Planet] = [PlanetEarth(), PlanetMars(), PlanetGliese581C()]
+let planets: [Planet] = [PlanetAlderaan(), PlanetCoruscant(), PlanetTatooine()]
 
 let names = planets.map { (planet: Planet) -> String in
 	let visitor = NameVisitor()

@@ -1,12 +1,12 @@
-struct Cart<T> {
-    let items: [T]
+struct NovellasCollection<T> {
+    let novellas: [T]
 }
 
-extension Cart: SequenceType {
+extension NovellasCollection: SequenceType {
     typealias Generator = GeneratorOf<T>
     
     func generate() -> GeneratorOf<T> {
         var i = 0
-        return GeneratorOf { return i >= self.items.count ? nil : self.items[i++] }
+        return GeneratorOf { return i >= self.novellas.count ? nil : self.novellas[i++] }
     }
 }

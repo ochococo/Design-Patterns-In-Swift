@@ -1,26 +1,20 @@
 var gameState = GameState()
-gameState.gameLevel = 2
-gameState.playerScore = 200
-
-// Saves state: {gameLevel 2 playerScore 200}
-CheckPoint.saveState(gameState.saveToMemento())
-
-gameState.gameLevel = 3
-gameState.gameLevel = 250
-
-// Restores state: {gameLevel 2 playerScore 200}
 gameState.restoreFromMemento(CheckPoint.restorePreviousState())
 
-gameState.gameLevel = 4
+gameState.chapter = "Black Mesa Inbound"
+gameState.weapon = "Crowbar"
+CheckPoint.saveState(gameState.toMemento())
 
-// Saves state - gameState2: {gameLevel 4 playerScore 200}
-CheckPoint.saveState(gameState.saveToMemento(), keyName: "gameState2")
+gameState.chapter = "Anomalous Materials"
+gameState.weapon = "Glock 17"
+gameState.restoreFromMemento(CheckPoint.restorePreviousState())
 
-gameState.gameLevel = 5
-gameState.playerScore = 300
+gameState.chapter = "Unforeseen Consequences"
+gameState.weapon = "MP5"
+CheckPoint.saveState(gameState.toMemento(), keyName: "gameState2")
 
-// Saves state - gameState3: {gameLevel 5 playerScore 300}
-CheckPoint.saveState(gameState.saveToMemento(), keyName: "gameState3")
+gameState.chapter = "Office Complex"
+gameState.weapon = "Crossbow"
+CheckPoint.saveState(gameState.toMemento())
 
-// Restores state - gameState2: {gameLevel 4 playerScore 200}
 gameState.restoreFromMemento(CheckPoint.restorePreviousState(keyName: "gameState2"))
