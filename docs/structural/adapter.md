@@ -5,39 +5,47 @@ The adapter pattern is used to provide a link between two otherwise incompatible
 **Example:**
 
 ```swift
-// WARNING: This example uses Point class from Builder pattern!
+protocol OlderDeathStarSuperLaserAiming {
+    var angleV: NSNumber {get}
+    var angleH: NSNumber {get}
+}
 
-class PointConverter {
+// Adaptee
 
-    class func convert(#point:Point, base:Double, negative:Bool) -> Point {
+struct DeathStarSuperlaserTarget {
+    let angleHorizontal: Double
+    let angleVertical: Double
 
-        var pointConverted = Point{
-            if let x = point.x { $0.x = x * base * (negative ? -1.0 : 1.0) }
-            if let y = point.y { $0.y = y * base * (negative ? -1.0 : 1.0) }
-            if let z = point.z { $0.z = z * base * (negative ? -1.0 : 1.0) }
-        }
-        
-        return pointConverted
+    init(angleHorizontal:Double, angleVertical:Double) {
+        self.angleHorizontal = angleHorizontal
+        self.angleVertical = angleVertical
     }
 }
 
-extension PointConverter{
-    
-    class func convert(#x:Double!, y:Double!, z:Double!, base:Double!, negative:Bool!) -> (x:Double!,y:Double!,z:Double!) {
-        var point = Point{ $0.x = x; $0.y = y; $0.z = z }
-        var pointCalculated = self.convert(point:point, base:base, negative:negative)
+// Adapter
 
-        return (pointCalculated.x!,pointCalculated.y!,pointCalculated.z!)
+struct OldDeathStarSuperlaserTarget : OlderDeathStarSuperLaserAiming {
+    private let target : DeathStarSuperlaserTarget
+
+    var angleV:NSNumber {
+        return NSNumber(double: target.angleVertical)
     }
 
+    var angleH:NSNumber {
+        return NSNumber(double: target.angleHorizontal)
+    }
+
+    init(_ target:DeathStarSuperlaserTarget) {
+        self.target = target
+    }
 }
 ```
 
 **Usage:**
 ```swift
-var tuple = PointConverter.convert(x:1.1, y:2.2, z:3.3, base:2.0, negative:true)
+let target = DeathStarSuperlaserTarget(angleHorizontal: 14.0, angleVertical: 12.0)
+let oldFormat = OldDeathStarSuperlaserTarget(target)
 
-tuple.x
-tuple.y
-tuple.z
+oldFormat.angleH
+oldFormat.angleV
 ```

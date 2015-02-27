@@ -23,8 +23,8 @@ class GameState {
     }
 
     func restoreFromMemento(memento: Memento) {
-        chapter = memento[DPMementoKeyChapter] as String? ?? "n/a"
-        weapon = memento[DPMementoKeyWeapon] as String? ?? "n/a"
+        chapter = memento[DPMementoKeyChapter] as? String ?? "n/a"
+        weapon = memento[DPMementoKeyWeapon] as? String ?? "n/a"
     }
 }
 
@@ -41,7 +41,7 @@ class CheckPoint {
     class func restorePreviousState(keyName: String = DPMementoGameState) -> Memento {
         let defaults = NSUserDefaults.standardUserDefaults()
 
-        return defaults.objectForKey(keyName) as Memento! ?? Memento()
+        return defaults.objectForKey(keyName) as? Memento ?? Memento()
     }
 }
 ```

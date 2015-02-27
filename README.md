@@ -287,8 +287,8 @@ class GameState {
     }
 
     func restoreFromMemento(memento: Memento) {
-        chapter = memento[DPMementoKeyChapter] as String? ?? "n/a"
-        weapon = memento[DPMementoKeyWeapon] as String? ?? "n/a"
+        chapter = memento[DPMementoKeyChapter] as? String ?? "n/a"
+        weapon = memento[DPMementoKeyWeapon] as? String ?? "n/a"
     }
 }
 
@@ -305,7 +305,7 @@ class CheckPoint {
     class func restorePreviousState(keyName: String = DPMementoGameState) -> Memento {
         let defaults = NSUserDefaults.standardUserDefaults()
 
-        return defaults.objectForKey(keyName) as Memento! ?? Memento()
+        return defaults.objectForKey(keyName) as? Memento ?? Memento()
     }
 }
 ```
@@ -361,13 +361,13 @@ class TestChambers {
 
 class Observer : PropertyObserver {
     func willChangePropertyName(propertyName: String, newPropertyValue: AnyObject?) {
-        if newPropertyValue as Int? == 1 {
+        if newPropertyValue as? Int == 1 {
             println("Okay. Look. We both said a lot of things that you're going to regret.")
         }
     }
 
     func didChangePropertyName(propertyName: String, oldPropertyValue: AnyObject?) {
-        if oldPropertyValue as Int? == 0 {
+        if oldPropertyValue as? Int == 0 {
             println("Sorry about the mess. I've really let the place go since you killed me.")
         }
     }
@@ -619,49 +619,46 @@ An external class controls the construction algorithm.
 **Example:**
 
 ```swift
-protocol ThreeDimensions {
-    var x: Double? {get}
-    var y: Double? {get}
-    var z: Double? {get}
-}
+class DeathStarBuilder {
 
-class Point : ThreeDimensions {
     var x: Double?
     var y: Double?
     var z: Double?
 
-    typealias PointBuilderClosure = (Point) -> ()
+    typealias BuilderClosure = (DeathStarBuilder) -> ()
 
-    init(buildClosure: PointBuilderClosure) {
+    init(buildClosure: BuilderClosure) {
         buildClosure(self)
     }
 }
 
+struct DeathStar {
+
+    let x: Double
+    let y: Double
+    let z: Double
+
+    init?(builder: DeathStarBuilder) {
+
+        if let x = builder.x, y = builder.y, z = builder.z {
+            self.x = x
+            self.y = y
+            self.z = z
+        } else {
+            return nil
+        }
+    }
+}
 ```
 **Usage:**
 ```swift
-let fancyPoint = Point { point in
-    point.x = 0.1
-    point.y = 0.2
-    point.z = 0.3
+let empire = DeathStarBuilder { builder in
+    builder.x = 0.1
+    builder.y = 0.2
+    builder.z = 0.3
 }
 
-fancyPoint.x
-fancyPoint.y
-fancyPoint.z
-```
-
-Shorter but oh-so-ugly alternative:
-
-```swift
-let uglierPoint = Point {
-    $0.x = 0.1
-    $0.y = 0.2
-    $0.z = 0.3
-}
-
-let alsoUglyPoint = Point { ($0.x, $0.y, $0.z) = (0.1, 0.2, 0.3) }
-
+let deathStar = DeathStar(builder:empire)
 ```
 ##🏭 Factory Method
 
@@ -795,41 +792,49 @@ The adapter pattern is used to provide a link between two otherwise incompatible
 **Example:**
 
 ```swift
-// WARNING: This example uses Point class from Builder pattern!
+protocol OlderDeathStarSuperLaserAiming {
+    var angleV: NSNumber {get}
+    var angleH: NSNumber {get}
+}
 
-class PointConverter {
+// Adaptee
 
-    class func convert(#point:Point, base:Double, negative:Bool) -> Point {
+struct DeathStarSuperlaserTarget {
+    let angleHorizontal: Double
+    let angleVertical: Double
 
-        var pointConverted = Point{
-            if let x = point.x { $0.x = x * base * (negative ? -1.0 : 1.0) }
-            if let y = point.y { $0.y = y * base * (negative ? -1.0 : 1.0) }
-            if let z = point.z { $0.z = z * base * (negative ? -1.0 : 1.0) }
-        }
-        
-        return pointConverted
+    init(angleHorizontal:Double, angleVertical:Double) {
+        self.angleHorizontal = angleHorizontal
+        self.angleVertical = angleVertical
     }
 }
 
-extension PointConverter{
-    
-    class func convert(#x:Double!, y:Double!, z:Double!, base:Double!, negative:Bool!) -> (x:Double!,y:Double!,z:Double!) {
-        var point = Point{ $0.x = x; $0.y = y; $0.z = z }
-        var pointCalculated = self.convert(point:point, base:base, negative:negative)
+// Adapter
 
-        return (pointCalculated.x!,pointCalculated.y!,pointCalculated.z!)
+struct OldDeathStarSuperlaserTarget : OlderDeathStarSuperLaserAiming {
+    private let target : DeathStarSuperlaserTarget
+
+    var angleV:NSNumber {
+        return NSNumber(double: target.angleVertical)
     }
 
+    var angleH:NSNumber {
+        return NSNumber(double: target.angleHorizontal)
+    }
+
+    init(_ target:DeathStarSuperlaserTarget) {
+        self.target = target
+    }
 }
 ```
 
 **Usage:**
 ```swift
-var tuple = PointConverter.convert(x:1.1, y:2.2, z:3.3, base:2.0, negative:true)
+let target = DeathStarSuperlaserTarget(angleHorizontal: 14.0, angleVertical: 12.0)
+let oldFormat = OldDeathStarSuperlaserTarget(target)
 
-tuple.x
-tuple.y
-tuple.z
+oldFormat.angleH
+oldFormat.angleV
 ```
 ##🌉  Bridge
 

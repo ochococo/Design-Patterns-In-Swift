@@ -6,47 +6,44 @@ An external class controls the construction algorithm.
 **Example:**
 
 ```swift
-protocol ThreeDimensions {
-    var x: Double? {get}
-    var y: Double? {get}
-    var z: Double? {get}
-}
+class DeathStarBuilder {
 
-class Point : ThreeDimensions {
     var x: Double?
     var y: Double?
     var z: Double?
 
-    typealias PointBuilderClosure = (Point) -> ()
+    typealias BuilderClosure = (DeathStarBuilder) -> ()
 
-    init(buildClosure: PointBuilderClosure) {
+    init(buildClosure: BuilderClosure) {
         buildClosure(self)
     }
 }
 
+struct DeathStar {
+
+    let x: Double
+    let y: Double
+    let z: Double
+
+    init?(builder: DeathStarBuilder) {
+
+        if let x = builder.x, y = builder.y, z = builder.z {
+            self.x = x
+            self.y = y
+            self.z = z
+        } else {
+            return nil
+        }
+    }
+}
 ```
 **Usage:**
 ```swift
-let fancyPoint = Point { point in
-    point.x = 0.1
-    point.y = 0.2
-    point.z = 0.3
+let empire = DeathStarBuilder { builder in
+    builder.x = 0.1
+    builder.y = 0.2
+    builder.z = 0.3
 }
 
-fancyPoint.x
-fancyPoint.y
-fancyPoint.z
-```
-
-Shorter but oh-so-ugly alternative:
-
-```swift
-let uglierPoint = Point {
-    $0.x = 0.1
-    $0.y = 0.2
-    $0.z = 0.3
-}
-
-let alsoUglyPoint = Point { ($0.x, $0.y, $0.z) = (0.1, 0.2, 0.3) }
-
+let deathStar = DeathStar(builder:empire)
 ```

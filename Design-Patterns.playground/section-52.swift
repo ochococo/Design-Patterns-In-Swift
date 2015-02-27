@@ -1,12 +1,10 @@
-class ThieveryCorporationPersonDisplay {
-    var name: String?
-    let font: String
+let Prototype = ThieveryCorporationPersonDisplay(font:"Ubuntu")
 
-    init(font: String) {
-        self.font = font
-    }
+let Philippe = Prototype.clone()
+Philippe.name = "Philippe"
 
-    func clone() -> ThieveryCorporationPersonDisplay {
-        return ThieveryCorporationPersonDisplay(font:self.font)
-    }
-}
+let Christoph = Prototype.clone()
+Christoph.name = "Christoph"
+
+let Eduardo = Prototype.clone()
+Eduardo.name = "Eduardo"

@@ -1,7 +1,17 @@
-let computer = CurrentComputer()
-let doors = "Pod Bay Doors"
+protocol HEVSuitMedicalAid {
+    func administerMorphine() -> String
+}
 
-computer.openDoors(doors)
+class HEVSuit : HEVSuitMedicalAid {
+    func administerMorphine() -> String {
+        return "Morphine aministered."
+    }
+}
 
-computer.authenticateWithPassword("pass")
-computer.openDoors(doors)
+class HEVSuitHumanInterface : HEVSuitMedicalAid {
+    lazy private var physicalSuit: HEVSuit = HEVSuit()
+
+    func administerMorphine() -> String {
+        return physicalSuit.administerMorphine()
+    }
+}

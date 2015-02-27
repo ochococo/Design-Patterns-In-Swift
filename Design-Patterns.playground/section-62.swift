@@ -1,5 +1,32 @@
-var tuple = PointConverter.convert(x:1.1, y:2.2, z:3.3, base:2.0, negative:true)
+protocol Switch {
+    var appliance: Appliance {get set}
+    func turnOn()
+}
 
-tuple.x
-tuple.y
-tuple.z
+protocol Appliance {
+    func run()
+}
+
+class RemoteControl: Switch {
+    var appliance: Appliance
+
+    func turnOn() {
+        self.appliance.run()
+    }
+    
+    init(appliance: Appliance) {
+        self.appliance = appliance
+    }
+}
+
+class TV: Appliance {
+    func run() {
+        println("tv turned on");
+    }
+}
+
+class VacuumCleaner: Appliance {
+    func run() {
+        println("vacuum cleaner turned on")
+    }
+}

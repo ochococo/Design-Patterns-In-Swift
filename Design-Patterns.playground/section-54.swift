@@ -1,10 +1,10 @@
-let Prototype = ThieveryCorporationPersonDisplay(font:"Ubuntu")
+class SingletonClass {
+    class var shared : SingletonClass {
 
-let Philippe = Prototype.clone()
-Philippe.name = "Philippe"
+        struct Static {
+            static let instance : SingletonClass = SingletonClass()
+        }
 
-let Christoph = Prototype.clone()
-Christoph.name = "Christoph"
-
-let Eduardo = Prototype.clone()
-Eduardo.name = "Eduardo"
+        return Static.instance
+    }
+}
