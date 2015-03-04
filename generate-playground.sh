@@ -1,20 +1,19 @@
 #!/bin/bash
 
 # concatenate all docs together into README.md
-cat docs/header.md docs/*/* docs/footer.md > README.md
+rm ./contents.swift
 
-# remove the old Design-Patterns.playground
-rm -R ./Design-Patterns.playground
+cat source/header.swift source/*/* source/footer.swift > ./contents.swift
 
-# see (https://www.npmjs.org/package/playground) to understand playground executable
-playground ./README.md --platform ios --stylesheet ./stylesheet.css
+cp ./contents.swift ./Design-Patterns.playground/contents.swift
 
-# rename readme for new playground
-mv ./README.playground ./Design-Patterns.playground
+{ rm contents.swift && awk '{gsub("\\*//\\*:", "", $0); print}' > contents.swift; } < contents.swift
+{ rm contents.swift && awk '{gsub("/\\*:", "```\n", $0); print}' > contents.swift; } < contents.swift
+{ rm contents.swift && awk '{gsub("\\*/", "\n```swift", $0); print}' > contents.swift; } < contents.swift
+
+{ rm contents.swift && awk 'NR>1{print buf}{buf = $0}' > contents.swift; } < contents.swift
+
+echo "\`\`\`swift
+$(cat ./contents.swift)" > ./README.md
 
 zip -r -X Design-Patterns.playground.zip ./Design-Patterns.playground
-
-# no playground?
-#
-# brew install node
-# npm install -g playground

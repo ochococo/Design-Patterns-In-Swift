@@ -1,1 +1,0 @@
-let instance = SingletonClass.shared
