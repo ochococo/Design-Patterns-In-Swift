@@ -17,3 +17,5 @@ echo "\`\`\`swift
 $(cat ./contents.swift)" > ./README.md
 
 zip -r -X Design-Patterns.playground.zip ./Design-Patterns.playground
+
+rm ./contents.swift
