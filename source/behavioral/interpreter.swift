@@ -75,7 +75,7 @@ class AddExp: IntegerExp {
 ### Usage
 */
 var expression: IntegerExp?
-var context = IntegerContext()
+var intContext = IntegerContext()
 
 var a = IntegerVarExp(name: "A")
 var b = IntegerVarExp(name: "B")
@@ -83,8 +83,8 @@ var c = IntegerVarExp(name: "C")
 
 expression = AddExp(op1: a, op2: AddExp(op1: b, op2: c)) // a + (b + c)
 
-context.assign(a, value: 2)
-context.assign(b, value: 1)
-context.assign(c, value: 3)
+intContext.assign(a, value: 2)
+intContext.assign(b, value: 1)
+intContext.assign(c, value: 3)
 
-var result = expression?.evaluate(context)
+var result = expression?.evaluate(intContext)
