@@ -52,7 +52,7 @@ class MoneyPile {
 
         while canTakeSomeBill(v) {
 
-            if (q == 0) {
+            if q == 0 {
                 break
             }
 
@@ -1064,7 +1064,7 @@ class CurrentComputer : DoorOperator {
     
     func openDoors(doors: String) -> String {
 
-        if (computer == nil) {
+        if computer == nil {
             return "Access Denied. I'm afraid I can't do that."
         }
         
