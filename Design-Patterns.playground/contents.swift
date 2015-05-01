@@ -765,6 +765,10 @@ There are very few applications, do not overuse this pattern!
 */
 class DeathStarSuperlaser {
     static let sharedInstance = DeathStarSuperlaser()
+
+    private init() {
+        // Private initialization to ensure just one instance is created.
+    }
 }
 /*:
 ### Usage:
