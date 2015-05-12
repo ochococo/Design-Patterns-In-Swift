@@ -833,7 +833,7 @@ class Euro : Currency {
     }
 }
 
-class UnitedStatesDolar : Currency {
+class UnitedStatesDollar : Currency {
     func symbol() -> String {
         return "$"
     }
@@ -854,7 +854,7 @@ class CurrencyFactory {
             case .Spain, .France :
                 return Euro()
             case .UnitedStates :
-                return UnitedStatesDolar()
+                return UnitedStatesDollar()
             default:
                 return nil
         }
