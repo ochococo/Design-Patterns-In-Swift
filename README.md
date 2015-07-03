@@ -688,38 +688,32 @@ Protocols
 ```swift
 protocol Decimal {
     func stringValue() -> String
+    // factory
+    static func make(string : String) -> Decimal
 }
 
-protocol NumberFactoryProtocol {
-    func numberFromString(string : String) -> Decimal
-}
+typealias NumberFactory = (String) -> Decimal
 
-// Number implementations
+// Number implementations with factory methods
 
 struct NextStepNumber : Decimal {
     private var nextStepNumber : NSNumber
 
     func stringValue() -> String { return nextStepNumber.stringValue }
+    
+    // factory
+    static func make(string : String) -> Decimal {
+        return NextStepNumber(nextStepNumber:NSNumber(longLong:(string as NSString).longLongValue))
+    }
 }
 
 struct SwiftNumber : Decimal {
     private var swiftInt : Int
 
     func stringValue() -> String { return "\(swiftInt)" }
-}
-```
-
-Factories
-
-```swift
-class NextStepNumberFactory : NumberFactoryProtocol {
-    func numberFromString(string : String) -> Decimal {
-        return NextStepNumber(nextStepNumber:NSNumber(longLong:(string as NSString).longLongValue))
-    }
-}
-
-class SwiftNumberFactory : NumberFactoryProtocol {
-    func numberFromString(string : String) -> Decimal {
+    
+    // factory
+    static func make(string : String) -> Decimal {
         return SwiftNumber(swiftInt:(string as NSString).integerValue)
     }
 }
@@ -732,14 +726,13 @@ enum NumberType {
     case NextStep, Swift
 }
 
-class NumberAbstractFactory {
-    class func numberFactoryType(type : NumberType) -> NumberFactoryProtocol {
-        
+class NumberHelper {
+    class func factoryFor(type : NumberType) -> NumberFactory {
         switch type {
-            case .NextStep:
-                    return NextStepNumberFactory()
-            case .Swift:
-                    return SwiftNumberFactory()
+        case .NextStep:
+            return NextStepNumber.make
+        case .Swift:
+            return SwiftNumber.make
         }
     }
 }
@@ -748,12 +741,12 @@ class NumberAbstractFactory {
 ### Usage
 
 ```swift
-let factoryOne = NumberAbstractFactory.numberFactoryType(.NextStep)
-let numberOne = factoryOne.numberFromString("1")
+let factoryOne = NumberHelper.factoryFor(.NextStep)
+let numberOne = factoryOne("1")
 numberOne.stringValue()
 
-let factoryTwo = NumberAbstractFactory.numberFactoryType(.Swift)
-let numberTwo = factoryTwo.numberFromString("2")
+let factoryTwo = NumberHelper.factoryFor(.Swift)
+let numberTwo = factoryTwo("2")
 numberTwo.stringValue()
 ```
 
@@ -1226,6 +1219,76 @@ Eternal.setObject("Disconnect me. I’d rather be nothing", forKey:"Bishop")
 Eternal.objectForKey("Bishop")
 ```
 
+## 🍃 Flyweight
+
+The flyweight pattern is used to minimize memory usage or computational expenses by sharing as much as possible with other similar objects.
+
+### Example
+
+```swift
+// Instances of CoffeeFlavour will be the Flyweights
+class CoffeeFlavor : Printable {
+    var flavor: String
+    var description: String {
+        get {
+            return flavor
+        }
+    }
+    
+    init(flavor: String) {
+        self.flavor = flavor
+    }
+}
+
+// Menu acts as a factory and cache for CoffeeFlavour flyweight objects
+class Menu {
+    private var flavors: [String: CoffeeFlavor] = [:]
+    
+    func lookup(flavor: String) -> CoffeeFlavor {
+        if flavors.indexForKey(flavor) == nil {
+            flavors[flavor] = CoffeeFlavor(flavor: flavor)
+        }
+        return flavors[flavor]!
+    }
+}
+
+class CoffeeShop {
+    private var orders: [Int: CoffeeFlavor] = [:]
+    private var menu = Menu()
+    
+    func takeOrder(#flavor: String, table: Int) {
+        orders[table] = menu.lookup(flavor)
+    }
+    
+    func serve() {
+        for (table, flavor) in orders {
+            println("Serving \(flavor) to table \(table)")
+        }
+    }
+}
+```
+
+### Usage
+
+```swift
+let coffeeShop = CoffeeShop()
+
+coffeeShop.takeOrder(flavor: "Cappuccino", table: 1)
+coffeeShop.takeOrder(flavor: "Frappe", table: 3);
+coffeeShop.takeOrder(flavor: "Espresso", table: 2);
+coffeeShop.takeOrder(flavor: "Frappe", table: 15);
+coffeeShop.takeOrder(flavor: "Cappuccino", table: 10);
+coffeeShop.takeOrder(flavor: "Frappe", table: 8);
+coffeeShop.takeOrder(flavor: "Espresso", table: 7);
+coffeeShop.takeOrder(flavor: "Cappuccino", table: 4);
+coffeeShop.takeOrder(flavor: "Espresso", table: 9);
+coffeeShop.takeOrder(flavor: "Frappe", table: 12);
+coffeeShop.takeOrder(flavor: "Cappuccino", table: 13);
+coffeeShop.takeOrder(flavor: "Espresso", table: 5);
+
+coffeeShop.serve()
+```
+
 ☔ Protection Proxy
 ------------------
 
@@ -1282,7 +1345,7 @@ computer.authenticateWithPassword("pass")
 computer.openDoors(doors)
 ```
 
-##🍬 Virtual Proxy
+## 🍬 Virtual Proxy
 
 The proxy pattern is used to provide a surrogate or placeholder object, which references an underlying object. 
 Virtual proxy is used for loading object on demand.
