@@ -83,7 +83,7 @@ class RemoteControl: Switch {
     func turnOn() {
         self.appliance.run()
     }
-
+    
     init(appliance: Appliance) {
         self.appliance = appliance
     }
@@ -122,9 +122,9 @@ Component
 protocol Shape {
     func draw(fillColor: String)
 }
-/*:
+/*: 
 Leafs
-*/
+*/ 
 class Square : Shape {
     func draw(fillColor: String) {
         print("Drawing a Square with color \(fillColor)")
@@ -142,11 +142,11 @@ Composite
 */
 class Whiteboard : Shape {
     lazy var shapes = [Shape]()
-
+    
     init(_ shapes:Shape...) {
         self.shapes = shapes
     }
-
+    
     func draw(fillColor:String) {
         for shape in self.shapes {
             shape.draw(fillColor)
@@ -162,7 +162,7 @@ whiteboard.draw("Red")
 🍧 Decorator
 ------------
 
-The decorator pattern is used to extend or alter the functionality of objects at run- time by wrapping them in an object of a decorator class.
+The decorator pattern is used to extend or alter the functionality of objects at run- time by wrapping them in an object of a decorator class. 
 This provides a flexible alternative to using inheritance to modify behaviour.
 
 ### Example
@@ -267,7 +267,7 @@ Eternal.objectForKey("Bishop")
 ☔ Protection Proxy
 ------------------
 
-The proxy pattern is used to provide a surrogate or placeholder object, which references an underlying object.
+The proxy pattern is used to provide a surrogate or placeholder object, which references an underlying object. 
 Protection proxy is restricting access.
 
 ### Example
@@ -295,13 +295,13 @@ class CurrentComputer : DoorOperator {
 
         return true
     }
-
+    
     func openDoors(doors: String) -> String {
 
         if computer == nil {
             return "Access Denied. I'm afraid I can't do that."
         }
-
+        
         return computer.openDoors(doors)
     }
 }
@@ -319,7 +319,7 @@ computer.openDoors(doors)
 🍬 Virtual Proxy
 ----------------
 
-The proxy pattern is used to provide a surrogate or placeholder object, which references an underlying object.
+The proxy pattern is used to provide a surrogate or placeholder object, which references an underlying object. 
 Virtual proxy is used for loading object on demand.
 
 ### Example

@@ -22,19 +22,19 @@ class MoneyPile {
     let value: Int
     var quantity: Int
     var nextPile: MoneyPile?
-
+    
     init(value: Int, quantity: Int, nextPile: MoneyPile?) {
         self.value = value
         self.quantity = quantity
         self.nextPile = nextPile
     }
-
+    
     func canWithdraw(var v: Int) -> Bool {
 
         func canTakeSomeBill(want: Int) -> Bool {
             return (want / self.value) > 0
         }
-
+        
         var q = self.quantity
 
         while canTakeSomeBill(v) {
@@ -62,14 +62,14 @@ class ATM {
     private var fifty: MoneyPile
     private var twenty: MoneyPile
     private var ten: MoneyPile
-
+    
     private var startPile: MoneyPile {
         return self.hundred
     }
-
-    init(hundred: MoneyPile,
-           fifty: MoneyPile,
-          twenty: MoneyPile,
+    
+    init(hundred: MoneyPile, 
+           fifty: MoneyPile, 
+          twenty: MoneyPile, 
              ten: MoneyPile) {
 
         self.hundred = hundred
@@ -77,7 +77,7 @@ class ATM {
         self.twenty = twenty
         self.ten = ten
     }
-
+    
     func canWithdraw(value: Int) -> String {
         return "Can withdraw: \(self.startPile.canWithdraw(value))"
     }
@@ -115,7 +115,7 @@ class OpenCommand : DoorCommand {
     required init(doors: String) {
         self.doors = doors
     }
-
+    
     func execute() -> String {
         return "Opened \(doors)"
     }
@@ -127,7 +127,7 @@ class CloseCommand : DoorCommand {
     required init(doors: String) {
         self.doors = doors
     }
-
+    
     func execute() -> String {
         return "Closed \(doors)"
     }
@@ -136,16 +136,16 @@ class CloseCommand : DoorCommand {
 class HAL9000DoorsOperations {
     let openCommand: DoorCommand
     let closeCommand: DoorCommand
-
+    
     init(doors: String) {
         self.openCommand = OpenCommand(doors:doors)
         self.closeCommand = CloseCommand(doors:doors)
     }
-
+    
     func close() -> String {
         return closeCommand.execute()
     }
-
+    
     func open() -> String {
         return openCommand.execute()
     }
@@ -175,11 +175,11 @@ protocol IntegerExp {
 
 class IntegerContext {
     private var data: [Character:Int] = [:]
-
+    
     func lookup(name: Character) -> Int {
         return self.data[name]!
     }
-
+    
     func assign(integerVarExp: IntegerVarExp, value: Int) {
         self.data[integerVarExp.name] = value
     }
@@ -187,15 +187,15 @@ class IntegerContext {
 
 class IntegerVarExp: IntegerExp {
     let name: Character
-
+    
     init(name: Character) {
         self.name = name
     }
-
+    
     func evaluate(context: IntegerContext) -> Int {
         return context.lookup(self.name)
     }
-
+    
     func replace(name: Character, integerExp: IntegerExp) -> IntegerExp {
         if name == self.name {
             return integerExp.copy()
@@ -203,7 +203,7 @@ class IntegerVarExp: IntegerExp {
             return IntegerVarExp(name: self.name)
         }
     }
-
+    
     func copy() -> IntegerExp {
         return IntegerVarExp(name: self.name)
     }
@@ -212,21 +212,21 @@ class IntegerVarExp: IntegerExp {
 class AddExp: IntegerExp {
     private var operand1: IntegerExp
     private var operand2: IntegerExp
-
+    
     init(op1: IntegerExp, op2: IntegerExp) {
         self.operand1 = op1
         self.operand2 = op2
     }
-
+    
     func evaluate(context: IntegerContext) -> Int {
         return self.operand1.evaluate(context) + self.operand2.evaluate(context)
     }
-
+    
     func replace(character: Character, integerExp: IntegerExp) -> IntegerExp {
         return AddExp(op1: operand1.replace(character, integerExp: integerExp),
             op2: operand2.replace(character, integerExp: integerExp))
     }
-
+    
     func copy() -> IntegerExp {
         return AddExp(op1: self.operand1, op2: self.operand2)
     }
@@ -262,7 +262,7 @@ struct NovellasCollection<T> {
 
 extension NovellasCollection: SequenceType {
     typealias Generator = AnyGenerator<T>
-
+    
     func generate() -> AnyGenerator<T> {
         var i = 0
         return anyGenerator{ return i >= self.novellas.count ? nil : self.novellas[i++] }
@@ -287,15 +287,15 @@ The mediator pattern is used to reduce coupling between classes that communicate
 
 class Colleague {
     let mediator: Mediator
-
+    
     init(mediator: Mediator) {
         self.mediator = mediator
     }
-
+    
     func send(message: String) {
         mediator.send(message, colleague: self)
     }
-
+    
     func receive(message: String) {
         assert(false, "Method should be overriden")
     }
@@ -307,11 +307,11 @@ protocol Mediator {
 
 class MessageMediator: Mediator {
     private var colleagues: [Colleague] = []
-
+    
     func addColleague(colleague: Colleague) {
         colleagues.append(colleague)
     }
-
+    
     func send(message: String, colleague: Colleague) {
         for c in colleagues {
             if c !== colleague { //for simplicity we compare object references
@@ -411,7 +411,7 @@ gameState.restoreFromMemento(CheckPoint.restorePreviousState(keyName: "gameState
 👓 Observer
 -----------
 
-The observer pattern is used to allow an object to publish changes to its state.
+The observer pattern is used to allow an object to publish changes to its state. 
 Other objects subscribe to be immediately notified of any changes.
 
 ### Example
@@ -459,7 +459,7 @@ testChambers.testChamberNumber++
 🐉 State
 ---------
 
-The state pattern is used to alter the behaviour of an object as its internal state changes.
+The state pattern is used to alter the behaviour of an object as its internal state changes. 
 The pattern allows the class for an object to apparently change at run-time.
 
 ### Example
@@ -482,7 +482,7 @@ class Context {
 	func changeStateToUnauthorized() {
 		state = UnauthorizedState()
 	}
-
+    
 }
 
 protocol State {
@@ -529,11 +529,11 @@ protocol PrintStrategy {
 class Printer {
 
     let strategy: PrintStrategy
-
+    
     func printString(string: String) -> String {
         return self.strategy.printString(string)
     }
-
+    
     init(strategy: PrintStrategy) {
         self.strategy = strategy
     }

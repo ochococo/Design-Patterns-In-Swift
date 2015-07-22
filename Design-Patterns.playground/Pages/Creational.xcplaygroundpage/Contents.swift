@@ -14,46 +14,42 @@ import Foundation/*:
 🌰 Abstract Factory
 -------------------
 
-The abstract factory pattern is used to provide a client with a set of related or dependant objects.
+The abstract factory pattern is used to provide a client with a set of related or dependant objects. 
 The "family" of objects created by the factory are determined at run-time.
 
 ### Example
 */
-/*:
+/*: 
 Protocols
 */
 protocol Decimal {
     func stringValue() -> String
+    // factory
+    static func make(string : String) -> Decimal
 }
 
-protocol NumberFactoryProtocol {
-    func numberFromString(string : String) -> Decimal
-}
+typealias NumberFactory = (String) -> Decimal
 
-// Number implementations
+// Number implementations with factory methods
 
 struct NextStepNumber : Decimal {
     private var nextStepNumber : NSNumber
 
     func stringValue() -> String { return nextStepNumber.stringValue }
+    
+    // factory
+    static func make(string : String) -> Decimal {
+        return NextStepNumber(nextStepNumber:NSNumber(longLong:(string as NSString).longLongValue))
+    }
 }
 
 struct SwiftNumber : Decimal {
     private var swiftInt : Int
 
     func stringValue() -> String { return "\(swiftInt)" }
-}
-/*:
-Factories
-*/
-class NextStepNumberFactory : NumberFactoryProtocol {
-    func numberFromString(string : String) -> Decimal {
-        return NextStepNumber(nextStepNumber:NSNumber(longLong:(string as NSString).longLongValue))
-    }
-}
-
-class SwiftNumberFactory : NumberFactoryProtocol {
-    func numberFromString(string : String) -> Decimal {
+    
+    // factory
+    static func make(string : String) -> Decimal {
         return SwiftNumber(swiftInt:(string as NSString).integerValue)
     }
 }
@@ -64,32 +60,31 @@ enum NumberType {
     case NextStep, Swift
 }
 
-class NumberAbstractFactory {
-    class func numberFactoryType(type : NumberType) -> NumberFactoryProtocol {
-
+class NumberHelper {
+    class func factoryFor(type : NumberType) -> NumberFactory {
         switch type {
-            case .NextStep:
-                    return NextStepNumberFactory()
-            case .Swift:
-                    return SwiftNumberFactory()
+        case .NextStep:
+            return NextStepNumber.make
+        case .Swift:
+            return SwiftNumber.make
         }
     }
 }
 /*:
 ### Usage
 */
-let factoryOne = NumberAbstractFactory.numberFactoryType(.NextStep)
-let numberOne = factoryOne.numberFromString("1")
+let factoryOne = NumberHelper.factoryFor(.NextStep)
+let numberOne = factoryOne("1")
 numberOne.stringValue()
 
-let factoryTwo = NumberAbstractFactory.numberFactoryType(.Swift)
-let numberTwo = factoryTwo.numberFromString("2")
+let factoryTwo = NumberHelper.factoryFor(.Swift)
+let numberTwo = factoryTwo("2")
 numberTwo.stringValue()
 /*:
 👷 Builder
 ----------
 
-The builder pattern is used to create complex objects with constituent parts that must be created in the same order or using a specific algorithm.
+The builder pattern is used to create complex objects with constituent parts that must be created in the same order or using a specific algorithm. 
 An external class controls the construction algorithm.
 
 ### Example
@@ -155,7 +150,7 @@ class Euro : Currency {
     func symbol() -> String {
         return "€"
     }
-
+    
     func code() -> String {
         return "EUR"
     }
@@ -165,7 +160,7 @@ class UnitedStatesDolar : Currency {
     func symbol() -> String {
         return "$"
     }
-
+    
     func code() -> String {
         return "USD"
     }
@@ -186,7 +181,7 @@ class CurrencyFactory {
             default:
                 return nil
         }
-
+        
     }
 }
 /*:
@@ -202,7 +197,7 @@ CurrencyFactory.currencyForCountry(.UK)?.code() ?? noCurrencyCode
 🃏 Prototype
 ------------
 
-The prototype pattern is used to instantiate a new object by copying all of the properties of an existing object, creating an independent clone.
+The prototype pattern is used to instantiate a new object by copying all of the properties of an existing object, creating an independent clone. 
 This practise is particularly useful when the construction of a new object is inefficient.
 
 ### Example

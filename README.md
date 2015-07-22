@@ -698,38 +698,32 @@ Protocols
 ```swift
 protocol Decimal {
     func stringValue() -> String
+    // factory
+    static func make(string : String) -> Decimal
 }
 
-protocol NumberFactoryProtocol {
-    func numberFromString(string : String) -> Decimal
-}
+typealias NumberFactory = (String) -> Decimal
 
-// Number implementations
+// Number implementations with factory methods
 
 struct NextStepNumber : Decimal {
     private var nextStepNumber : NSNumber
 
     func stringValue() -> String { return nextStepNumber.stringValue }
+    
+    // factory
+    static func make(string : String) -> Decimal {
+        return NextStepNumber(nextStepNumber:NSNumber(longLong:(string as NSString).longLongValue))
+    }
 }
 
 struct SwiftNumber : Decimal {
     private var swiftInt : Int
 
     func stringValue() -> String { return "\(swiftInt)" }
-}
-```
-
-Factories
-
-```swift
-class NextStepNumberFactory : NumberFactoryProtocol {
-    func numberFromString(string : String) -> Decimal {
-        return NextStepNumber(nextStepNumber:NSNumber(longLong:(string as NSString).longLongValue))
-    }
-}
-
-class SwiftNumberFactory : NumberFactoryProtocol {
-    func numberFromString(string : String) -> Decimal {
+    
+    // factory
+    static func make(string : String) -> Decimal {
         return SwiftNumber(swiftInt:(string as NSString).integerValue)
     }
 }
@@ -742,14 +736,13 @@ enum NumberType {
     case NextStep, Swift
 }
 
-class NumberAbstractFactory {
-    class func numberFactoryType(type : NumberType) -> NumberFactoryProtocol {
-        
+class NumberHelper {
+    class func factoryFor(type : NumberType) -> NumberFactory {
         switch type {
-            case .NextStep:
-                    return NextStepNumberFactory()
-            case .Swift:
-                    return SwiftNumberFactory()
+        case .NextStep:
+            return NextStepNumber.make
+        case .Swift:
+            return SwiftNumber.make
         }
     }
 }
@@ -758,12 +751,12 @@ class NumberAbstractFactory {
 ### Usage
 
 ```swift
-let factoryOne = NumberAbstractFactory.numberFactoryType(.NextStep)
-let numberOne = factoryOne.numberFromString("1")
+let factoryOne = NumberHelper.factoryFor(.NextStep)
+let numberOne = factoryOne("1")
 numberOne.stringValue()
 
-let factoryTwo = NumberAbstractFactory.numberFactoryType(.Swift)
-let numberTwo = factoryTwo.numberFromString("2")
+let factoryTwo = NumberHelper.factoryFor(.Swift)
+let numberTwo = factoryTwo("2")
 numberTwo.stringValue()
 ```
 
@@ -1346,3 +1339,5 @@ Info
 📖 Descriptions from: [Gang of Four Design Patterns Reference Sheet](http://www.blackwasp.co.uk/GangOfFour.aspx)
 
 🚀 How to generate playground (+zip) from source: [GENERATE.md](https://github.com/ochococo/Design-Patterns-In-Swift/blob/master/GENERATE.md)
+
+
