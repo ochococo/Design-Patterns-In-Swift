@@ -11,11 +11,11 @@ struct NovellasCollection<T> {
 }
 
 extension NovellasCollection: SequenceType {
-    typealias Generator = GeneratorOf<T>
+    typealias Generator = AnyGenerator<T>
     
-    func generate() -> GeneratorOf<T> {
+    func generate() -> AnyGenerator<T> {
         var i = 0
-        return GeneratorOf { return i >= self.novellas.count ? nil : self.novellas[i++] }
+        return anyGenerator{ return i >= self.novellas.count ? nil : self.novellas[i++] }
     }
 }
 /*:
@@ -24,5 +24,5 @@ extension NovellasCollection: SequenceType {
 let greatNovellas = NovellasCollection(novellas:["Mist"])
 
 for novella in greatNovellas {
-    println("I've read: \(novella)")
+    print("I've read: \(novella)")
 }

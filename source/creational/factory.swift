@@ -32,14 +32,14 @@ class UnitedStatesDolar : Currency {
 }
 
 enum Country {
-    case UnitedStates, Spain, France, UK
+    case UnitedStates, Spain, UK, Greece
 }
 
 class CurrencyFactory {
     class func currencyForCountry(country:Country) -> Currency? {
 
         switch country {
-            case .Spain, .France :
+            case .Spain, .Greece :
                 return Euro()
             case .UnitedStates :
                 return UnitedStatesDolar()
@@ -54,7 +54,7 @@ class CurrencyFactory {
 */
 let noCurrencyCode = "No Currency Code Available"
 
+CurrencyFactory.currencyForCountry(.Greece)?.code() ?? noCurrencyCode
 CurrencyFactory.currencyForCountry(.Spain)?.code() ?? noCurrencyCode
 CurrencyFactory.currencyForCountry(.UnitedStates)?.code() ?? noCurrencyCode
-CurrencyFactory.currencyForCountry(.France)?.code() ?? noCurrencyCode
 CurrencyFactory.currencyForCountry(.UK)?.code() ?? noCurrencyCode

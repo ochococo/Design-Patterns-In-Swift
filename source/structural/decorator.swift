@@ -70,8 +70,8 @@ class WhipCoffee: CoffeeDecorator {
 ### Usage:
 */
 var someCoffee: Coffee = SimpleCoffee()
-println("Cost : \(someCoffee.getCost()); Ingredients: \(someCoffee.getIngredients())")
+print("Cost : \(someCoffee.getCost()); Ingredients: \(someCoffee.getIngredients())")
 someCoffee = Milk(decoratedCoffee: someCoffee)
-println("Cost : \(someCoffee.getCost()); Ingredients: \(someCoffee.getIngredients())")
+print("Cost : \(someCoffee.getCost()); Ingredients: \(someCoffee.getIngredients())")
 someCoffee = WhipCoffee(decoratedCoffee: someCoffee)
-println("Cost : \(someCoffee.getCost()); Ingredients: \(someCoffee.getIngredients())")
+print("Cost : \(someCoffee.getCost()); Ingredients: \(someCoffee.getIngredients())")

@@ -1,3 +1,6 @@
+//: Behavioral |
+//: [Creational](Creational) |
+//: [Structural](Structural)
 /*:
 Behavioral
 ==========
@@ -6,3 +9,5 @@ Behavioral
 >
 >**Source:** [wikipedia.org](http://en.wikipedia.org/wiki/Behavioral_pattern)
 */
+import Swift
+import Foundation

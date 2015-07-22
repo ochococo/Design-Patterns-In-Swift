@@ -1,14 +1,7 @@
-```swift
 
-import Swift
-import Foundation
-
-```
-
-
-Design Patterns implemented in Swift 1.2
-========================================
-A short cheat-sheet with Xcode 6.3beta Playground ([Design-Patterns.playground.zip](https://raw.githubusercontent.com/ochococo/Design-Patterns-In-Swift/master/Design-Patterns.playground.zip)).
+Design Patterns implemented in Swift 2
+======================================
+A short cheat-sheet with Xcode 7beta Playground ([Design-Patterns.playground.zip](https://raw.githubusercontent.com/ochococo/Design-Patterns-In-Swift/master/Design-Patterns.playground.zip)).
 
 👷 Project maintained by: [@nsmeme](http://twitter.com/nsmeme) (Oktawian Chojnacki)
 
@@ -19,12 +12,21 @@ A short cheat-sheet with Xcode 6.3beta Playground ([Design-Patterns.playground.z
 * [Structural](#structural)
 
 
+```swift Behavioral |
+ [Creational](Creational) |
+ [Structural](Structural)
+```
+
 Behavioral
 ==========
 
 >In software engineering, behavioral design patterns are design patterns that identify common communication patterns between objects and realize these patterns. By doing so, these patterns increase flexibility in carrying out this communication.
 >
 >**Source:** [wikipedia.org](http://en.wikipedia.org/wiki/Behavioral_pattern)
+
+```swift
+import Swift
+import Foundation```
 
 🐝 Chain Of Responsibility
 --------------------------
@@ -289,11 +291,11 @@ struct NovellasCollection<T> {
 }
 
 extension NovellasCollection: SequenceType {
-    typealias Generator = GeneratorOf<T>
+    typealias Generator = AnyGenerator<T>
     
-    func generate() -> GeneratorOf<T> {
+    func generate() -> AnyGenerator<T> {
         var i = 0
-        return GeneratorOf { return i >= self.novellas.count ? nil : self.novellas[i++] }
+        return anyGenerator{ return i >= self.novellas.count ? nil : self.novellas[i++] }
     }
 }
 ```
@@ -304,7 +306,7 @@ extension NovellasCollection: SequenceType {
 let greatNovellas = NovellasCollection(novellas:["Mist"])
 
 for novella in greatNovellas {
-    println("I've read: \(novella)")
+    print("I've read: \(novella)")
 }
 ```
 
@@ -355,7 +357,7 @@ class MessageMediator: Mediator {
 
 class ConcreteColleague: Colleague {
     override func receive(message: String) {
-        println("Colleague received: \(message)")
+        print("Colleague received: \(message)")
     }
 }
 
@@ -417,7 +419,7 @@ class CheckPoint {
         defaults.synchronize()
     }
 
-    class func restorePreviousState(keyName: String = DPMementoGameState) -> Memento {
+    class func restorePreviousState(keyName keyName: String = DPMementoGameState) -> Memento {
         let defaults = NSUserDefaults.standardUserDefaults()
 
         return defaults.objectForKey(keyName) as? Memento ?? Memento()
@@ -482,13 +484,13 @@ class TestChambers {
 class Observer : PropertyObserver {
     func willChangePropertyName(propertyName: String, newPropertyValue: AnyObject?) {
         if newPropertyValue as? Int == 1 {
-            println("Okay. Look. We both said a lot of things that you're going to regret.")
+            print("Okay. Look. We both said a lot of things that you're going to regret.")
         }
     }
 
     func didChangePropertyName(propertyName: String, oldPropertyValue: AnyObject?) {
         if oldPropertyValue as? Int == 0 {
-            println("Sorry about the mess. I've really let the place go since you killed me.")
+            print("Sorry about the mess. I've really let the place go since you killed me.")
         }
     }
 }
@@ -503,7 +505,8 @@ testChambers.observer = observerInstance
 testChambers.testChamberNumber++
 ```
 
-## 🐉 State
+🐉 State
+---------
 
 The state pattern is used to alter the behaviour of an object as its internal state changes. 
 The pattern allows the class for an object to apparently change at run-time.
@@ -522,7 +525,7 @@ class Context {
         get { return state.userId(self) }
     }
 
-	func changeStateToAuthorized(#userId: String) {
+	func changeStateToAuthorized(userId userId: String) {
 		state = AuthorizedState(userId: userId)
 	}
 
@@ -663,6 +666,9 @@ let names = planets.map { (planet: Planet) -> String in
 }
 
 names
+ [Behavioral](Behavioral) |
+ Creational |
+ [Structural](Structural)
 ```
 
 Creational
@@ -671,6 +677,10 @@ Creational
 > In software engineering, creational design patterns are design patterns that deal with object creation mechanisms, trying to create objects in a manner suitable to the situation. The basic form of object creation could result in design problems or added complexity to the design. Creational design patterns solve this problem by somehow controlling this object creation.
 >
 >**Source:** [wikipedia.org](http://en.wikipedia.org/wiki/Creational_pattern)
+
+```swift
+import Swift
+import Foundation```
 
 🌰 Abstract Factory
 -------------------
@@ -779,7 +789,7 @@ class DeathStarBuilder {
     }
 }
 
-struct DeathStar {
+struct DeathStar : CustomStringConvertible {
 
     let x: Double
     let y: Double
@@ -794,6 +804,10 @@ struct DeathStar {
         } else {
             return nil
         }
+    }
+
+    var description:String {
+        return "Death Star at (x:\(x) y:\(y) z:\(z))"
     }
 }
 ```
@@ -844,14 +858,14 @@ class UnitedStatesDolar : Currency {
 }
 
 enum Country {
-    case UnitedStates, Spain, France, UK
+    case UnitedStates, Spain, UK, Greece
 }
 
 class CurrencyFactory {
     class func currencyForCountry(country:Country) -> Currency? {
 
         switch country {
-            case .Spain, .France :
+            case .Spain, .Greece :
                 return Euro()
             case .UnitedStates :
                 return UnitedStatesDolar()
@@ -868,9 +882,9 @@ class CurrencyFactory {
 ```swift
 let noCurrencyCode = "No Currency Code Available"
 
+CurrencyFactory.currencyForCountry(.Greece)?.code() ?? noCurrencyCode
 CurrencyFactory.currencyForCountry(.Spain)?.code() ?? noCurrencyCode
 CurrencyFactory.currencyForCountry(.UnitedStates)?.code() ?? noCurrencyCode
-CurrencyFactory.currencyForCountry(.France)?.code() ?? noCurrencyCode
 CurrencyFactory.currencyForCountry(.UK)?.code() ?? noCurrencyCode
 ```
 
@@ -935,6 +949,9 @@ class DeathStarSuperlaser {
 
 ```swift
 let laser = DeathStarSuperlaser.sharedInstance
+ [Behavioral](Behavioral) |
+ [Creational](Creational) |
+ Structural
 ```
 
 Structural
@@ -943,6 +960,10 @@ Structural
 >In software engineering, structural design patterns are design patterns that ease the design by identifying a simple way to realize relationships between entities.
 >
 >**Source:** [wikipedia.org](http://en.wikipedia.org/wiki/Structural_pattern)
+
+```swift
+import Swift
+import Foundation```
 
 🔌 Adapter
 ----------
@@ -1033,13 +1054,13 @@ class RemoteControl: Switch {
 
 class TV: Appliance {
     func run() {
-        println("tv turned on");
+        print("tv turned on");
     }
 }
 
 class VacuumCleaner: Appliance {
     func run() {
-        println("vacuum cleaner turned on")
+        print("vacuum cleaner turned on")
     }
 }
 ```
@@ -1054,7 +1075,8 @@ var fancyVacuumCleanerRemoteControl = RemoteControl(appliance: VacuumCleaner())
 fancyVacuumCleanerRemoteControl.turnOn()
 ```
 
-## 🌿 Composite
+🌿 Composite
+-------------
 
 The composite pattern is used to create hierarchical, recursive tree structures of related objects where any element of the structure may be accessed and utilised in a standard manner.
 
@@ -1187,11 +1209,11 @@ class WhipCoffee: CoffeeDecorator {
 
 ```swift
 var someCoffee: Coffee = SimpleCoffee()
-println("Cost : \(someCoffee.getCost()); Ingredients: \(someCoffee.getIngredients())")
+print("Cost : \(someCoffee.getCost()); Ingredients: \(someCoffee.getIngredients())")
 someCoffee = Milk(decoratedCoffee: someCoffee)
-println("Cost : \(someCoffee.getCost()); Ingredients: \(someCoffee.getIngredients())")
+print("Cost : \(someCoffee.getCost()); Ingredients: \(someCoffee.getIngredients())")
 someCoffee = WhipCoffee(decoratedCoffee: someCoffee)
-println("Cost : \(someCoffee.getCost()); Ingredients: \(someCoffee.getIngredients())")
+print("Cost : \(someCoffee.getCost()); Ingredients: \(someCoffee.getIngredients())")
 ```
 
 🎁 Façade
@@ -1282,7 +1304,8 @@ computer.authenticateWithPassword("pass")
 computer.openDoors(doors)
 ```
 
-##🍬 Virtual Proxy
+🍬 Virtual Proxy
+----------------
 
 The proxy pattern is used to provide a surrogate or placeholder object, which references an underlying object. 
 Virtual proxy is used for loading object on demand.

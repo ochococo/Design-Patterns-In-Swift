@@ -29,13 +29,13 @@ class RemoteControl: Switch {
 
 class TV: Appliance {
     func run() {
-        println("tv turned on");
+        print("tv turned on");
     }
 }
 
 class VacuumCleaner: Appliance {
     func run() {
-        println("vacuum cleaner turned on")
+        print("vacuum cleaner turned on")
     }
 }
 /*:

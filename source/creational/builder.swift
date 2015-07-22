@@ -20,7 +20,7 @@ class DeathStarBuilder {
     }
 }
 
-struct DeathStar {
+struct DeathStar : CustomStringConvertible {
 
     let x: Double
     let y: Double
@@ -35,6 +35,10 @@ struct DeathStar {
         } else {
             return nil
         }
+    }
+
+    var description:String {
+        return "Death Star at (x:\(x) y:\(y) z:\(z))"
     }
 }
 /*:

@@ -29,13 +29,13 @@ class TestChambers {
 class Observer : PropertyObserver {
     func willChangePropertyName(propertyName: String, newPropertyValue: AnyObject?) {
         if newPropertyValue as? Int == 1 {
-            println("Okay. Look. We both said a lot of things that you're going to regret.")
+            print("Okay. Look. We both said a lot of things that you're going to regret.")
         }
     }
 
     func didChangePropertyName(propertyName: String, oldPropertyValue: AnyObject?) {
         if oldPropertyValue as? Int == 0 {
-            println("Sorry about the mess. I've really let the place go since you killed me.")
+            print("Sorry about the mess. I've really let the place go since you killed me.")
         }
     }
 }

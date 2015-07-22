@@ -45,7 +45,7 @@ class MessageMediator: Mediator {
 
 class ConcreteColleague: Colleague {
     override func receive(message: String) {
-        println("Colleague received: \(message)")
+        print("Colleague received: \(message)")
     }
 }
 

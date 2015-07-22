@@ -37,7 +37,7 @@ class CheckPoint {
         defaults.synchronize()
     }
 
-    class func restorePreviousState(keyName: String = DPMementoGameState) -> Memento {
+    class func restorePreviousState(keyName keyName: String = DPMementoGameState) -> Memento {
         let defaults = NSUserDefaults.standardUserDefaults()
 
         return defaults.objectForKey(keyName) as? Memento ?? Memento()
