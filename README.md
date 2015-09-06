@@ -11,12 +11,6 @@ A short cheat-sheet with Xcode 7beta Playground ([Design-Patterns.playground.zip
 * [Creational](#creational)
 * [Structural](#structural)
 
-
-```swift Behavioral |
- [Creational](Creational) |
- [Structural](Structural)
-```
-
 Behavioral
 ==========
 
@@ -26,7 +20,8 @@ Behavioral
 
 ```swift
 import Swift
-import Foundation```
+import Foundation
+```
 
 🐝 Chain Of Responsibility
 --------------------------

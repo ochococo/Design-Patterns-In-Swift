@@ -10,7 +10,8 @@ Structural
 >**Source:** [wikipedia.org](http://en.wikipedia.org/wiki/Structural_pattern)
 */
 import Swift
-import Foundation/*:
+import Foundation
+/*:
 🔌 Adapter
 ----------
 
@@ -61,7 +62,7 @@ let oldFormat = OldDeathStarSuperlaserTarget(target)
 oldFormat.angleH
 oldFormat.angleV
 /*:
-🌉  Bridge
+🌉 Bridge
 ----------
 
 The bridge pattern is used to separate the abstract elements of a class from the implementation details, providing the means to replace the implementation details without modifying the abstraction.
@@ -124,7 +125,8 @@ protocol Shape {
 }
 /*: 
 Leafs
-*/ 
+*/
+ 
 class Square : Shape {
     func draw(fillColor: String) {
         print("Drawing a Square with color \(fillColor)")

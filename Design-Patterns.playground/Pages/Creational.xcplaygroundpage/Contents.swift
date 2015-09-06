@@ -10,7 +10,8 @@ Creational
 >**Source:** [wikipedia.org](http://en.wikipedia.org/wiki/Creational_pattern)
 */
 import Swift
-import Foundation/*:
+import Foundation
+/*:
 🌰 Abstract Factory
 -------------------
 
