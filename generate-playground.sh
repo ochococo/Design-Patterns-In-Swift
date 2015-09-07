@@ -6,7 +6,7 @@ cleanThisMessForReadme () {
 
 	FILENAME=$1
 
-	{ rm $FILENAME && awk '{gsub("\\*/", "\n```swift", $0); print}' > $FILENAME; } < $FILENAME
+	{ rm $FILENAME && awk '{gsub("\\*/", "\n```swift\n", $0); print}' > $FILENAME; } < $FILENAME
 	{ rm $FILENAME && awk '{gsub("\\*//\\*:", "", $0); print}' > $FILENAME; } < $FILENAME
 	{ rm $FILENAME && awk '{gsub("/\\*:", "```\n", $0); print}' > $FILENAME; } < $FILENAME
 	{ rm $FILENAME && awk '{gsub("//\\*:", "", $0); print}' > $FILENAME; } < $FILENAME

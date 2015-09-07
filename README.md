@@ -11,6 +11,7 @@ A short cheat-sheet with Xcode 7beta Playground ([Design-Patterns.playground.zip
 * [Creational](#creational)
 * [Structural](#structural)
 
+
 Behavioral
 ==========
 
@@ -31,6 +32,7 @@ The chain of responsibility pattern is used to process varied requests, each of 
 ### Example:
 
 ```swift
+
 class MoneyPile {
     let value: Int
     var quantity: Int
@@ -100,6 +102,7 @@ class ATM {
 ### Usage
 
 ```swift
+
 // Create piles of money and link them together 10 < 20 < 50 < 100.**
 let ten = MoneyPile(value: 10, quantity: 6, nextPile: nil)
 let twenty = MoneyPile(value: 20, quantity: 2, nextPile: ten)
@@ -122,6 +125,7 @@ The command pattern is used to express a request, including the call to be made 
 ### Example:
 
 ```swift
+
 protocol DoorCommand {
     func execute() -> String
 }
@@ -172,6 +176,7 @@ class HAL9000DoorsOperations {
 ### Usage:
 
 ```swift
+
 let podBayDoors = "Pod Bay Doors"
 let doorModule = HAL9000DoorsOperations(doors:podBayDoors)
 
@@ -187,6 +192,7 @@ The interpreter pattern is used to evaluate sentences in a language.
 ### Example
 
 ```swift
+
 
 protocol IntegerExp {
     func evaluate(context: IntegerContext) -> Int
@@ -257,6 +263,7 @@ class AddExp: IntegerExp {
 ### Usage
 
 ```swift
+
 var expression: IntegerExp?
 var intContext = IntegerContext()
 
@@ -281,6 +288,7 @@ The iterator pattern is used to provide a standard interface for traversing a co
 ### Example:
 
 ```swift
+
 struct NovellasCollection<T> {
     let novellas: [T]
 }
@@ -298,6 +306,7 @@ extension NovellasCollection: SequenceType {
 ### Usage
 
 ```swift
+
 let greatNovellas = NovellasCollection(novellas:["Mist"])
 
 for novella in greatNovellas {
@@ -313,6 +322,7 @@ The mediator pattern is used to reduce coupling between classes that communicate
 ### Example
 
 ```swift
+
 
 class Colleague {
     let mediator: Mediator
@@ -362,6 +372,7 @@ class ConcreteColleague: Colleague {
 
 ```swift
 
+
 let messagesMediator = MessageMediator()
 let user0 = ConcreteColleague(mediator: messagesMediator)
 let user1 = ConcreteColleague(mediator: messagesMediator)
@@ -379,6 +390,7 @@ The memento pattern is used to capture the current state of an object and store 
 ### Example
 
 ```swift
+
 typealias Memento = Dictionary<NSObject, AnyObject>
 
 let DPMementoKeyChapter = "com.valve.halflife.chapter"
@@ -389,6 +401,7 @@ let DPMementoGameState = "com.valve.halflife.state"
 Originator
 
 ```swift
+
 class GameState {
     var chapter: String = ""
     var weapon: String = ""
@@ -407,6 +420,7 @@ class GameState {
 Caretaker
 
 ```swift
+
 class CheckPoint {
     class func saveState(memento: Memento, keyName: String = DPMementoGameState) {
         let defaults = NSUserDefaults.standardUserDefaults()
@@ -425,6 +439,7 @@ class CheckPoint {
  ### Usage
 
 ```swift
+
 var gameState = GameState()
 gameState.restoreFromMemento(CheckPoint.restorePreviousState())
 
@@ -457,6 +472,7 @@ Other objects subscribe to be immediately notified of any changes.
 ### Example
 
 ```swift
+
 protocol PropertyObserver : class {
     func willChangePropertyName(propertyName:String, newPropertyValue:AnyObject?)
     func didChangePropertyName(propertyName:String, oldPropertyValue:AnyObject?)
@@ -494,6 +510,7 @@ class Observer : PropertyObserver {
 ### Usage
 
 ```swift
+
 var observerInstance = Observer()
 var testChambers = TestChambers()
 testChambers.observer = observerInstance
@@ -509,6 +526,7 @@ The pattern allows the class for an object to apparently change at run-time.
 ### Example
 
 ```swift
+
 class Context {
 	private var state: State = UnauthorizedState()
 
@@ -555,6 +573,7 @@ class AuthorizedState: State {
 ### Usage
 
 ```swift
+
 let context = Context()
 (context.isAuthorized, context.userId)
 context.changeStateToAuthorized(userId: "admin")
@@ -571,6 +590,7 @@ The strategy pattern is used to create an interchangeable family of algorithms f
 ### Example
 
 ```swift
+
 protocol PrintStrategy {
     func printString(string: String) -> String
 }
@@ -604,6 +624,7 @@ class LowerCaseStrategy : PrintStrategy {
 ### Usage
 
 ```swift
+
 var lower = Printer(strategy:LowerCaseStrategy())
 lower.printString("O tempora, o mores!")
 
@@ -620,6 +641,7 @@ The visitor pattern is used to separate a relatively complex set of structured d
 ### Example
 
 ```swift
+
 protocol PlanetVisitor {
 	func visit(planet: PlanetAlderaan)
 	func visit(planet: PlanetCoruscant)
@@ -652,6 +674,7 @@ class NameVisitor: PlanetVisitor {
 ### Usage
 
 ```swift
+
 let planets: [Planet] = [PlanetAlderaan(), PlanetCoruscant(), PlanetTatooine()]
 
 let names = planets.map { (planet: Planet) -> String in
@@ -673,9 +696,6 @@ Creational
 >
 >**Source:** [wikipedia.org](http://en.wikipedia.org/wiki/Creational_pattern)
 
-```swift
-import Swift
-import Foundation```
 
 🌰 Abstract Factory
 -------------------
@@ -686,11 +706,13 @@ The "family" of objects created by the factory are determined at run-time.
 ### Example
 
 ```swift
+
 ```
  
 Protocols
 
 ```swift
+
 protocol Decimal {
     func stringValue() -> String
     // factory
@@ -727,6 +749,7 @@ struct SwiftNumber : Decimal {
 Abstract factory
 
 ```swift
+
 enum NumberType {
     case NextStep, Swift
 }
@@ -746,6 +769,7 @@ class NumberHelper {
 ### Usage
 
 ```swift
+
 let factoryOne = NumberHelper.factoryFor(.NextStep)
 let numberOne = factoryOne("1")
 numberOne.stringValue()
@@ -764,6 +788,7 @@ An external class controls the construction algorithm.
 ### Example
 
 ```swift
+
 class DeathStarBuilder {
 
     var x: Double?
@@ -803,6 +828,7 @@ struct DeathStar : CustomStringConvertible {
 ### Usage
 
 ```swift
+
 let empire = DeathStarBuilder { builder in
     builder.x = 0.1
     builder.y = 0.2
@@ -820,6 +846,7 @@ The factory pattern is used to replace class constructors, abstracting the proce
 ### Example
 
 ```swift
+
 protocol Currency {
     func symbol() -> String
     func code() -> String
@@ -868,6 +895,7 @@ class CurrencyFactory {
 ### Usage
 
 ```swift
+
 let noCurrencyCode = "No Currency Code Available"
 
 CurrencyFactory.currencyForCountry(.Greece)?.code() ?? noCurrencyCode
@@ -885,6 +913,7 @@ This practise is particularly useful when the construction of a new object is in
 ### Example
 
 ```swift
+
 class ChungasRevengeDisplay {
     var name: String?
     let font: String
@@ -902,6 +931,7 @@ class ChungasRevengeDisplay {
 ### Usage
 
 ```swift
+
 let Prototype = ChungasRevengeDisplay(font:"GotanProject")
 
 let Philippe = Prototype.clone()
@@ -924,6 +954,7 @@ There are very few applications, do not overuse this pattern!
 ### Example:
 
 ```swift
+
 class DeathStarSuperlaser {
     static let sharedInstance = DeathStarSuperlaser()
 
@@ -936,6 +967,7 @@ class DeathStarSuperlaser {
 ### Usage:
 
 ```swift
+
 let laser = DeathStarSuperlaser.sharedInstance
  [Behavioral](Behavioral) |
  [Creational](Creational) |
@@ -949,9 +981,6 @@ Structural
 >
 >**Source:** [wikipedia.org](http://en.wikipedia.org/wiki/Structural_pattern)
 
-```swift
-import Swift
-import Foundation```
 
 🔌 Adapter
 ----------
@@ -961,6 +990,7 @@ The adapter pattern is used to provide a link between two otherwise incompatible
 ### Example
 
 ```swift
+
 protocol OlderDeathStarSuperLaserAiming {
     var angleV: NSNumber {get}
     var angleH: NSNumber {get}
@@ -970,6 +1000,7 @@ protocol OlderDeathStarSuperLaserAiming {
 **Adaptee**
 
 ```swift
+
 struct DeathStarSuperlaserTarget {
     let angleHorizontal: Double
     let angleVertical: Double
@@ -984,6 +1015,7 @@ struct DeathStarSuperlaserTarget {
 **Adapter**
 
 ```swift
+
 struct OldDeathStarSuperlaserTarget : OlderDeathStarSuperLaserAiming {
     private let target : DeathStarSuperlaserTarget
 
@@ -1004,6 +1036,7 @@ struct OldDeathStarSuperlaserTarget : OlderDeathStarSuperLaserAiming {
 ### Usage
 
 ```swift
+
 let target = DeathStarSuperlaserTarget(angleHorizontal: 14.0, angleVertical: 12.0)
 let oldFormat = OldDeathStarSuperlaserTarget(target)
 
@@ -1011,7 +1044,7 @@ oldFormat.angleH
 oldFormat.angleV
 ```
 
-🌉  Bridge
+🌉 Bridge
 ----------
 
 The bridge pattern is used to separate the abstract elements of a class from the implementation details, providing the means to replace the implementation details without modifying the abstraction.
@@ -1019,6 +1052,7 @@ The bridge pattern is used to separate the abstract elements of a class from the
 ### Example
 
 ```swift
+
 protocol Switch {
     var appliance: Appliance {get set}
     func turnOn()
@@ -1056,6 +1090,7 @@ class VacuumCleaner: Appliance {
 ### Usage
 
 ```swift
+
 var tvRemoteControl = RemoteControl(appliance: TV())
 tvRemoteControl.turnOn()
 
@@ -1071,11 +1106,13 @@ The composite pattern is used to create hierarchical, recursive tree structures 
 ### Example
 
 ```swift
+
 ```
 
 Component
 
 ```swift
+
 protocol Shape {
     func draw(fillColor: String)
 }
@@ -1083,7 +1120,8 @@ protocol Shape {
  
 Leafs
 
-```swift 
+```swift
+ 
 class Square : Shape {
     func draw(fillColor: String) {
         print("Drawing a Square with color \(fillColor)")
@@ -1101,6 +1139,7 @@ class Circle : Shape {
 Composite
 
 ```swift
+
 class Whiteboard : Shape {
     lazy var shapes = [Shape]()
     
@@ -1119,6 +1158,7 @@ class Whiteboard : Shape {
 ### Usage:
 
 ```swift
+
 var whiteboard = Whiteboard(Circle(), Square())
 whiteboard.draw("Red")
 ```
@@ -1132,6 +1172,7 @@ This provides a flexible alternative to using inheritance to modify behaviour.
 ### Example
 
 ```swift
+
 protocol Coffee {
     func getCost() -> Double
     func getIngredients() -> String
@@ -1196,6 +1237,7 @@ class WhipCoffee: CoffeeDecorator {
 ### Usage:
 
 ```swift
+
 var someCoffee: Coffee = SimpleCoffee()
 print("Cost : \(someCoffee.getCost()); Ingredients: \(someCoffee.getIngredients())")
 someCoffee = Milk(decoratedCoffee: someCoffee)
@@ -1212,6 +1254,7 @@ The facade pattern is used to define a simplified interface to a more complex su
 ### Example
 
 ```swift
+
 class Eternal {
 
     class func setObject(value: AnyObject!, forKey defaultName: String!) {
@@ -1232,6 +1275,7 @@ class Eternal {
 ### Usage
 
 ```swift
+
 Eternal.setObject("Disconnect me. I’d rather be nothing", forKey:"Bishop")
 Eternal.objectForKey("Bishop")
 ```
@@ -1245,6 +1289,7 @@ Protection proxy is restricting access.
 ### Example
 
 ```swift
+
 protocol DoorOperator {
     func openDoors(doors: String) -> String
 }
@@ -1260,21 +1305,21 @@ class CurrentComputer : DoorOperator {
 
     func authenticateWithPassword(pass: String) -> Bool {
 
-        if pass != "pass" {
-            return false
+        guard pass == "pass" else {
+            return false;
         }
 
         computer = HAL9000()
 
         return true
     }
-    
+
     func openDoors(doors: String) -> String {
 
-        if computer == nil {
+        guard computer != nil else {
             return "Access Denied. I'm afraid I can't do that."
         }
-        
+
         return computer.openDoors(doors)
     }
 }
@@ -1283,6 +1328,7 @@ class CurrentComputer : DoorOperator {
 ### Usage
 
 ```swift
+
 let computer = CurrentComputer()
 let doors = "Pod Bay Doors"
 
@@ -1301,6 +1347,7 @@ Virtual proxy is used for loading object on demand.
 ### Example
 
 ```swift
+
 protocol HEVSuitMedicalAid {
     func administerMorphine() -> String
 }
@@ -1323,6 +1370,7 @@ class HEVSuitHumanInterface : HEVSuitMedicalAid {
 ### Usage
 
 ```swift
+
 let humanInterface = HEVSuitHumanInterface()
 humanInterface.administerMorphine()
 ```
@@ -1336,3 +1384,4 @@ Info
 🚀 How to generate playground (+zip) from source: [GENERATE.md](https://github.com/ochococo/Design-Patterns-In-Swift/blob/master/GENERATE.md)
 
 
+```swift

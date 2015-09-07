@@ -167,6 +167,7 @@ The interpreter pattern is used to evaluate sentences in a language.
 
 ### Example
 */
+
 protocol IntegerExp {
     func evaluate(context: IntegerContext) -> Int
     func replace(character: Character, integerExp: IntegerExp) -> IntegerExp
@@ -284,6 +285,7 @@ The mediator pattern is used to reduce coupling between classes that communicate
 
 ### Example
 */
+
 class Colleague {
     let mediator: Mediator
     
@@ -325,9 +327,11 @@ class ConcreteColleague: Colleague {
         print("Colleague received: \(message)")
     }
 }
+
 /*:
 ### Usage
 */
+
 let messagesMediator = MessageMediator()
 let user0 = ConcreteColleague(mediator: messagesMediator)
 let user1 = ConcreteColleague(mediator: messagesMediator)
@@ -403,6 +407,7 @@ gameState.weapon = "Crossbow"
 CheckPoint.saveState(gameState.toMemento())
 
 gameState.restoreFromMemento(CheckPoint.restorePreviousState(keyName: "gameState2"))
+
 /*:
 👓 Observer
 -----------
@@ -554,6 +559,7 @@ lower.printString("O tempora, o mores!")
 
 var upper = Printer(strategy:UpperCaseStrategy())
 upper.printString("O tempora, o mores!")
+
 /*:
 🏃 Visitor
 ----------
