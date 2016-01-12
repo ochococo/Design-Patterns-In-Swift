@@ -354,7 +354,7 @@ class MessageMediator: Mediator {
     func send(message: String, colleague: Colleague) {
         for c in colleagues {
             if c !== colleague { //for simplicity we compare object references
-                colleague.receive(message)
+                c.receive(message)
             }
         }
     }
