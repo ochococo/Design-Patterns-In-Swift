@@ -427,14 +427,14 @@ Caretaker
 
 ```swift
 
-class CheckPoint {
-    class func saveState(memento: Memento, keyName: String = DPMementoGameState) {
+enum CheckPoint {
+    static func saveState(memento: Memento, keyName: String = DPMementoGameState) {
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.setObject(memento, forKey: keyName)
         defaults.synchronize()
     }
 
-    class func restorePreviousState(keyName keyName: String = DPMementoGameState) -> Memento {
+    static func restorePreviousState(keyName keyName: String = DPMementoGameState) -> Memento {
         let defaults = NSUserDefaults.standardUserDefaults()
 
         return defaults.objectForKey(keyName) as? Memento ?? Memento()
@@ -768,8 +768,8 @@ enum NumberType {
     case NextStep, Swift
 }
 
-class NumberHelper {
-    class func factoryFor(type : NumberType) -> NumberFactory {
+enum NumberHelper {
+    static func factoryFor(type : NumberType) -> NumberFactory {
         switch type {
         case .NextStep:
             return NextStepNumber.make
@@ -892,8 +892,8 @@ enum Country {
     case UnitedStates, Spain, UK, Greece
 }
 
-class CurrencyFactory {
-    class func currencyForCountry(country:Country) -> Currency? {
+enum CurrencyFactory {
+    static func currencyForCountry(country:Country) -> Currency? {
 
         switch country {
             case .Spain, .Greece :
@@ -1275,15 +1275,15 @@ The facade pattern is used to define a simplified interface to a more complex su
 
 ```swift
 
-class Eternal {
+enum Eternal {
 
-    class func setObject(value: AnyObject!, forKey defaultName: String!) {
+    static func setObject(value: AnyObject!, forKey defaultName: String!) {
         let defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
         defaults.setObject(value, forKey:defaultName)
         defaults.synchronize()
     }
 
-    class func objectForKey(defaultName: String!) -> AnyObject! {
+    static func objectForKey(defaultName: String!) -> AnyObject! {
         let defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
 
         return defaults.objectForKey(defaultName)
