@@ -12,6 +12,12 @@ A short cheat-sheet with Xcode 7beta Playground ([Design-Patterns.playground.zip
 * [Structural](#structural)
 
 
+```swift
+ Behavioral |
+ [Creational](Creational) |
+ [Structural](Structural)
+```
+
 Behavioral
 ==========
 
@@ -20,6 +26,7 @@ Behavioral
 >**Source:** [wikipedia.org](http://en.wikipedia.org/wiki/Behavioral_pattern)
 
 ```swift
+
 import Swift
 import Foundation
 ```
@@ -329,9 +336,11 @@ The mediator pattern is used to reduce coupling between classes that communicate
 
 
 class Colleague {
+    let name: String
     let mediator: Mediator
     
-    init(mediator: Mediator) {
+    init(name: String, mediator: Mediator) {
+        self.name = name
         self.mediator = mediator
     }
     
@@ -366,7 +375,7 @@ class MessageMediator: Mediator {
 
 class ConcreteColleague: Colleague {
     override func receive(message: String) {
-        print("Colleague received: \(message)")
+        print("Colleague \(name) received: \(message)")
     }
 }
 
@@ -378,8 +387,8 @@ class ConcreteColleague: Colleague {
 
 
 let messagesMediator = MessageMediator()
-let user0 = ConcreteColleague(mediator: messagesMediator)
-let user1 = ConcreteColleague(mediator: messagesMediator)
+let user0 = ConcreteColleague(name: "0", mediator: messagesMediator)
+let user1 = ConcreteColleague(name: "1", mediator: messagesMediator)
 messagesMediator.addColleague(user0)
 messagesMediator.addColleague(user1)
 
@@ -710,6 +719,11 @@ Creational
 >
 >**Source:** [wikipedia.org](http://en.wikipedia.org/wiki/Creational_pattern)
 
+```swift
+
+import Swift
+import Foundation
+```
 
 🌰 Abstract Factory
 -------------------
@@ -999,6 +1013,11 @@ Structural
 >
 >**Source:** [wikipedia.org](http://en.wikipedia.org/wiki/Structural_pattern)
 
+```swift
+
+import Swift
+import Foundation
+```
 
 🔌 Adapter
 ----------
