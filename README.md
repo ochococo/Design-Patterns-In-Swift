@@ -116,6 +116,8 @@ atm.canWithdraw(100) // Can withdraw - 1x100
 atm.canWithdraw(165) // Cannot withdraw because ATM doesn't has bill with value of 5
 atm.canWithdraw(30)  // Can withdraw - 1x20, 2x10
 ```
+### Further examples
+ * [Design Patterns in Swift: Chain of Responsibility](https://github.com/kingreza/Swift-Chain-Of-Responsibility)
 
 👫 Command
 ----------
@@ -381,6 +383,8 @@ messagesMediator.addColleague(user1)
 
 user0.send("Hello") // user1 receives message
 ```
+### Further examples
+ * [Design Patterns in Swift: Mediator](https://github.com/kingreza/Swift-Mediator)
 
 💾 Memento
 ----------
@@ -516,6 +520,8 @@ var testChambers = TestChambers()
 testChambers.observer = observerInstance
 testChambers.testChamberNumber++
 ```
+### Further examples
+ * [Design Patterns in Swift: Observer](https://github.com/kingreza/Swift-Observer)
 
 🐉 State
 ---------
@@ -581,7 +587,10 @@ context.changeStateToAuthorized(userId: "admin")
 context.changeStateToUnauthorized()
 (context.isAuthorized, context.userId)
 ```
-
+### Further examples
+ * [Design Patterns in Swift: State](https://github.com/kingreza/Swift-State)
+ 
+ 
 💡 Strategy
 -----------
 
@@ -632,6 +641,8 @@ var upper = Printer(strategy:UpperCaseStrategy())
 upper.printString("O tempora, o mores!")
 
 ```
+### Further examples
+ * [Design Patterns in Swift: Strategy](https://github.com/kingreza/Swift-Strategy)
 
 🏃 Visitor
 ----------
@@ -688,6 +699,8 @@ names
  Creational |
  [Structural](Structural)
 ```
+### Further examples
+ * [Design Patterns in Swift: Visitor](https://github.com/kingreza/Swift-Visitor)
 
 Creational
 ==========
