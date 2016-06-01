@@ -281,7 +281,6 @@ intContext.assign(c, value: 3)
 
 var result = expression?.evaluate(intContext)
 ```
-
 ### Further examples
  * [Design Patterns in Swift: Interpreter](https://github.com/kingreza/Swift-Interpreter)
 
@@ -592,8 +591,7 @@ context.changeStateToUnauthorized()
 ```
 ### Further examples
  * [Design Patterns in Swift: State](https://github.com/kingreza/Swift-State)
- 
- 
+
 💡 Strategy
 -----------
 
