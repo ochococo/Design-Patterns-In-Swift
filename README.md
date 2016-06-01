@@ -282,6 +282,9 @@ intContext.assign(c, value: 3)
 var result = expression?.evaluate(intContext)
 ```
 
+### Further examples
+ * [Design Patterns in Swift: Interpreter](https://github.com/kingreza/Swift-Interpreter)
+
 🍫 Iterator
 -----------
 
@@ -850,6 +853,8 @@ let empire = DeathStarBuilder { builder in
 
 let deathStar = DeathStar(builder:empire)
 ```
+### Further examples
+ * [Design Patterns in Swift: Builder](https://github.com/kingreza/Swift-Builder)
 
 🏭 Factory Method
 -----------------
@@ -956,6 +961,8 @@ Christoph.name = "Christoph"
 let Eduardo = Prototype.clone()
 Eduardo.name = "Eduardo"
 ```
+### Further examples
+ * [Design Patterns in Swift: Prototype](https://github.com/kingreza/Swift-Prototype)
 
 💍 Singleton
 ------------
@@ -1056,6 +1063,8 @@ let oldFormat = OldDeathStarSuperlaserTarget(target)
 oldFormat.angleH
 oldFormat.angleV
 ```
+### Further examples
+ * [Design Patterns in Swift: Prototype](https://github.com/kingreza/Swift-Adapter)
 
 🌉 Bridge
 ----------
