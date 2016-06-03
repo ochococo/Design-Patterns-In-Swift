@@ -100,7 +100,8 @@ atm.canWithdraw(165) // Cannot withdraw because ATM doesn't has bill with value 
 atm.canWithdraw(30)  // Can withdraw - 1x20, 2x10
 /*:
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Chain-Of-Responsibility)
-*//*:
+*/
+/*:
 👫 Command
 ----------
 
@@ -253,7 +254,8 @@ intContext.assign(c, value: 3)
 var result = expression?.evaluate(intContext)
 /*:
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Interpreter)
-*//*:
+*/
+/*:
 🍫 Iterator
 -----------
 
@@ -347,7 +349,8 @@ messagesMediator.addColleague(user1)
 user0.send("Hello") // user1 receives message
 /*:
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Mediator)
-*//*:
+*/
+/*:
 💾 Memento
 ----------
 
@@ -466,7 +469,8 @@ testChambers.observer = observerInstance
 testChambers.testChamberNumber++
 /*:
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Observer)
-*//*:
+*/
+/*:
 🐉 State
 ---------
 
@@ -527,7 +531,8 @@ context.changeStateToUnauthorized()
 (context.isAuthorized, context.userId)
 /*:
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-State)
-*//*:
+*/
+/*:
 💡 Strategy
 -----------
 
@@ -573,7 +578,8 @@ var upper = Printer(strategy:UpperCaseStrategy())
 upper.printString("O tempora, o mores!")
 /*:
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Strategy)
-*//*:
+*/
+/*:
 🏃 Visitor
 ----------
 
