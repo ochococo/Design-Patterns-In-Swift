@@ -4,7 +4,7 @@
 
 The observer pattern is used to allow an object to publish changes to its state. 
 Other objects subscribe to be immediately notified of any changes.
-
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Observer)
 ### Example
 */
 protocol PropertyObserver : class {

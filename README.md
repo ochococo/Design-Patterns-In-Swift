@@ -11,6 +11,13 @@ A short cheat-sheet with Xcode 7beta Playground ([Design-Patterns.playground.zip
 * [Creational](#creational)
 * [Structural](#structural)
 
+
+```swift
+ Behavioral |
+ [Creational](Creational) |
+ [Structural](Structural)
+```
+
 Behavioral
 ==========
 
@@ -28,6 +35,7 @@ import Foundation
 --------------------------
 
 The chain of responsibility pattern is used to process varied requests, each of which may be dealt with by a different handler.
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Chain-Of-Responsibility)
 
 ### Example:
 
@@ -116,8 +124,6 @@ atm.canWithdraw(100) // Can withdraw - 1x100
 atm.canWithdraw(165) // Cannot withdraw because ATM doesn't has bill with value of 5
 atm.canWithdraw(30)  // Can withdraw - 1x20, 2x10
 ```
-### Further examples
- * [Design Patterns in Swift: Chain of Responsibility](https://github.com/kingreza/Swift-Chain-Of-Responsibility)
 
 👫 Command
 ----------
@@ -190,7 +196,7 @@ doorModule.close()
 --------------
 
 The interpreter pattern is used to evaluate sentences in a language.
-
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Interpreter)
 ### Example
 
 ```swift
@@ -281,8 +287,6 @@ intContext.assign(c, value: 3)
 
 var result = expression?.evaluate(intContext)
 ```
-### Further examples
- * [Design Patterns in Swift: Interpreter](https://github.com/kingreza/Swift-Interpreter)
 
 🍫 Iterator
 -----------
@@ -322,7 +326,7 @@ for novella in greatNovellas {
 -----------
 
 The mediator pattern is used to reduce coupling between classes that communicate with each other. Instead of classes communicating directly, and thus requiring knowledge of their implementation, the classes send messages via a mediator object.
-
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Mediator)
 ### Example
 
 ```swift
@@ -387,8 +391,6 @@ messagesMediator.addColleague(user1)
 
 user0.send("Hello") // user1 receives message
 ```
-### Further examples
- * [Design Patterns in Swift: Mediator](https://github.com/kingreza/Swift-Mediator)
 
 💾 Memento
 ----------
@@ -429,14 +431,14 @@ Caretaker
 
 ```swift
 
-enum CheckPoint {
-    static func saveState(memento: Memento, keyName: String = DPMementoGameState) {
+class CheckPoint {
+    class func saveState(memento: Memento, keyName: String = DPMementoGameState) {
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.setObject(memento, forKey: keyName)
         defaults.synchronize()
     }
 
-    static func restorePreviousState(keyName keyName: String = DPMementoGameState) -> Memento {
+    class func restorePreviousState(keyName keyName: String = DPMementoGameState) -> Memento {
         let defaults = NSUserDefaults.standardUserDefaults()
 
         return defaults.objectForKey(keyName) as? Memento ?? Memento()
@@ -476,7 +478,7 @@ gameState.restoreFromMemento(CheckPoint.restorePreviousState(keyName: "gameState
 
 The observer pattern is used to allow an object to publish changes to its state. 
 Other objects subscribe to be immediately notified of any changes.
-
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Observer)
 ### Example
 
 ```swift
@@ -524,15 +526,13 @@ var testChambers = TestChambers()
 testChambers.observer = observerInstance
 testChambers.testChamberNumber++
 ```
-### Further examples
- * [Design Patterns in Swift: Observer](https://github.com/kingreza/Swift-Observer)
 
 🐉 State
 ---------
 
 The state pattern is used to alter the behaviour of an object as its internal state changes. 
 The pattern allows the class for an object to apparently change at run-time.
-
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-State)
 ### Example
 
 ```swift
@@ -591,14 +591,12 @@ context.changeStateToAuthorized(userId: "admin")
 context.changeStateToUnauthorized()
 (context.isAuthorized, context.userId)
 ```
-### Further examples
- * [Design Patterns in Swift: State](https://github.com/kingreza/Swift-State)
 
 💡 Strategy
 -----------
 
 The strategy pattern is used to create an interchangeable family of algorithms from which the required process is chosen at run-time.
-
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Strategy)
 ### Example
 
 ```swift
@@ -644,14 +642,12 @@ var upper = Printer(strategy:UpperCaseStrategy())
 upper.printString("O tempora, o mores!")
 
 ```
-### Further examples
- * [Design Patterns in Swift: Strategy](https://github.com/kingreza/Swift-Strategy)
 
 🏃 Visitor
 ----------
 
 The visitor pattern is used to separate a relatively complex set of structured data classes from the functionality that may be performed upon the data that they hold.
-
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Visitor)
 ### Example
 
 ```swift
@@ -702,8 +698,6 @@ names
  Creational |
  [Structural](Structural)
 ```
-### Further examples
- * [Design Patterns in Swift: Visitor](https://github.com/kingreza/Swift-Visitor)
 
 Creational
 ==========
@@ -775,8 +769,8 @@ enum NumberType {
     case NextStep, Swift
 }
 
-enum NumberHelper {
-    static func factoryFor(type : NumberType) -> NumberFactory {
+class NumberHelper {
+    class func factoryFor(type : NumberType) -> NumberFactory {
         switch type {
         case .NextStep:
             return NextStepNumber.make
@@ -805,7 +799,7 @@ numberTwo.stringValue()
 
 The builder pattern is used to create complex objects with constituent parts that must be created in the same order or using a specific algorithm. 
 An external class controls the construction algorithm.
-
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Builder)
 ### Example
 
 ```swift
@@ -858,8 +852,6 @@ let empire = DeathStarBuilder { builder in
 
 let deathStar = DeathStar(builder:empire)
 ```
-### Further examples
- * [Design Patterns in Swift: Builder](https://github.com/kingreza/Swift-Builder)
 
 🏭 Factory Method
 -----------------
@@ -899,8 +891,8 @@ enum Country {
     case UnitedStates, Spain, UK, Greece
 }
 
-enum CurrencyFactory {
-    static func currencyForCountry(country:Country) -> Currency? {
+class CurrencyFactory {
+    class func currencyForCountry(country:Country) -> Currency? {
 
         switch country {
             case .Spain, .Greece :
@@ -932,7 +924,7 @@ CurrencyFactory.currencyForCountry(.UK)?.code() ?? noCurrencyCode
 
 The prototype pattern is used to instantiate a new object by copying all of the properties of an existing object, creating an independent clone. 
 This practise is particularly useful when the construction of a new object is inefficient.
-
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Prototype)
 ### Example
 
 ```swift
@@ -966,8 +958,6 @@ Christoph.name = "Christoph"
 let Eduardo = Prototype.clone()
 Eduardo.name = "Eduardo"
 ```
-### Further examples
- * [Design Patterns in Swift: Prototype](https://github.com/kingreza/Swift-Prototype)
 
 💍 Singleton
 ------------
@@ -1016,7 +1006,7 @@ import Foundation
 ----------
 
 The adapter pattern is used to provide a link between two otherwise incompatible types by wrapping the "adaptee" with a class that supports the interface required by the client.
-
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Adapter)
 ### Example
 
 ```swift
@@ -1073,8 +1063,6 @@ let oldFormat = OldDeathStarSuperlaserTarget(target)
 oldFormat.angleH
 oldFormat.angleV
 ```
-### Further examples
- * [Design Patterns in Swift: Prototype](https://github.com/kingreza/Swift-Adapter)
 
 🌉 Bridge
 ----------
@@ -1287,15 +1275,15 @@ The facade pattern is used to define a simplified interface to a more complex su
 
 ```swift
 
-enum Eternal {
+class Eternal {
 
-    static func setObject(value: AnyObject!, forKey defaultName: String!) {
+    class func setObject(value: AnyObject!, forKey defaultName: String!) {
         let defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
         defaults.setObject(value, forKey:defaultName)
         defaults.synchronize()
     }
 
-    static func objectForKey(defaultName: String!) -> AnyObject! {
+    class func objectForKey(defaultName: String!) -> AnyObject! {
         let defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
 
         return defaults.objectForKey(defaultName)

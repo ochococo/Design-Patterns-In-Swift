@@ -16,7 +16,7 @@ import Foundation
 ----------
 
 The adapter pattern is used to provide a link between two otherwise incompatible types by wrapping the "adaptee" with a class that supports the interface required by the client.
-
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Adapter)
 ### Example
 */
 protocol OlderDeathStarSuperLaserAiming {

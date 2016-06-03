@@ -3,7 +3,7 @@
 --------------
 
 The interpreter pattern is used to evaluate sentences in a language.
-
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Interpreter)
 ### Example
 */
 

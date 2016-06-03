@@ -3,6 +3,7 @@
 --------------------------
 
 The chain of responsibility pattern is used to process varied requests, each of which may be dealt with by a different handler.
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Chain-Of-Responsibility)
 
 ### Example:
 */

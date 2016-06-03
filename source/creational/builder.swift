@@ -4,7 +4,7 @@
 
 The builder pattern is used to create complex objects with constituent parts that must be created in the same order or using a specific algorithm. 
 An external class controls the construction algorithm.
-
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Builder)
 ### Example
 */
 class DeathStarBuilder {

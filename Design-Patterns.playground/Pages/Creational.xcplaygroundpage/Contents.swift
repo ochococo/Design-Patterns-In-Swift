@@ -87,7 +87,7 @@ numberTwo.stringValue()
 
 The builder pattern is used to create complex objects with constituent parts that must be created in the same order or using a specific algorithm. 
 An external class controls the construction algorithm.
-
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Builder)
 ### Example
 */
 class DeathStarBuilder {
@@ -200,7 +200,7 @@ CurrencyFactory.currencyForCountry(.UK)?.code() ?? noCurrencyCode
 
 The prototype pattern is used to instantiate a new object by copying all of the properties of an existing object, creating an independent clone. 
 This practise is particularly useful when the construction of a new object is inefficient.
-
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Prototype)
 ### Example
 */
 class ChungasRevengeDisplay {

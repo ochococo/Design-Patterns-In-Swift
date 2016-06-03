@@ -16,6 +16,7 @@ import Foundation
 --------------------------
 
 The chain of responsibility pattern is used to process varied requests, each of which may be dealt with by a different handler.
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Chain-Of-Responsibility)
 
 ### Example:
 */
@@ -164,7 +165,7 @@ doorModule.close()
 --------------
 
 The interpreter pattern is used to evaluate sentences in a language.
-
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Interpreter)
 ### Example
 */
 
@@ -282,7 +283,7 @@ for novella in greatNovellas {
 -----------
 
 The mediator pattern is used to reduce coupling between classes that communicate with each other. Instead of classes communicating directly, and thus requiring knowledge of their implementation, the classes send messages via a mediator object.
-
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Mediator)
 ### Example
 */
 
@@ -416,7 +417,7 @@ gameState.restoreFromMemento(CheckPoint.restorePreviousState(keyName: "gameState
 
 The observer pattern is used to allow an object to publish changes to its state. 
 Other objects subscribe to be immediately notified of any changes.
-
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Observer)
 ### Example
 */
 protocol PropertyObserver : class {
@@ -464,7 +465,7 @@ testChambers.testChamberNumber++
 
 The state pattern is used to alter the behaviour of an object as its internal state changes. 
 The pattern allows the class for an object to apparently change at run-time.
-
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-State)
 ### Example
 */
 class Context {
@@ -522,7 +523,7 @@ context.changeStateToUnauthorized()
 -----------
 
 The strategy pattern is used to create an interchangeable family of algorithms from which the required process is chosen at run-time.
-
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Strategy)
 ### Example
 */
 protocol PrintStrategy {
@@ -567,7 +568,7 @@ upper.printString("O tempora, o mores!")
 ----------
 
 The visitor pattern is used to separate a relatively complex set of structured data classes from the functionality that may be performed upon the data that they hold.
-
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Visitor)
 ### Example
 */
 protocol PlanetVisitor {
