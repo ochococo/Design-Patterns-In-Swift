@@ -62,3 +62,6 @@ messagesMediator.addColleague(user0)
 messagesMediator.addColleague(user1)
 
 user0.send("Hello") // user1 receives message
+/*:
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Mediator)
+*/

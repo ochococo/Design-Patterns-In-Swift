@@ -48,8 +48,8 @@ enum NumberType {
     case NextStep, Swift
 }
 
-class NumberHelper {
-    class func factoryFor(type : NumberType) -> NumberFactory {
+enum NumberHelper {
+    static func factoryFor(type : NumberType) -> NumberFactory {
         switch type {
         case .NextStep:
             return NextStepNumber.make

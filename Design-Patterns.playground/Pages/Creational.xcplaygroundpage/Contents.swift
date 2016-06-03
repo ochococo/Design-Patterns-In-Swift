@@ -61,8 +61,8 @@ enum NumberType {
     case NextStep, Swift
 }
 
-class NumberHelper {
-    class func factoryFor(type : NumberType) -> NumberFactory {
+enum NumberHelper {
+    static func factoryFor(type : NumberType) -> NumberFactory {
         switch type {
         case .NextStep:
             return NextStepNumber.make
@@ -134,6 +134,8 @@ let empire = DeathStarBuilder { builder in
 }
 
 let deathStar = DeathStar(builder:empire)
+
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Builder)
 /*:
 🏭 Factory Method
 -----------------
@@ -171,8 +173,8 @@ enum Country {
     case UnitedStates, Spain, UK, Greece
 }
 
-class CurrencyFactory {
-    class func currencyForCountry(country:Country) -> Currency? {
+enum CurrencyFactory {
+    static func currencyForCountry(country:Country) -> Currency? {
 
         switch country {
             case .Spain, .Greece :
@@ -229,6 +231,8 @@ Christoph.name = "Christoph"
 let Eduardo = Prototype.clone()
 Eduardo.name = "Eduardo"
 /*:
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Prototype)
+*//*:
 💍 Singleton
 ------------
 

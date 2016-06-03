@@ -62,6 +62,8 @@ let oldFormat = OldDeathStarSuperlaserTarget(target)
 oldFormat.angleH
 oldFormat.angleV
 /*:
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Adapter)
+*//*:
 🌉 Bridge
 ----------
 
@@ -244,15 +246,15 @@ The facade pattern is used to define a simplified interface to a more complex su
 
 ### Example
 */
-class Eternal {
+enum Eternal {
 
-    class func setObject(value: AnyObject!, forKey defaultName: String!) {
+    static func setObject(value: AnyObject!, forKey defaultName: String!) {
         let defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
         defaults.setObject(value, forKey:defaultName)
         defaults.synchronize()
     }
 
-    class func objectForKey(defaultName: String!) -> AnyObject! {
+    static func objectForKey(defaultName: String!) -> AnyObject! {
         let defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
 
         return defaults.objectForKey(defaultName)

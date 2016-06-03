@@ -32,3 +32,6 @@ Christoph.name = "Christoph"
 
 let Eduardo = Prototype.clone()
 Eduardo.name = "Eduardo"
+/*:
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Prototype)
+*/
