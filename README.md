@@ -5,6 +5,8 @@ A short cheat-sheet with Xcode 7.3 Playground ([Design-Patterns.playground.zip](
 
 👷 Project maintained by: [@nsmeme](http://twitter.com/nsmeme) (Oktawian Chojnacki)
 
+⚠️ See my newest project: [OOD-Principles-In-Swift](https://github.com/ochococo/OOD-Principles-In-Swift)
+
 ## Table of Contents
 
 * [Behavioral](#behavioral)
