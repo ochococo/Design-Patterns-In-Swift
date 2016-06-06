@@ -11,6 +11,13 @@ A short cheat-sheet with Xcode 7beta Playground ([Design-Patterns.playground.zip
 * [Creational](#creational)
 * [Structural](#structural)
 
+
+```swift
+ Behavioral |
+ [Creational](Creational) |
+ [Structural](Structural)
+```
+
 Behavioral
 ==========
 
@@ -116,6 +123,8 @@ atm.canWithdraw(100) // Can withdraw - 1x100
 atm.canWithdraw(165) // Cannot withdraw because ATM doesn't has bill with value of 5
 atm.canWithdraw(30)  // Can withdraw - 1x20, 2x10
 ```
+
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Chain-Of-Responsibility)
 
 👫 Command
 ----------
@@ -280,6 +289,8 @@ intContext.assign(c, value: 3)
 var result = expression?.evaluate(intContext)
 ```
 
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Interpreter)
+
 🍫 Iterator
 -----------
 
@@ -383,6 +394,8 @@ messagesMediator.addColleague(user1)
 
 user0.send("Hello") // user1 receives message
 ```
+
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Mediator)
 
 💾 Memento
 ----------
@@ -519,6 +532,8 @@ testChambers.observer = observerInstance
 testChambers.testChamberNumber++
 ```
 
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Observer)
+
 🐉 State
 ---------
 
@@ -584,6 +599,8 @@ context.changeStateToUnauthorized()
 (context.isAuthorized, context.userId)
 ```
 
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-State)
+
 💡 Strategy
 -----------
 
@@ -634,6 +651,8 @@ var upper = Printer(strategy:UpperCaseStrategy())
 upper.printString("O tempora, o mores!")
 
 ```
+
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Strategy)
 
 🏃 Visitor
 ----------
@@ -686,6 +705,11 @@ let names = planets.map { (planet: Planet) -> String in
 }
 
 names
+```
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Visitor)
+
+```swift
+
  [Behavioral](Behavioral) |
  Creational |
  [Structural](Structural)
@@ -845,6 +869,9 @@ let empire = DeathStarBuilder { builder in
 let deathStar = DeathStar(builder:empire)
 ```
 
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Builder)
+
+
 🏭 Factory Method
 -----------------
 
@@ -951,6 +978,8 @@ let Eduardo = Prototype.clone()
 Eduardo.name = "Eduardo"
 ```
 
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Prototype)
+
 💍 Singleton
 ------------
 
@@ -1055,6 +1084,8 @@ let oldFormat = OldDeathStarSuperlaserTarget(target)
 oldFormat.angleH
 oldFormat.angleV
 ```
+
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Adapter)
 
 🌉 Bridge
 ----------

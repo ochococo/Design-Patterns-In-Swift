@@ -88,3 +88,6 @@ intContext.assign(b, value: 1)
 intContext.assign(c, value: 3)
 
 var result = expression?.evaluate(intContext)
+/*:
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Interpreter)
+*/

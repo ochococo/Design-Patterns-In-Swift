@@ -35,8 +35,8 @@ enum Country {
     case UnitedStates, Spain, UK, Greece
 }
 
-class CurrencyFactory {
-    class func currencyForCountry(country:Country) -> Currency? {
+enum CurrencyFactory {
+    static func currencyForCountry(country:Country) -> Currency? {
 
         switch country {
             case .Spain, .Greece :

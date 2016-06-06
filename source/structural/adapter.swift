@@ -48,3 +48,6 @@ let oldFormat = OldDeathStarSuperlaserTarget(target)
 
 oldFormat.angleH
 oldFormat.angleV
+/*:
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Adapter)
+*/

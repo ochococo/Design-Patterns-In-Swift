@@ -99,6 +99,9 @@ atm.canWithdraw(100) // Can withdraw - 1x100
 atm.canWithdraw(165) // Cannot withdraw because ATM doesn't has bill with value of 5
 atm.canWithdraw(30)  // Can withdraw - 1x20, 2x10
 /*:
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Chain-Of-Responsibility)
+*/
+/*:
 👫 Command
 ----------
 
@@ -250,6 +253,9 @@ intContext.assign(c, value: 3)
 
 var result = expression?.evaluate(intContext)
 /*:
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Interpreter)
+*/
+/*:
 🍫 Iterator
 -----------
 
@@ -342,6 +348,9 @@ messagesMediator.addColleague(user1)
 
 user0.send("Hello") // user1 receives message
 /*:
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Mediator)
+*/
+/*:
 💾 Memento
 ----------
 
@@ -373,14 +382,14 @@ class GameState {
 /*:
 Caretaker
 */
-class CheckPoint {
-    class func saveState(memento: Memento, keyName: String = DPMementoGameState) {
+enum CheckPoint {
+    static func saveState(memento: Memento, keyName: String = DPMementoGameState) {
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.setObject(memento, forKey: keyName)
         defaults.synchronize()
     }
 
-    class func restorePreviousState(keyName keyName: String = DPMementoGameState) -> Memento {
+    static func restorePreviousState(keyName keyName: String = DPMementoGameState) -> Memento {
         let defaults = NSUserDefaults.standardUserDefaults()
 
         return defaults.objectForKey(keyName) as? Memento ?? Memento()
@@ -459,6 +468,9 @@ var testChambers = TestChambers()
 testChambers.observer = observerInstance
 testChambers.testChamberNumber++
 /*:
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Observer)
+*/
+/*:
 🐉 State
 ---------
 
@@ -518,6 +530,9 @@ context.changeStateToAuthorized(userId: "admin")
 context.changeStateToUnauthorized()
 (context.isAuthorized, context.userId)
 /*:
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-State)
+*/
+/*:
 💡 Strategy
 -----------
 
@@ -561,7 +576,9 @@ lower.printString("O tempora, o mores!")
 
 var upper = Printer(strategy:UpperCaseStrategy())
 upper.printString("O tempora, o mores!")
-
+/*:
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Strategy)
+*/
 /*:
 🏃 Visitor
 ----------
@@ -609,3 +626,6 @@ let names = planets.map { (planet: Planet) -> String in
 }
 
 names
+/*:
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Visitor)
+*/

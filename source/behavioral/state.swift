@@ -57,3 +57,6 @@ context.changeStateToAuthorized(userId: "admin")
 (context.isAuthorized, context.userId) // now logged in as "admin"
 context.changeStateToUnauthorized()
 (context.isAuthorized, context.userId)
+/*:
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-State)
+*/

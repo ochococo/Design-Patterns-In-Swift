@@ -85,3 +85,6 @@ atm.canWithdraw(310) // Cannot because ATM has only 300
 atm.canWithdraw(100) // Can withdraw - 1x100
 atm.canWithdraw(165) // Cannot withdraw because ATM doesn't has bill with value of 5
 atm.canWithdraw(30)  // Can withdraw - 1x20, 2x10
+/*:
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Chain-Of-Responsibility)
+*/
