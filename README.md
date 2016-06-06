@@ -1,7 +1,7 @@
 
 Design Patterns implemented in Swift 2
 ======================================
-A short cheat-sheet with Xcode 7beta Playground ([Design-Patterns.playground.zip](https://raw.githubusercontent.com/ochococo/Design-Patterns-In-Swift/master/Design-Patterns.playground.zip)).
+A short cheat-sheet with Xcode 7.3 Playground ([Design-Patterns.playground.zip](https://raw.githubusercontent.com/ochococo/Design-Patterns-In-Swift/master/Design-Patterns.playground.zip)).
 
 👷 Project maintained by: [@nsmeme](http://twitter.com/nsmeme) (Oktawian Chojnacki)
 
@@ -10,13 +10,6 @@ A short cheat-sheet with Xcode 7beta Playground ([Design-Patterns.playground.zip
 * [Behavioral](#behavioral)
 * [Creational](#creational)
 * [Structural](#structural)
-
-
-```swift
- Behavioral |
- [Creational](Creational) |
- [Structural](Structural)
-```
 
 Behavioral
 ==========
@@ -51,7 +44,9 @@ class MoneyPile {
         self.nextPile = nextPile
     }
     
-    func canWithdraw(var v: Int) -> Bool {
+    func canWithdraw(v: Int) -> Bool {
+
+        var v = v
 
         func canTakeSomeBill(want: Int) -> Bool {
             return (want / self.value) > 0
@@ -125,6 +120,7 @@ atm.canWithdraw(30)  // Can withdraw - 1x20, 2x10
 ```
 
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Chain-Of-Responsibility)
+
 
 👫 Command
 ----------
@@ -291,6 +287,7 @@ var result = expression?.evaluate(intContext)
 
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Interpreter)
 
+
 🍫 Iterator
 -----------
 
@@ -309,7 +306,7 @@ extension NovellasCollection: SequenceType {
     
     func generate() -> AnyGenerator<T> {
         var i = 0
-        return anyGenerator{ return i >= self.novellas.count ? nil : self.novellas[i++] }
+        return AnyGenerator { i += 1; return i >= self.novellas.count ? nil : self.novellas[i] }
     }
 }
 ```
@@ -396,6 +393,7 @@ user0.send("Hello") // user1 receives message
 ```
 
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Mediator)
+
 
 💾 Memento
 ----------
@@ -534,6 +532,7 @@ testChambers.testChamberNumber++
 
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Observer)
 
+
 🐉 State
 ---------
 
@@ -649,10 +648,10 @@ lower.printString("O tempora, o mores!")
 
 var upper = Printer(strategy:UpperCaseStrategy())
 upper.printString("O tempora, o mores!")
-
 ```
 
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Strategy)
+
 
 🏃 Visitor
 ----------
@@ -706,14 +705,9 @@ let names = planets.map { (planet: Planet) -> String in
 
 names
 ```
+
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Visitor)
 
-```swift
-
- [Behavioral](Behavioral) |
- Creational |
- [Structural](Structural)
-```
 
 Creational
 ==========
@@ -736,9 +730,6 @@ The "family" of objects created by the factory are determined at run-time.
 
 ### Example
 
-```swift
-
-```
  
 Protocols
 
@@ -980,6 +971,7 @@ Eduardo.name = "Eduardo"
 
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Prototype)
 
+
 💍 Singleton
 ------------
 
@@ -1005,9 +997,7 @@ class DeathStarSuperlaser {
 ```swift
 
 let laser = DeathStarSuperlaser.sharedInstance
- [Behavioral](Behavioral) |
- [Creational](Creational) |
- Structural
+
 ```
 
 Structural
@@ -1087,6 +1077,7 @@ oldFormat.angleV
 
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Adapter)
 
+
 🌉 Bridge
 ----------
 
@@ -1148,9 +1139,6 @@ The composite pattern is used to create hierarchical, recursive tree structures 
 
 ### Example
 
-```swift
-
-```
 
 Component
 

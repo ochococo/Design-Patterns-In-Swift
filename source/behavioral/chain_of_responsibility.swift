@@ -17,7 +17,9 @@ class MoneyPile {
         self.nextPile = nextPile
     }
     
-    func canWithdraw(var v: Int) -> Bool {
+    func canWithdraw(v: Int) -> Bool {
+
+        var v = v
 
         func canTakeSomeBill(want: Int) -> Bool {
             return (want / self.value) > 0

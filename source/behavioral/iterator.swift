@@ -15,7 +15,7 @@ extension NovellasCollection: SequenceType {
     
     func generate() -> AnyGenerator<T> {
         var i = 0
-        return anyGenerator{ return i >= self.novellas.count ? nil : self.novellas[i++] }
+        return AnyGenerator { i += 1; return i >= self.novellas.count ? nil : self.novellas[i] }
     }
 }
 /*:

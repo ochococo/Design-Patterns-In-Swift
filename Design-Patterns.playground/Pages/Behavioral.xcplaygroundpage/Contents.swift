@@ -30,7 +30,9 @@ class MoneyPile {
         self.nextPile = nextPile
     }
     
-    func canWithdraw(var v: Int) -> Bool {
+    func canWithdraw(v: Int) -> Bool {
+
+        var v = v
 
         func canTakeSomeBill(want: Int) -> Bool {
             return (want / self.value) > 0
@@ -272,7 +274,7 @@ extension NovellasCollection: SequenceType {
     
     func generate() -> AnyGenerator<T> {
         var i = 0
-        return anyGenerator{ return i >= self.novellas.count ? nil : self.novellas[i++] }
+        return AnyGenerator { i += 1; return i >= self.novellas.count ? nil : self.novellas[i] }
     }
 }
 /*:
