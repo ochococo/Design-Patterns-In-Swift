@@ -30,28 +30,29 @@ class MoneyPile {
         self.nextPile = nextPile
     }
     
-    func canWithdraw(var v: Int) -> Bool {
+    func canWithdraw(v: Int) -> Bool {
 
         func canTakeSomeBill(want: Int) -> Bool {
             return (want / self.value) > 0
         }
         
         var q = self.quantity
+        var whatsLeft = v
 
-        while canTakeSomeBill(v) {
+        while canTakeSomeBill(whatsLeft) {
 
             if q == 0 {
                 break
             }
 
-            v -= self.value
+            whatsLeft -= self.value
             q -= 1
         }
 
-        if v == 0 {
+        if whatsLeft == 0 {
             return true
         } else if let next = self.nextPile {
-            return next.canWithdraw(v)
+            return next.canWithdraw(whatsLeft)
         }
 
         return false
@@ -272,7 +273,14 @@ extension NovellasCollection: SequenceType {
     
     func generate() -> AnyGenerator<T> {
         var i = 0
-        return anyGenerator{ return i >= self.novellas.count ? nil : self.novellas[i++] }
+        return AnyGenerator {
+            var result:T?
+            if (i < self.novellas.count) {
+                result = self.novellas[i]
+                i+=1
+            }
+            return result
+        }
     }
 }
 /*:
@@ -466,7 +474,7 @@ class Observer : PropertyObserver {
 var observerInstance = Observer()
 var testChambers = TestChambers()
 testChambers.observer = observerInstance
-testChambers.testChamberNumber++
+testChambers.testChamberNumber+=1
 /*:
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Observer)
 */
