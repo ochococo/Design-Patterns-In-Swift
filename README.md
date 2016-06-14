@@ -10,8 +10,30 @@ A short cheat-sheet with Xcode 7.3 Playground ([Design-Patterns.playground.zip](
 ## Table of Contents
 
 * [Behavioral](#behavioral)
+    * [Chain Of Responsibility](#chain-of-responsibility)
+    * [Command](#command)
+    * [Interpreter](#interpreter)
+    * [Iterator](#iterator)
+    * [Mediator](#mediator)
+    * [Memento](#memento)
+    * [Observer](#observer)
+    * [State](#state)
+    * [Strategy](#strategy)
+    * [Visitor](#visitor)
 * [Creational](#creational)
-* [Structural](#structural)
+    * [Abstract Factory](#abstract-factory)
+    * [Builder](#builder)
+    * [Factory](#factory-method)
+    * [Prototype](#prototype)
+    * [Singleton](#singleton)
+* [Structural](structural)
+    * [Adapter](#adapter)
+    * [Bridge](#bridge)
+    * [Composite](#composite)
+    * [Decorator](#decorator)
+    * [Facade](#façade)
+    * [Protection Proxy](#protection-proxy)
+    * [Virtual Proxy](#virtual-proxy)
 
 Behavioral
 ==========
@@ -26,6 +48,8 @@ import Swift
 import Foundation
 ```
 
+
+<a name="chain-of-responsibility"></a>
 🐝 Chain Of Responsibility
 --------------------------
 
@@ -124,6 +148,7 @@ atm.canWithdraw(30)  // Can withdraw - 1x20, 2x10
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Chain-Of-Responsibility)
 
 
+<a name="command"></a>
 👫 Command
 ----------
 
@@ -191,6 +216,8 @@ doorModule.open()
 doorModule.close()
 ```
 
+
+<a name="interpreter"></a>
 🎶 Interpreter
 --------------
 
@@ -290,6 +317,7 @@ var result = expression?.evaluate(intContext)
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Interpreter)
 
 
+<a name="iterator"></a>
 🍫 Iterator
 -----------
 
@@ -324,6 +352,8 @@ for novella in greatNovellas {
 }
 ```
 
+
+<a name="mediator"></a>
 💐 Mediator
 -----------
 
@@ -397,6 +427,7 @@ user0.send("Hello") // user1 receives message
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Mediator)
 
 
+<a name="memento"></a>
 💾 Memento
 ----------
 
@@ -413,7 +444,7 @@ let DPMementoKeyWeapon = "com.valve.halflife.weapon"
 let DPMementoGameState = "com.valve.halflife.state"
 ```
 
-Originator
+**Originator**
 
 ```swift
 
@@ -432,7 +463,7 @@ class GameState {
 }
 ```
 
-Caretaker
+**Caretaker**
 
 ```swift
 
@@ -451,7 +482,7 @@ enum CheckPoint {
 }
 ```
 
- ### Usage
+### Usage
 
 ```swift
 
@@ -478,6 +509,8 @@ gameState.restoreFromMemento(CheckPoint.restorePreviousState(keyName: "gameState
 
 ```
 
+
+<a name="observer"></a>
 👓 Observer
 -----------
 
@@ -535,6 +568,7 @@ testChambers.testChamberNumber++
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Observer)
 
 
+<a name="state"></a>
 🐉 State
 ---------
 
@@ -602,6 +636,8 @@ context.changeStateToUnauthorized()
 
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-State)
 
+
+<a name="strategy"></a>
 💡 Strategy
 -----------
 
@@ -655,6 +691,7 @@ upper.printString("O tempora, o mores!")
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Strategy)
 
 
+<a name="visitor"></a>
 🏃 Visitor
 ----------
 
@@ -724,6 +761,8 @@ import Swift
 import Foundation
 ```
 
+
+<a name="abstract-factory"></a>
 🌰 Abstract Factory
 -------------------
 
@@ -733,7 +772,7 @@ The "family" of objects created by the factory are determined at run-time.
 ### Example
 
  
-Protocols
+**Protocols**
 
 ```swift
 
@@ -770,7 +809,7 @@ struct SwiftNumber : Decimal {
 }
 ```
 
-Abstract factory
+**Abstract factory**
 
 ```swift
 
@@ -803,6 +842,8 @@ let numberTwo = factoryTwo("2")
 numberTwo.stringValue()
 ```
 
+
+<a name="builder"></a>
 👷 Builder
 ----------
 
@@ -865,6 +906,7 @@ let deathStar = DeathStar(builder:empire)
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Builder)
 
 
+<a name="factory-method"></a>
 🏭 Factory Method
 -----------------
 
@@ -931,6 +973,8 @@ CurrencyFactory.currencyForCountry(.UnitedStates)?.code() ?? noCurrencyCode
 CurrencyFactory.currencyForCountry(.UK)?.code() ?? noCurrencyCode
 ```
 
+
+<a name="prototype"></a>
 🃏 Prototype
 ------------
 
@@ -974,6 +1018,7 @@ Eduardo.name = "Eduardo"
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Prototype)
 
 
+<a name="singleton"></a>
 💍 Singleton
 ------------
 
@@ -1015,6 +1060,8 @@ import Swift
 import Foundation
 ```
 
+
+<a name="adapter"></a>
 🔌 Adapter
 ----------
 
@@ -1080,6 +1127,7 @@ oldFormat.angleV
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Adapter)
 
 
+<a name="bridge"></a>
 🌉 Bridge
 ----------
 
@@ -1134,6 +1182,8 @@ var fancyVacuumCleanerRemoteControl = RemoteControl(appliance: VacuumCleaner())
 fancyVacuumCleanerRemoteControl.turnOn()
 ```
 
+
+<a name="composite"></a>
 🌿 Composite
 -------------
 
@@ -1142,7 +1192,7 @@ The composite pattern is used to create hierarchical, recursive tree structures 
 ### Example
 
 
-Component
+**Component**
 
 ```swift
 
@@ -1151,7 +1201,7 @@ protocol Shape {
 }
 ```
  
-Leafs
+**Leafs**
 
 ```swift
  
@@ -1169,7 +1219,7 @@ class Circle : Shape {
 
 ```
 
-Composite
+**Composite**
 
 ```swift
 
@@ -1196,6 +1246,8 @@ var whiteboard = Whiteboard(Circle(), Square())
 whiteboard.draw("Red")
 ```
 
+
+<a name="decorator"></a>
 🍧 Decorator
 ------------
 
@@ -1279,6 +1331,8 @@ someCoffee = WhipCoffee(decoratedCoffee: someCoffee)
 print("Cost : \(someCoffee.getCost()); Ingredients: \(someCoffee.getIngredients())")
 ```
 
+
+<a name="façade"></a>
 🎁 Façade
 ---------
 
@@ -1313,6 +1367,8 @@ Eternal.setObject("Disconnect me. I’d rather be nothing", forKey:"Bishop")
 Eternal.objectForKey("Bishop")
 ```
 
+
+<a name="protection-proxy"></a>
 ☔ Protection Proxy
 ------------------
 
@@ -1371,6 +1427,8 @@ computer.authenticateWithPassword("pass")
 computer.openDoors(doors)
 ```
 
+
+<a name="virtual-proxy"></a>
 🍬 Virtual Proxy
 ----------------
 
