@@ -42,11 +42,11 @@ struct OldDeathStarSuperlaserTarget : OlderDeathStarSuperLaserAiming {
     private let target : DeathStarSuperlaserTarget
 
     var angleV:NSNumber {
-        return NSNumber(double: target.angleVertical)
+        return NSNumber(value: target.angleVertical)
     }
 
     var angleH:NSNumber {
-        return NSNumber(double: target.angleHorizontal)
+        return NSNumber(value: target.angleHorizontal)
     }
 
     init(_ target:DeathStarSuperlaserTarget) {
@@ -153,7 +153,7 @@ class Whiteboard : Shape {
     
     func draw(fillColor:String) {
         for shape in self.shapes {
-            shape.draw(fillColor)
+            shape.draw(fillColor: fillColor)
         }
     }
 }
@@ -161,7 +161,7 @@ class Whiteboard : Shape {
 ### Usage:
 */
 var whiteboard = Whiteboard(Circle(), Square())
-whiteboard.draw("Red")
+whiteboard.draw(fillColor: "Red")
 /*:
 🍧 Decorator
 ------------
@@ -188,7 +188,7 @@ class SimpleCoffee: Coffee {
 
 class CoffeeDecorator: Coffee {
     private let decoratedCoffee: Coffee
-    private let ingredientSeparator: String = ", "
+    public let ingredientSeparator: String = ", "
 
     required init(decoratedCoffee: Coffee) {
         self.decoratedCoffee = decoratedCoffee
@@ -250,23 +250,23 @@ The facade pattern is used to define a simplified interface to a more complex su
 enum Eternal {
 
     static func setObject(value: AnyObject!, forKey defaultName: String!) {
-        let defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject(value, forKey:defaultName)
+        let defaults:UserDefaults = UserDefaults.standard
+        defaults.set(value, forKey:defaultName)
         defaults.synchronize()
     }
 
     static func objectForKey(defaultName: String!) -> AnyObject! {
-        let defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
+        let defaults:UserDefaults = UserDefaults.standard
 
-        return defaults.objectForKey(defaultName)
+        return defaults.object(forKey: defaultName) as AnyObject!
     }
 
 }
 /*:
 ### Usage
 */
-Eternal.setObject("Disconnect me. I’d rather be nothing", forKey:"Bishop")
-Eternal.objectForKey("Bishop")
+Eternal.setObject(value: "Disconnect me. I’d rather be nothing" as AnyObject!, forKey:"Bishop")
+Eternal.objectForKey(defaultName: "Bishop")
 /*:
 ☔ Protection Proxy
 ------------------
@@ -306,7 +306,7 @@ class CurrentComputer : DoorOperator {
             return "Access Denied. I'm afraid I can't do that."
         }
 
-        return computer.openDoors(doors)
+        return computer.openDoors(doors: doors)
     }
 }
 /*:
@@ -315,10 +315,10 @@ class CurrentComputer : DoorOperator {
 let computer = CurrentComputer()
 let doors = "Pod Bay Doors"
 
-computer.openDoors(doors)
+computer.openDoors(doors: doors)
 
-computer.authenticateWithPassword("pass")
-computer.openDoors(doors)
+computer.authenticateWithPassword(pass: "pass")
+computer.openDoors(doors: doors)
 /*:
 🍬 Virtual Proxy
 ----------------

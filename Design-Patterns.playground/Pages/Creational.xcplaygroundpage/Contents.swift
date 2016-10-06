@@ -40,7 +40,7 @@ struct NextStepNumber : Decimal {
     
     // factory
     static func make(string : String) -> Decimal {
-        return NextStepNumber(nextStepNumber:NSNumber(longLong:(string as NSString).longLongValue))
+        return NextStepNumber(nextStepNumber:NSNumber(value:(string as NSString).longLongValue))
     }
 }
 
@@ -74,11 +74,11 @@ enum NumberHelper {
 /*:
 ### Usage
 */
-let factoryOne = NumberHelper.factoryFor(.NextStep)
+let factoryOne = NumberHelper.factoryFor(type: .NextStep)
 let numberOne = factoryOne("1")
 numberOne.stringValue()
 
-let factoryTwo = NumberHelper.factoryFor(.Swift)
+let factoryTwo = NumberHelper.factoryFor(type: .Swift)
 let numberTwo = factoryTwo("2")
 numberTwo.stringValue()
 /*:
@@ -111,7 +111,7 @@ struct DeathStar : CustomStringConvertible {
 
     init?(builder: DeathStarBuilder) {
 
-        if let x = builder.x, y = builder.y, z = builder.z {
+        if let x = builder.x, let y = builder.y, let z = builder.z {
             self.x = x
             self.y = y
             self.z = z
@@ -193,10 +193,10 @@ enum CurrencyFactory {
 */
 let noCurrencyCode = "No Currency Code Available"
 
-CurrencyFactory.currencyForCountry(.Greece)?.code() ?? noCurrencyCode
-CurrencyFactory.currencyForCountry(.Spain)?.code() ?? noCurrencyCode
-CurrencyFactory.currencyForCountry(.UnitedStates)?.code() ?? noCurrencyCode
-CurrencyFactory.currencyForCountry(.UK)?.code() ?? noCurrencyCode
+CurrencyFactory.currencyForCountry(country: .Greece)?.code() ?? noCurrencyCode
+CurrencyFactory.currencyForCountry(country: .Spain)?.code() ?? noCurrencyCode
+CurrencyFactory.currencyForCountry(country: .UnitedStates)?.code() ?? noCurrencyCode
+CurrencyFactory.currencyForCountry(country: .UK)?.code() ?? noCurrencyCode
 /*:
 🃏 Prototype
 ------------
