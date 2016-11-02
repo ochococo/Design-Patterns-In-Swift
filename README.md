@@ -10,8 +10,26 @@ A short cheat-sheet with Xcode 7.3 Playground ([Design-Patterns.playground.zip](
 ## Table of Contents
 
 * [Behavioral](#behavioral)
+    - [🐝 Chain Of Responsibility](#-chain-of-responsibility)
+    - [👫 Command](#-command)
+    - [🍫 Iterator](#-iterator)
+    - [💐 Mediator](#-mediator)
+    - [💾 Memento](#-memento)
+    - [👓 Observer](#-observer)
+    - [🐉 State](#-state)
+    - [💡 Strategy](#-strategy)
+    - [🏃 Visitor](#-visitor)
 * [Creational](#creational)
+    - [🌰 Abstract Factory](#-abstract-factory)
+    - [👷 Builder](#-builder)
+    - [🏭 Factory Method](#-factory-method)
+    - [🃏 Prototype](#-prototype)
 * [Structural](#structural)
+    - [🔌 Adapter](#-adapter)
+    - [🌉 Bridge](#-bridge)
+    - [🎁 Façade](#-façade)
+    - [☔ Protection Proxy](#-protection-proxy)
+    - [🍬 Virtual Proxy](#-virtual-proxy)
 
 Behavioral
 ==========
@@ -26,8 +44,7 @@ import Swift
 import Foundation
 ```
 
-🐝 Chain Of Responsibility
---------------------------
+##🐝 Chain Of Responsibility
 
 The chain of responsibility pattern is used to process varied requests, each of which may be dealt with by a different handler.
 
@@ -124,8 +141,7 @@ atm.canWithdraw(30)  // Can withdraw - 1x20, 2x10
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Chain-Of-Responsibility)
 
 
-👫 Command
-----------
+##👫 Command
 
 The command pattern is used to express a request, including the call to be made and all of its required parameters, in a command object. The command may then be executed immediately or held for later use.
 
@@ -191,8 +207,7 @@ doorModule.open()
 doorModule.close()
 ```
 
-🎶 Interpreter
---------------
+##🎶 Interpreter
 
 The interpreter pattern is used to evaluate sentences in a language.
 
@@ -290,8 +305,7 @@ var result = expression?.evaluate(intContext)
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Interpreter)
 
 
-🍫 Iterator
------------
+##🍫 Iterator
 
 The iterator pattern is used to provide a standard interface for traversing a collection of items in an aggregate object without the need to understand its underlying structure.
 
@@ -324,8 +338,7 @@ for novella in greatNovellas {
 }
 ```
 
-💐 Mediator
------------
+##💐 Mediator
 
 The mediator pattern is used to reduce coupling between classes that communicate with each other. Instead of classes communicating directly, and thus requiring knowledge of their implementation, the classes send messages via a mediator object.
 
@@ -397,8 +410,7 @@ user0.send("Hello") // user1 receives message
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Mediator)
 
 
-💾 Memento
-----------
+##💾 Memento
 
 The memento pattern is used to capture the current state of an object and store it in such a manner that it can be restored at a later time without breaking the rules of encapsulation.
 
@@ -478,8 +490,7 @@ gameState.restoreFromMemento(CheckPoint.restorePreviousState(keyName: "gameState
 
 ```
 
-👓 Observer
------------
+##👓 Observer
 
 The observer pattern is used to allow an object to publish changes to its state. 
 Other objects subscribe to be immediately notified of any changes.
@@ -535,8 +546,7 @@ testChambers.testChamberNumber++
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Observer)
 
 
-🐉 State
----------
+##🐉 State
 
 The state pattern is used to alter the behaviour of an object as its internal state changes. 
 The pattern allows the class for an object to apparently change at run-time.
@@ -602,8 +612,7 @@ context.changeStateToUnauthorized()
 
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-State)
 
-💡 Strategy
------------
+##💡 Strategy
 
 The strategy pattern is used to create an interchangeable family of algorithms from which the required process is chosen at run-time.
 
@@ -655,8 +664,7 @@ upper.printString("O tempora, o mores!")
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Strategy)
 
 
-🏃 Visitor
-----------
+##🏃 Visitor
 
 The visitor pattern is used to separate a relatively complex set of structured data classes from the functionality that may be performed upon the data that they hold.
 
@@ -724,8 +732,7 @@ import Swift
 import Foundation
 ```
 
-🌰 Abstract Factory
--------------------
+##🌰 Abstract Factory
 
 The abstract factory pattern is used to provide a client with a set of related or dependant objects. 
 The "family" of objects created by the factory are determined at run-time.
@@ -803,8 +810,7 @@ let numberTwo = factoryTwo("2")
 numberTwo.stringValue()
 ```
 
-👷 Builder
-----------
+##👷 Builder
 
 The builder pattern is used to create complex objects with constituent parts that must be created in the same order or using a specific algorithm. 
 An external class controls the construction algorithm.
@@ -865,8 +871,7 @@ let deathStar = DeathStar(builder:empire)
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Builder)
 
 
-🏭 Factory Method
------------------
+##🏭 Factory Method
 
 The factory pattern is used to replace class constructors, abstracting the process of object generation so that the type of the object instantiated can be determined at run-time.
 
@@ -931,8 +936,7 @@ CurrencyFactory.currencyForCountry(.UnitedStates)?.code() ?? noCurrencyCode
 CurrencyFactory.currencyForCountry(.UK)?.code() ?? noCurrencyCode
 ```
 
-🃏 Prototype
-------------
+##🃏 Prototype
 
 The prototype pattern is used to instantiate a new object by copying all of the properties of an existing object, creating an independent clone. 
 This practise is particularly useful when the construction of a new object is inefficient.
@@ -974,8 +978,7 @@ Eduardo.name = "Eduardo"
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Prototype)
 
 
-💍 Singleton
-------------
+##💍 Singleton
 
 The singleton pattern ensures that only one object of a particular class is ever created.
 All further references to objects of the singleton class refer to the same underlying instance.
@@ -1015,8 +1018,7 @@ import Swift
 import Foundation
 ```
 
-🔌 Adapter
-----------
+##🔌 Adapter
 
 The adapter pattern is used to provide a link between two otherwise incompatible types by wrapping the "adaptee" with a class that supports the interface required by the client.
 
@@ -1080,8 +1082,7 @@ oldFormat.angleV
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Adapter)
 
 
-🌉 Bridge
-----------
+##🌉 Bridge
 
 The bridge pattern is used to separate the abstract elements of a class from the implementation details, providing the means to replace the implementation details without modifying the abstraction.
 
@@ -1134,8 +1135,7 @@ var fancyVacuumCleanerRemoteControl = RemoteControl(appliance: VacuumCleaner())
 fancyVacuumCleanerRemoteControl.turnOn()
 ```
 
-🌿 Composite
--------------
+##🌿 Composite
 
 The composite pattern is used to create hierarchical, recursive tree structures of related objects where any element of the structure may be accessed and utilised in a standard manner.
 
@@ -1196,8 +1196,7 @@ var whiteboard = Whiteboard(Circle(), Square())
 whiteboard.draw("Red")
 ```
 
-🍧 Decorator
-------------
+##🍧 Decorator
 
 The decorator pattern is used to extend or alter the functionality of objects at run- time by wrapping them in an object of a decorator class. 
 This provides a flexible alternative to using inheritance to modify behaviour.
@@ -1279,8 +1278,7 @@ someCoffee = WhipCoffee(decoratedCoffee: someCoffee)
 print("Cost : \(someCoffee.getCost()); Ingredients: \(someCoffee.getIngredients())")
 ```
 
-🎁 Façade
----------
+##🎁 Façade
 
 The facade pattern is used to define a simplified interface to a more complex subsystem.
 
@@ -1313,8 +1311,7 @@ Eternal.setObject("Disconnect me. I’d rather be nothing", forKey:"Bishop")
 Eternal.objectForKey("Bishop")
 ```
 
-☔ Protection Proxy
-------------------
+##☔ Protection Proxy
 
 The proxy pattern is used to provide a surrogate or placeholder object, which references an underlying object. 
 Protection proxy is restricting access.
@@ -1371,8 +1368,7 @@ computer.authenticateWithPassword("pass")
 computer.openDoors(doors)
 ```
 
-🍬 Virtual Proxy
-----------------
+##🍬 Virtual Proxy
 
 The proxy pattern is used to provide a surrogate or placeholder object, which references an underlying object. 
 Virtual proxy is used for loading object on demand.
