@@ -175,7 +175,7 @@ The interpreter pattern is used to evaluate sentences in a language.
 
 protocol IntegerExpression {
     func evaluate(context: IntegerContext) -> Int
-    func replace(character: Character, integerExp: IntegerExpression) -> IntegerExpression
+    func replace(character: Character, expression: IntegerExpression) -> IntegerExpression
     func copy() -> IntegerExpression
 }
 
@@ -186,8 +186,8 @@ class IntegerContext {
         return self.data[name]!
     }
     
-    func assign(integerVarExp: Expression, value: Int) {
-        self.data[integerVarExp.name] = value
+    func assign(expression: Expression, value: Int) {
+        self.data[expression.name] = value
     }
 }
 
@@ -202,9 +202,9 @@ class Expression: IntegerExpression {
         return context.lookup(name: self.name)
     }
     
-    func replace(character name: Character, integerExp: IntegerExpression) -> IntegerExpression {
+    func replace(character name: Character, expression: IntegerExpression) -> IntegerExpression {
         if name == self.name {
-            return integerExp.copy()
+            return expression.copy()
         } else {
             return Expression(name: self.name)
         }
@@ -228,9 +228,9 @@ class AddExp: IntegerExpression {
         return self.operand1.evaluate(context: context) + self.operand2.evaluate(context: context)
     }
     
-    func replace(character: Character, integerExp: IntegerExpression) -> IntegerExpression {
-        return AddExp(op1: operand1.replace(character: character, integerExp: integerExp),
-            op2: operand2.replace(character: character, integerExp: integerExp))
+    func replace(character: Character, expression: IntegerExpression) -> IntegerExpression {
+        return AddExp(op1: operand1.replace(character: character, expression: expression),
+            op2: operand2.replace(character: character, expression: expression))
     }
     
     func copy() -> IntegerExpression {
@@ -249,9 +249,9 @@ var c = Expression(name: "C")
 
 expression = AddExp(op1: a, op2: AddExp(op1: b, op2: c)) // a + (b + c)
 
-intContext.assign(integerVarExp: a, value: 2)
-intContext.assign(integerVarExp: b, value: 1)
-intContext.assign(integerVarExp: c, value: 3)
+intContext.assign(expression: a, value: 2)
+intContext.assign(expression: b, value: 1)
+intContext.assign(expression: c, value: 3)
 
 var result = expression?.evaluate(context: intContext)
 /*:
