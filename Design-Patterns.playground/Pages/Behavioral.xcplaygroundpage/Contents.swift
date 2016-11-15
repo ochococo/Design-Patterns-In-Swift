@@ -30,9 +30,9 @@ class MoneyPile {
         self.nextPile = nextPile
     }
     
-    func canWithdraw(v: Int) -> Bool {
+    func canWithdraw(amount: Int) -> Bool {
 
-        var v = v
+        var val = amount
 
         func canTakeSomeBill(want: Int) -> Bool {
             return (want / self.value) > 0
@@ -40,20 +40,20 @@ class MoneyPile {
         
         var q = self.quantity
 
-        while canTakeSomeBill(want: v) {
+        while canTakeSomeBill(want: val) {
 
             if q == 0 {
                 break
             }
 
-            v -= self.value
+            val -= self.value
             q -= 1
         }
 
-        if v == 0 {
+        if val == 0 {
             return true
         } else if let next = self.nextPile {
-            return next.canWithdraw(v: v)
+            return next.canWithdraw(amount: val)
         }
 
         return false
@@ -82,7 +82,7 @@ class ATM {
     }
     
     func canWithdraw(value: Int) -> String {
-        return "Can withdraw: \(self.startPile.canWithdraw(v: value))"
+        return "Can withdraw: \(self.startPile.canWithdraw(amount: value))"
     }
 }
 /*:
@@ -173,10 +173,10 @@ The interpreter pattern is used to evaluate sentences in a language.
 ### Example
 */
 
-protocol IntegerExp {
+protocol IntegerExpression {
     func evaluate(context: IntegerContext) -> Int
-    func replace(character: Character, integerExp: IntegerExp) -> IntegerExp
-    func copy() -> IntegerExp
+    func replace(character: Character, integerExp: IntegerExpression) -> IntegerExpression
+    func copy() -> IntegerExpression
 }
 
 class IntegerContext {
@@ -186,12 +186,12 @@ class IntegerContext {
         return self.data[name]!
     }
     
-    func assign(integerVarExp: IntegerVarExp, value: Int) {
+    func assign(integerVarExp: Expression, value: Int) {
         self.data[integerVarExp.name] = value
     }
 }
 
-class IntegerVarExp: IntegerExp {
+class Expression: IntegerExpression {
     let name: Character
     
     init(name: Character) {
@@ -202,24 +202,24 @@ class IntegerVarExp: IntegerExp {
         return context.lookup(name: self.name)
     }
     
-    func replace(character name: Character, integerExp: IntegerExp) -> IntegerExp {
+    func replace(character name: Character, integerExp: IntegerExpression) -> IntegerExpression {
         if name == self.name {
             return integerExp.copy()
         } else {
-            return IntegerVarExp(name: self.name)
+            return Expression(name: self.name)
         }
     }
     
-    func copy() -> IntegerExp {
-        return IntegerVarExp(name: self.name)
+    func copy() -> IntegerExpression {
+        return Expression(name: self.name)
     }
 }
 
-class AddExp: IntegerExp {
-    private var operand1: IntegerExp
-    private var operand2: IntegerExp
+class AddExp: IntegerExpression {
+    private var operand1: IntegerExpression
+    private var operand2: IntegerExpression
     
-    init(op1: IntegerExp, op2: IntegerExp) {
+    init(op1: IntegerExpression, op2: IntegerExpression) {
         self.operand1 = op1
         self.operand2 = op2
     }
@@ -228,24 +228,24 @@ class AddExp: IntegerExp {
         return self.operand1.evaluate(context: context) + self.operand2.evaluate(context: context)
     }
     
-    func replace(character: Character, integerExp: IntegerExp) -> IntegerExp {
+    func replace(character: Character, integerExp: IntegerExpression) -> IntegerExpression {
         return AddExp(op1: operand1.replace(character: character, integerExp: integerExp),
             op2: operand2.replace(character: character, integerExp: integerExp))
     }
     
-    func copy() -> IntegerExp {
+    func copy() -> IntegerExpression {
         return AddExp(op1: self.operand1, op2: self.operand2)
     }
 }
 /*:
 ### Usage
 */
-var expression: IntegerExp?
+var expression: IntegerExpression?
 var intContext = IntegerContext()
 
-var a = IntegerVarExp(name: "A")
-var b = IntegerVarExp(name: "B")
-var c = IntegerVarExp(name: "C")
+var a = Expression(name: "A")
+var b = Expression(name: "B")
+var c = Expression(name: "C")
 
 expression = AddExp(op1: a, op2: AddExp(op1: b, op2: c)) // a + (b + c)
 
