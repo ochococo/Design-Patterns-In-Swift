@@ -30,9 +30,9 @@ class MoneyPile {
         self.nextPile = nextPile
     }
     
-    func canWithdraw(v: Int) -> Bool {
+    func canWithdraw(amount: Int) -> Bool {
 
-        var v = v
+        var val = amount
 
         func canTakeSomeBill(want: Int) -> Bool {
             return (want / self.value) > 0
@@ -40,20 +40,20 @@ class MoneyPile {
         
         var q = self.quantity
 
-        while canTakeSomeBill(v) {
+        while canTakeSomeBill(want: val) {
 
             if q == 0 {
                 break
             }
 
-            v -= self.value
+            val -= self.value
             q -= 1
         }
 
-        if v == 0 {
+        if val == 0 {
             return true
         } else if let next = self.nextPile {
-            return next.canWithdraw(v)
+            return next.canWithdraw(amount: val)
         }
 
         return false
@@ -82,7 +82,7 @@ class ATM {
     }
     
     func canWithdraw(value: Int) -> String {
-        return "Can withdraw: \(self.startPile.canWithdraw(value))"
+        return "Can withdraw: \(self.startPile.canWithdraw(amount: value))"
     }
 }
 /*:
@@ -96,10 +96,10 @@ let hundred = MoneyPile(value: 100, quantity: 1, nextPile: fifty)
 
 // Build ATM.
 var atm = ATM(hundred: hundred, fifty: fifty, twenty: twenty, ten: ten)
-atm.canWithdraw(310) // Cannot because ATM has only 300
-atm.canWithdraw(100) // Can withdraw - 1x100
-atm.canWithdraw(165) // Cannot withdraw because ATM doesn't has bill with value of 5
-atm.canWithdraw(30)  // Can withdraw - 1x20, 2x10
+atm.canWithdraw(value: 310) // Cannot because ATM has only 300
+atm.canWithdraw(value: 100) // Can withdraw - 1x100
+atm.canWithdraw(value: 165) // Cannot withdraw because ATM doesn't has bill with value of 5
+atm.canWithdraw(value: 30)  // Can withdraw - 1x20, 2x10
 /*:
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Chain-Of-Responsibility)
 */
@@ -173,10 +173,10 @@ The interpreter pattern is used to evaluate sentences in a language.
 ### Example
 */
 
-protocol IntegerExp {
+protocol IntegerExpression {
     func evaluate(context: IntegerContext) -> Int
-    func replace(character: Character, integerExp: IntegerExp) -> IntegerExp
-    func copy() -> IntegerExp
+    func replace(character: Character, expression: IntegerExpression) -> IntegerExpression
+    func copy() -> IntegerExpression
 }
 
 class IntegerContext {
@@ -186,74 +186,74 @@ class IntegerContext {
         return self.data[name]!
     }
     
-    func assign(integerVarExp: IntegerVarExp, value: Int) {
-        self.data[integerVarExp.name] = value
+    func assign(expression: Expression, value: Int) {
+        self.data[expression.name] = value
     }
 }
 
-class IntegerVarExp: IntegerExp {
+class Expression: IntegerExpression {
     let name: Character
     
     init(name: Character) {
         self.name = name
     }
-    
+  
     func evaluate(context: IntegerContext) -> Int {
-        return context.lookup(self.name)
+        return context.lookup(name: self.name)
     }
     
-    func replace(name: Character, integerExp: IntegerExp) -> IntegerExp {
+    func replace(character name: Character, expression: IntegerExpression) -> IntegerExpression {
         if name == self.name {
-            return integerExp.copy()
+            return expression.copy()
         } else {
-            return IntegerVarExp(name: self.name)
+            return Expression(name: self.name)
         }
     }
     
-    func copy() -> IntegerExp {
-        return IntegerVarExp(name: self.name)
+    func copy() -> IntegerExpression {
+        return Expression(name: self.name)
     }
 }
 
-class AddExp: IntegerExp {
-    private var operand1: IntegerExp
-    private var operand2: IntegerExp
+class AddExp: IntegerExpression {
+    private var operand1: IntegerExpression
+    private var operand2: IntegerExpression
     
-    init(op1: IntegerExp, op2: IntegerExp) {
+    init(op1: IntegerExpression, op2: IntegerExpression) {
         self.operand1 = op1
         self.operand2 = op2
     }
     
     func evaluate(context: IntegerContext) -> Int {
-        return self.operand1.evaluate(context) + self.operand2.evaluate(context)
+        return self.operand1.evaluate(context: context) + self.operand2.evaluate(context: context)
     }
     
-    func replace(character: Character, integerExp: IntegerExp) -> IntegerExp {
-        return AddExp(op1: operand1.replace(character, integerExp: integerExp),
-            op2: operand2.replace(character, integerExp: integerExp))
+    func replace(character: Character, expression: IntegerExpression) -> IntegerExpression {
+        return AddExp(op1: operand1.replace(character: character, expression: expression),
+            op2: operand2.replace(character: character, expression: expression))
     }
     
-    func copy() -> IntegerExp {
+    func copy() -> IntegerExpression {
         return AddExp(op1: self.operand1, op2: self.operand2)
     }
 }
 /*:
 ### Usage
 */
-var expression: IntegerExp?
+var expression: IntegerExpression?
 var intContext = IntegerContext()
 
-var a = IntegerVarExp(name: "A")
-var b = IntegerVarExp(name: "B")
-var c = IntegerVarExp(name: "C")
+var a = Expression(name: "A")
+var b = Expression(name: "B")
+var c = Expression(name: "C")
 
 expression = AddExp(op1: a, op2: AddExp(op1: b, op2: c)) // a + (b + c)
 
-intContext.assign(a, value: 2)
-intContext.assign(b, value: 1)
-intContext.assign(c, value: 3)
+intContext.assign(expression: a, value: 2)
+intContext.assign(expression: b, value: 1)
+intContext.assign(expression: c, value: 3)
 
-var result = expression?.evaluate(intContext)
+var result = expression?.evaluate(context: intContext)
 /*:
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Interpreter)
 */
@@ -269,12 +269,12 @@ struct NovellasCollection<T> {
     let novellas: [T]
 }
 
-extension NovellasCollection: SequenceType {
-    typealias Generator = AnyGenerator<T>
+extension NovellasCollection: Sequence {
+    typealias Generator = AnyIterator<T>
     
-    func generate() -> AnyGenerator<T> {
+    func generate() -> AnyIterator<T> {
         var i = 0
-        return AnyGenerator { i += 1; return i >= self.novellas.count ? nil : self.novellas[i] }
+        return AnyIterator { i += 1; return i >= self.novellas.count ? nil : self.novellas[i] }
     }
 }
 /*:
@@ -304,7 +304,7 @@ class Colleague {
     }
     
     func send(message: String) {
-        mediator.send(message, colleague: self)
+        mediator.send(message: message, colleague: self)
     }
     
     func receive(message: String) {
@@ -326,7 +326,7 @@ class MessageMediator: Mediator {
     func send(message: String, colleague: Colleague) {
         for c in colleagues {
             if c !== colleague { //for simplicity we compare object references
-                c.receive(message)
+                c.receive(message: message)
             }
         }
     }
@@ -345,10 +345,10 @@ class ConcreteColleague: Colleague {
 let messagesMediator = MessageMediator()
 let user0 = ConcreteColleague(name: "0", mediator: messagesMediator)
 let user1 = ConcreteColleague(name: "1", mediator: messagesMediator)
-messagesMediator.addColleague(user0)
-messagesMediator.addColleague(user1)
+messagesMediator.addColleague(colleague: user0)
+messagesMediator.addColleague(colleague: user1)
 
-user0.send("Hello") // user1 receives message
+user0.send(message: "Hello") // user1 receives message
 /*:
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Mediator)
 */
@@ -373,7 +373,7 @@ class GameState {
     var weapon: String = ""
 
     func toMemento() -> Memento {
-        return [ DPMementoKeyChapter:chapter, DPMementoKeyWeapon:weapon ]
+        return [ DPMementoKeyChapter as NSObject:chapter as AnyObject, DPMementoKeyWeapon as NSObject:weapon as AnyObject ]
     }
 
     func restoreFromMemento(memento: Memento) {
@@ -386,40 +386,40 @@ Caretaker
 */
 enum CheckPoint {
     static func saveState(memento: Memento, keyName: String = DPMementoGameState) {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject(memento, forKey: keyName)
+        let defaults = UserDefaults.standard
+        defaults.set(memento, forKey: keyName)
         defaults.synchronize()
     }
 
-    static func restorePreviousState(keyName keyName: String = DPMementoGameState) -> Memento {
-        let defaults = NSUserDefaults.standardUserDefaults()
+    static func restorePreviousState(keyName: String = DPMementoGameState) -> Memento {
+        let defaults = UserDefaults.standard
 
-        return defaults.objectForKey(keyName) as? Memento ?? Memento()
+        return defaults.object(forKey: keyName) as? Memento ?? Memento()
     }
 }
 /*:
  ### Usage
 */
 var gameState = GameState()
-gameState.restoreFromMemento(CheckPoint.restorePreviousState())
+gameState.restoreFromMemento(memento: CheckPoint.restorePreviousState())
 
 gameState.chapter = "Black Mesa Inbound"
 gameState.weapon = "Crowbar"
-CheckPoint.saveState(gameState.toMemento())
+CheckPoint.saveState(memento: gameState.toMemento())
 
 gameState.chapter = "Anomalous Materials"
 gameState.weapon = "Glock 17"
-gameState.restoreFromMemento(CheckPoint.restorePreviousState())
+gameState.restoreFromMemento(memento: CheckPoint.restorePreviousState())
 
 gameState.chapter = "Unforeseen Consequences"
 gameState.weapon = "MP5"
-CheckPoint.saveState(gameState.toMemento(), keyName: "gameState2")
+CheckPoint.saveState(memento: gameState.toMemento(), keyName: "gameState2")
 
 gameState.chapter = "Office Complex"
 gameState.weapon = "Crossbow"
-CheckPoint.saveState(gameState.toMemento())
+CheckPoint.saveState(memento: gameState.toMemento())
 
-gameState.restoreFromMemento(CheckPoint.restorePreviousState(keyName: "gameState2"))
+gameState.restoreFromMemento(memento: CheckPoint.restorePreviousState(keyName: "gameState2"))
 
 /*:
 👓 Observer
@@ -441,10 +441,10 @@ class TestChambers {
 
     var testChamberNumber: Int = 0 {
         willSet(newValue) {
-            observer?.willChangePropertyName("testChamberNumber", newPropertyValue:newValue)
+            observer?.willChangePropertyName(propertyName: "testChamberNumber", newPropertyValue:newValue as AnyObject?)
         }
         didSet {
-            observer?.didChangePropertyName("testChamberNumber", oldPropertyValue:oldValue)
+            observer?.didChangePropertyName(propertyName: "testChamberNumber", oldPropertyValue:oldValue as AnyObject?)
         }
     }
 }
@@ -468,7 +468,7 @@ class Observer : PropertyObserver {
 var observerInstance = Observer()
 var testChambers = TestChambers()
 testChambers.observer = observerInstance
-testChambers.testChamberNumber++
+testChambers.testChamberNumber += 1
 /*:
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Observer)
 */
@@ -485,14 +485,14 @@ class Context {
 	private var state: State = UnauthorizedState()
 
     var isAuthorized: Bool {
-        get { return state.isAuthorized(self) }
+        get { return state.isAuthorized(context: self) }
     }
 
     var userId: String? {
-        get { return state.userId(self) }
+        get { return state.userId(context: self) }
     }
 
-	func changeStateToAuthorized(userId userId: String) {
+	func changeStateToAuthorized(userId: String) {
 		state = AuthorizedState(userId: userId)
 	}
 
@@ -551,7 +551,7 @@ class Printer {
     let strategy: PrintStrategy
     
     func printString(string: String) -> String {
-        return self.strategy.printString(string)
+        return self.strategy.printString(string: string)
     }
     
     init(strategy: PrintStrategy) {
@@ -561,23 +561,23 @@ class Printer {
 
 class UpperCaseStrategy : PrintStrategy {
     func printString(string:String) -> String {
-        return string.uppercaseString
+        return string.uppercased()
     }
 }
 
 class LowerCaseStrategy : PrintStrategy {
     func printString(string:String) -> String {
-        return string.lowercaseString
+        return string.lowercased()
     }
 }
 /*:
 ### Usage
 */
 var lower = Printer(strategy:LowerCaseStrategy())
-lower.printString("O tempora, o mores!")
+lower.printString(string: "O tempora, o mores!")
 
 var upper = Printer(strategy:UpperCaseStrategy())
-upper.printString("O tempora, o mores!")
+upper.printString(string: "O tempora, o mores!")
 /*:
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Strategy)
 */
@@ -623,7 +623,7 @@ let planets: [Planet] = [PlanetAlderaan(), PlanetCoruscant(), PlanetTatooine()]
 
 let names = planets.map { (planet: Planet) -> String in
 	let visitor = NameVisitor()
-	planet.accept(visitor)
+	planet.accept(visitor: visitor)
 	return visitor.name
 }
 

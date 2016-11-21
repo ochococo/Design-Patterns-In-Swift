@@ -17,9 +17,9 @@ class MoneyPile {
         self.nextPile = nextPile
     }
     
-    func canWithdraw(v: Int) -> Bool {
+    func canWithdraw(amount: Int) -> Bool {
 
-        var v = v
+        var value = amount
 
         func canTakeSomeBill(want: Int) -> Bool {
             return (want / self.value) > 0
@@ -27,7 +27,7 @@ class MoneyPile {
         
         var q = self.quantity
 
-        while canTakeSomeBill(v) {
+        while canTakeSomeBill(value) {
 
             if q == 0 {
                 break
@@ -37,10 +37,10 @@ class MoneyPile {
             q -= 1
         }
 
-        if v == 0 {
+        if value == 0 {
             return true
         } else if let next = self.nextPile {
-            return next.canWithdraw(v)
+            return next.canWithdraw(value)
         }
 
         return false
@@ -68,18 +68,18 @@ class ATM {
         self.ten = ten
     }
     
-    func canWithdraw(value: Int) -> String {
-        return "Can withdraw: \(self.startPile.canWithdraw(value))"
+    func canWithdraw(amount: Int) -> String {
+        return "Can withdraw: \(self.startPile.canWithdraw(amount))"
     }
 }
 /*:
 ### Usage
 */
 // Create piles of money and link them together 10 < 20 < 50 < 100.**
-let ten = MoneyPile(value: 10, quantity: 6, nextPile: nil)
-let twenty = MoneyPile(value: 20, quantity: 2, nextPile: ten)
-let fifty = MoneyPile(value: 50, quantity: 2, nextPile: twenty)
-let hundred = MoneyPile(value: 100, quantity: 1, nextPile: fifty)
+let ten = MoneyPile(amount: 10, quantity: 6, nextPile: nil)
+let twenty = MoneyPile(amount: 20, quantity: 2, nextPile: ten)
+let fifty = MoneyPile(amount: 50, quantity: 2, nextPile: twenty)
+let hundred = MoneyPile(amount: 100, quantity: 1, nextPile: fifty)
 
 // Build ATM.
 var atm = ATM(hundred: hundred, fifty: fifty, twenty: twenty, ten: ten)
