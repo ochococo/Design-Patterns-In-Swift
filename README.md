@@ -5,13 +5,18 @@ A short cheat-sheet with Xcode 7.3 Playground ([Design-Patterns.playground.zip](
 
 👷 Project maintained by: [@nsmeme](http://twitter.com/nsmeme) (Oktawian Chojnacki)
 
-⚠️ See my newest project: [OOD-Principles-In-Swift](https://github.com/ochococo/OOD-Principles-In-Swift)
-
 ## Table of Contents
 
 * [Behavioral](#behavioral)
 * [Creational](#creational)
 * [Structural](#structural)
+
+
+```swift
+ Behavioral |
+ [Creational](Creational) |
+ [Structural](Structural)
+```
 
 Behavioral
 ==========
@@ -123,6 +128,9 @@ atm.canWithdraw(30)  // Can withdraw - 1x20, 2x10
 
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Chain-Of-Responsibility)
 
+```swift
+
+```
 
 👫 Command
 ----------
@@ -289,6 +297,9 @@ var result = expression?.evaluate(intContext)
 
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Interpreter)
 
+```swift
+
+```
 
 🍫 Iterator
 -----------
@@ -396,6 +407,9 @@ user0.send("Hello") // user1 receives message
 
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Mediator)
 
+```swift
+
+```
 
 💾 Memento
 ----------
@@ -534,6 +548,9 @@ testChambers.testChamberNumber++
 
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Observer)
 
+```swift
+
+```
 
 🐉 State
 ---------
@@ -602,6 +619,10 @@ context.changeStateToUnauthorized()
 
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-State)
 
+```swift
+
+```
+
 💡 Strategy
 -----------
 
@@ -654,6 +675,9 @@ upper.printString("O tempora, o mores!")
 
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Strategy)
 
+```swift
+
+```
 
 🏃 Visitor
 ----------
@@ -710,6 +734,12 @@ names
 
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Visitor)
 
+```swift
+
+ [Behavioral](Behavioral) |
+ Creational |
+ [Structural](Structural)
+```
 
 Creational
 ==========
@@ -732,6 +762,9 @@ The "family" of objects created by the factory are determined at run-time.
 
 ### Example
 
+```swift
+
+```
  
 Protocols
 
@@ -864,6 +897,9 @@ let deathStar = DeathStar(builder:empire)
 
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Builder)
 
+```swift
+
+```
 
 🏭 Factory Method
 -----------------
@@ -973,6 +1009,9 @@ Eduardo.name = "Eduardo"
 
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Prototype)
 
+```swift
+
+```
 
 💍 Singleton
 ------------
@@ -999,7 +1038,9 @@ class DeathStarSuperlaser {
 ```swift
 
 let laser = DeathStarSuperlaser.sharedInstance
-
+ [Behavioral](Behavioral) |
+ [Creational](Creational) |
+ Structural
 ```
 
 Structural
@@ -1079,6 +1120,9 @@ oldFormat.angleV
 
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Adapter)
 
+```swift
+
+```
 
 🌉 Bridge
 ----------
@@ -1141,6 +1185,9 @@ The composite pattern is used to create hierarchical, recursive tree structures 
 
 ### Example
 
+```swift
+
+```
 
 Component
 
@@ -1311,6 +1358,76 @@ enum Eternal {
 
 Eternal.setObject("Disconnect me. I’d rather be nothing", forKey:"Bishop")
 Eternal.objectForKey("Bishop")
+```
+
+## 🍃 Flyweight
+The flyweight pattern is used to minimize memory usage or computational expenses by sharing as much as possible with other similar objects.
+### Example
+
+```swift
+
+// Instances of CoffeeFlavour will be the Flyweights
+class CoffeeFlavor : Printable {
+    var flavor: String
+    var description: String {
+        get {
+            return flavor
+        }
+    }
+
+    init(flavor: String) {
+        self.flavor = flavor
+    }
+}
+
+// Menu acts as a factory and cache for CoffeeFlavour flyweight objects
+class Menu {
+    private var flavors: [String: CoffeeFlavor] = [:]
+
+    func lookup(flavor: String) -> CoffeeFlavor {
+        if flavors.indexForKey(flavor) == nil {
+            flavors[flavor] = CoffeeFlavor(flavor: flavor)
+        }
+        return flavors[flavor]!
+    }
+}
+
+class CoffeeShop {
+    private var orders: [Int: CoffeeFlavor] = [:]
+    private var menu = Menu()
+
+    func takeOrder(#flavor: String, table: Int) {
+        orders[table] = menu.lookup(flavor)
+    }
+
+    func serve() {
+        for (table, flavor) in orders {
+            println("Serving \(flavor) to table \(table)")
+        }
+    }
+}
+```
+
+### Usage
+
+```swift
+
+let coffeeShop = CoffeeShop()
+
+coffeeShop.takeOrder(flavor: "Cappuccino", table: 1)
+coffeeShop.takeOrder(flavor: "Frappe", table: 3);
+coffeeShop.takeOrder(flavor: "Espresso", table: 2);
+coffeeShop.takeOrder(flavor: "Frappe", table: 15);
+coffeeShop.takeOrder(flavor: "Cappuccino", table: 10);
+coffeeShop.takeOrder(flavor: "Frappe", table: 8);
+coffeeShop.takeOrder(flavor: "Espresso", table: 7);
+coffeeShop.takeOrder(flavor: "Cappuccino", table: 4);
+coffeeShop.takeOrder(flavor: "Espresso", table: 9);
+coffeeShop.takeOrder(flavor: "Frappe", table: 12);
+coffeeShop.takeOrder(flavor: "Cappuccino", table: 13);
+coffeeShop.takeOrder(flavor: "Espresso", table: 5);
+
+coffeeShop.serve()
 ```
 
 ☔ Protection Proxy

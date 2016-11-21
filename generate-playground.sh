@@ -1,7 +1,5 @@
 #!/bin/bash
 
-rm ./contents.swift
-
 cleanThisMessForReadme () {
 
 	FILENAME=$1
