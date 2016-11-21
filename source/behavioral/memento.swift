@@ -6,64 +6,78 @@ The memento pattern is used to capture the current state of an object and store 
 
 ### Example
 */
-typealias Memento = Dictionary<NSObject, AnyObject>
-
-let DPMementoKeyChapter = "com.valve.halflife.chapter"
-let DPMementoKeyWeapon = "com.valve.halflife.weapon"
-let DPMementoGameState = "com.valve.halflife.state"
+typealias Memento = NSDictionary
 /*:
 Originator
 */
-class GameState {
-    var chapter: String = ""
-    var weapon: String = ""
+protocol MementoConvertible {
+    var memento: Memento { get }
+    init?(memento: Memento)
+}
 
-    func toMemento() -> Memento {
-        return [ DPMementoKeyChapter:chapter, DPMementoKeyWeapon:weapon ]
+struct GameState: MementoConvertible {
+
+    private struct Keys {
+        static let chapter = "com.valve.halflife.chapter"
+        static let weapon = "com.valve.halflife.weapon"
     }
 
-    func restoreFromMemento(memento: Memento) {
-        chapter = memento[DPMementoKeyChapter] as? String ?? "n/a"
-        weapon = memento[DPMementoKeyWeapon] as? String ?? "n/a"
+    var chapter: String
+    var weapon: String
+
+    init(chapter: String, weapon: String) {
+        self.chapter = chapter
+        self.weapon = weapon
+    }
+
+    init?(memento: Memento) {
+        guard let mementoChapter = memento[Keys.chapter] as? String,
+              let mementoWeapon = memento[Keys.weapon] as? String else {
+            return nil
+        }
+
+        chapter = mementoChapter
+        weapon = mementoWeapon
+    }
+
+    var memento: Memento {
+        return [ Keys.chapter: chapter, Keys.weapon: weapon ]
     }
 }
 /*:
 Caretaker
 */
 enum CheckPoint {
-    static func saveState(memento: Memento, keyName: String = DPMementoGameState) {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject(memento, forKey: keyName)
+    static func save(_ state: MementoConvertible, saveName: String) {
+        let defaults = UserDefaults.standard
+        defaults.set(state.memento, forKey: saveName)
         defaults.synchronize()
     }
 
-    static func restorePreviousState(keyName keyName: String = DPMementoGameState) -> Memento {
-        let defaults = NSUserDefaults.standardUserDefaults()
+    static func restore(saveName: String) -> Memento? {
+        let defaults = UserDefaults.standard
 
-        return defaults.objectForKey(keyName) as? Memento ?? Memento()
+        return defaults.object(forKey: saveName) as? Memento
     }
 }
 /*:
  ### Usage
 */
-var gameState = GameState()
-gameState.restoreFromMemento(CheckPoint.restorePreviousState())
-
-gameState.chapter = "Black Mesa Inbound"
-gameState.weapon = "Crowbar"
-CheckPoint.saveState(gameState.toMemento())
+var gameState = GameState(chapter: "Black Mesa Inbound", weapon: "Crowbar")
 
 gameState.chapter = "Anomalous Materials"
 gameState.weapon = "Glock 17"
-gameState.restoreFromMemento(CheckPoint.restorePreviousState())
+CheckPoint.save(gameState, saveName: "gameState1")
 
 gameState.chapter = "Unforeseen Consequences"
 gameState.weapon = "MP5"
-CheckPoint.saveState(gameState.toMemento(), keyName: "gameState2")
+CheckPoint.save(gameState, saveName: "gameState2")
 
 gameState.chapter = "Office Complex"
 gameState.weapon = "Crossbow"
-CheckPoint.saveState(gameState.toMemento())
+CheckPoint.save(gameState, saveName: "gameState3")
 
-gameState.restoreFromMemento(CheckPoint.restorePreviousState(keyName: "gameState2"))
-
+if let memento = CheckPoint.restore(saveName: "gameState1") {
+    let finalState = GameState(memento: memento)
+    dump(finalState)
+}

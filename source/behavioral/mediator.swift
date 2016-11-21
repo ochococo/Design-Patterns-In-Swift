@@ -6,62 +6,52 @@ The mediator pattern is used to reduce coupling between classes that communicate
 
 ### Example
 */
+struct Programmer {
 
-class Colleague {
     let name: String
-    let mediator: Mediator
-    
-    init(name: String, mediator: Mediator) {
+
+    init(name: String) {
         self.name = name
-        self.mediator = mediator
     }
-    
-    func send(message: String) {
-        mediator.send(message, colleague: self)
-    }
-    
+
     func receive(message: String) {
-        assert(false, "Method should be overriden")
+        print("\(name) received: \(message)")
     }
 }
 
-protocol Mediator {
-    func send(message: String, colleague: Colleague)
+protocol MessageSending {
+    func send(message: String)
 }
 
-class MessageMediator: Mediator {
-    private var colleagues: [Colleague] = []
-    
-    func addColleague(colleague: Colleague) {
-        colleagues.append(colleague)
+final class MessageMediator: MessageSending {
+
+    private var recipients: [Programmer] = []
+
+    func add(recipient: Programmer) {
+        recipients.append(recipient)
     }
-    
-    func send(message: String, colleague: Colleague) {
-        for c in colleagues {
-            if c !== colleague { //for simplicity we compare object references
-                c.receive(message)
-            }
+
+    func send(message: String) {
+        for recipient in recipients {
+            recipient.receive(message: message)
         }
     }
 }
-
-class ConcreteColleague: Colleague {
-    override func receive(message: String) {
-        print("Colleague \(name) received: \(message)")
-    }
-}
-
 /*:
 ### Usage
 */
+func spamMonster(message: String, worker: MessageSending) {
+    worker.send(message: message)
+}
 
 let messagesMediator = MessageMediator()
-let user0 = ConcreteColleague(name: "0", mediator: messagesMediator)
-let user1 = ConcreteColleague(name: "1", mediator: messagesMediator)
-messagesMediator.addColleague(user0)
-messagesMediator.addColleague(user1)
 
-user0.send("Hello") // user1 receives message
+let user0 = Programmer(name: "Linus Torvalds")
+let user1 = Programmer(name: "Avadis 'Avie' Tevanian")
+messagesMediator.add(recipient: user0)
+messagesMediator.add(recipient: user1)
+
+spamMonster(message: "I'd Like to Add you to My Professional Network", worker: messagesMediator)
 /*:
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Mediator)
 */

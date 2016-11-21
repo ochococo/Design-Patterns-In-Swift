@@ -20,6 +20,7 @@ The chain of responsibility pattern is used to process varied requests, each of 
 ### Example:
 */
 class MoneyPile {
+
     let value: Int
     var quantity: Int
     var nextPile: MoneyPile?
@@ -30,30 +31,32 @@ class MoneyPile {
         self.nextPile = nextPile
     }
     
-    func canWithdraw(v: Int) -> Bool {
+    func canWithdraw(amount: Int) -> Bool {
 
-        var v = v
+        var amount = amount
 
         func canTakeSomeBill(want: Int) -> Bool {
             return (want / self.value) > 0
         }
         
-        var q = self.quantity
+        var quantity = self.quantity
 
-        while canTakeSomeBill(v) {
+        while canTakeSomeBill(want: amount) {
 
-            if q == 0 {
+            if quantity == 0 {
                 break
             }
 
-            v -= self.value
-            q -= 1
+            amount -= self.value
+            quantity -= 1
         }
 
-        if v == 0 {
+        guard amount > 0 else {
             return true
-        } else if let next = self.nextPile {
-            return next.canWithdraw(v)
+        }
+
+        if let next = self.nextPile {
+            return next.canWithdraw(amount: amount)
         }
 
         return false
@@ -81,8 +84,8 @@ class ATM {
         self.ten = ten
     }
     
-    func canWithdraw(value: Int) -> String {
-        return "Can withdraw: \(self.startPile.canWithdraw(value))"
+    func canWithdraw(amount: Int) -> String {
+        return "Can withdraw: \(self.startPile.canWithdraw(amount: amount))"
     }
 }
 /*:
@@ -96,10 +99,10 @@ let hundred = MoneyPile(value: 100, quantity: 1, nextPile: fifty)
 
 // Build ATM.
 var atm = ATM(hundred: hundred, fifty: fifty, twenty: twenty, ten: ten)
-atm.canWithdraw(310) // Cannot because ATM has only 300
-atm.canWithdraw(100) // Can withdraw - 1x100
-atm.canWithdraw(165) // Cannot withdraw because ATM doesn't has bill with value of 5
-atm.canWithdraw(30)  // Can withdraw - 1x20, 2x10
+atm.canWithdraw(amount: 310) // Cannot because ATM has only 300
+atm.canWithdraw(amount: 100) // Can withdraw - 1x100
+atm.canWithdraw(amount: 165) // Cannot withdraw because ATM doesn't has bill with value of 5
+atm.canWithdraw(amount: 30)  // Can withdraw - 1x20, 2x10
 /*:
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Chain-Of-Responsibility)
 */
@@ -173,87 +176,86 @@ The interpreter pattern is used to evaluate sentences in a language.
 ### Example
 */
 
-protocol IntegerExp {
-    func evaluate(context: IntegerContext) -> Int
-    func replace(character: Character, integerExp: IntegerExp) -> IntegerExp
-    func copy() -> IntegerExp
+protocol IntegerExpression {
+    func evaluate(_ context: IntegerContext) -> Int
+    func replace(character: Character, integerExpression: IntegerExpression) -> IntegerExpression
+    func copied() -> IntegerExpression
 }
 
-class IntegerContext {
+final class IntegerContext {
     private var data: [Character:Int] = [:]
     
     func lookup(name: Character) -> Int {
         return self.data[name]!
     }
     
-    func assign(integerVarExp: IntegerVarExp, value: Int) {
-        self.data[integerVarExp.name] = value
+    func assign(expression: IntegerVariableExpression, value: Int) {
+        self.data[expression.name] = value
     }
 }
 
-class IntegerVarExp: IntegerExp {
+final class IntegerVariableExpression: IntegerExpression {
     let name: Character
     
     init(name: Character) {
         self.name = name
     }
     
-    func evaluate(context: IntegerContext) -> Int {
-        return context.lookup(self.name)
+    func evaluate(_ context: IntegerContext) -> Int {
+        return context.lookup(name: self.name)
     }
     
-    func replace(name: Character, integerExp: IntegerExp) -> IntegerExp {
+    func replace(character name: Character, integerExpression: IntegerExpression) -> IntegerExpression {
         if name == self.name {
-            return integerExp.copy()
+            return integerExpression.copied()
         } else {
-            return IntegerVarExp(name: self.name)
+            return IntegerVariableExpression(name: self.name)
         }
     }
     
-    func copy() -> IntegerExp {
-        return IntegerVarExp(name: self.name)
+    func copied() -> IntegerExpression {
+        return IntegerVariableExpression(name: self.name)
     }
 }
 
-class AddExp: IntegerExp {
-    private var operand1: IntegerExp
-    private var operand2: IntegerExp
+final class AddExpression: IntegerExpression {
+    private var operand1: IntegerExpression
+    private var operand2: IntegerExpression
     
-    init(op1: IntegerExp, op2: IntegerExp) {
+    init(op1: IntegerExpression, op2: IntegerExpression) {
         self.operand1 = op1
         self.operand2 = op2
     }
     
-    func evaluate(context: IntegerContext) -> Int {
+    func evaluate(_ context: IntegerContext) -> Int {
         return self.operand1.evaluate(context) + self.operand2.evaluate(context)
     }
     
-    func replace(character: Character, integerExp: IntegerExp) -> IntegerExp {
-        return AddExp(op1: operand1.replace(character, integerExp: integerExp),
-            op2: operand2.replace(character, integerExp: integerExp))
+    func replace(character: Character, integerExpression: IntegerExpression) -> IntegerExpression {
+        return AddExpression(op1: operand1.replace(character: character, integerExpression: integerExpression),
+                             op2: operand2.replace(character: character, integerExpression: integerExpression))
     }
     
-    func copy() -> IntegerExp {
-        return AddExp(op1: self.operand1, op2: self.operand2)
+    func copied() -> IntegerExpression {
+        return AddExpression(op1: self.operand1, op2: self.operand2)
     }
 }
 /*:
 ### Usage
 */
-var expression: IntegerExp?
-var intContext = IntegerContext()
+var context = IntegerContext()
 
-var a = IntegerVarExp(name: "A")
-var b = IntegerVarExp(name: "B")
-var c = IntegerVarExp(name: "C")
+var a = IntegerVariableExpression(name: "A")
+var b = IntegerVariableExpression(name: "B")
+var c = IntegerVariableExpression(name: "C")
 
-expression = AddExp(op1: a, op2: AddExp(op1: b, op2: c)) // a + (b + c)
+var expression = AddExpression(op1: a, op2: AddExpression(op1: b, op2: c)) // a + (b + c)
 
-intContext.assign(a, value: 2)
-intContext.assign(b, value: 1)
-intContext.assign(c, value: 3)
+context.assign(expression: a, value: 2)
+context.assign(expression: b, value: 1)
+context.assign(expression: c, value: 3)
 
-var result = expression?.evaluate(intContext)
+var result = expression.evaluate(context)
 /*:
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Interpreter)
 */
@@ -265,22 +267,38 @@ The iterator pattern is used to provide a standard interface for traversing a co
 
 ### Example:
 */
-struct NovellasCollection<T> {
-    let novellas: [T]
+struct Novella {
+    let name: String
 }
 
-extension NovellasCollection: SequenceType {
-    typealias Generator = AnyGenerator<T>
-    
-    func generate() -> AnyGenerator<T> {
-        var i = 0
-        return AnyGenerator { i += 1; return i >= self.novellas.count ? nil : self.novellas[i] }
+struct Novellas {
+    let novellas: [Novella]
+}
+
+struct NovellasIterator: IteratorProtocol {
+
+    private var current = 0
+    private let novellas: [Novella]
+
+    init(novellas: [Novella]) {
+        self.novellas = novellas
+    }
+
+    mutating func next() -> Novella? {
+        defer { current += 1 }
+        return novellas.count > current ? novellas[current] : nil
+    }
+}
+
+extension Novellas: Sequence {
+    func makeIterator() -> NovellasIterator {
+        return NovellasIterator(novellas: novellas)
     }
 }
 /*:
 ### Usage
 */
-let greatNovellas = NovellasCollection(novellas:["Mist"])
+let greatNovellas = Novellas(novellas: [Novella(name: "The Mist")] )
 
 for novella in greatNovellas {
     print("I've read: \(novella)")
@@ -294,47 +312,35 @@ The mediator pattern is used to reduce coupling between classes that communicate
 ### Example
 */
 
-class Colleague {
+struct Programmer {
+
     let name: String
-    let mediator: Mediator
     
-    init(name: String, mediator: Mediator) {
+    init(name: String) {
         self.name = name
-        self.mediator = mediator
-    }
-    
-    func send(message: String) {
-        mediator.send(message, colleague: self)
     }
     
     func receive(message: String) {
-        assert(false, "Method should be overriden")
+        print("\(name) received: \(message)")
     }
 }
 
-protocol Mediator {
-    func send(message: String, colleague: Colleague)
+protocol MessageSending {
+    func send(message: String)
 }
 
-class MessageMediator: Mediator {
-    private var colleagues: [Colleague] = []
+final class MessageMediator: MessageSending {
+
+    private var recipients: [Programmer] = []
     
-    func addColleague(colleague: Colleague) {
-        colleagues.append(colleague)
+    func add(recipient: Programmer) {
+        recipients.append(recipient)
     }
     
-    func send(message: String, colleague: Colleague) {
-        for c in colleagues {
-            if c !== colleague { //for simplicity we compare object references
-                c.receive(message)
-            }
+    func send(message: String) {
+        for recipient in recipients {
+            recipient.receive(message: message)
         }
-    }
-}
-
-class ConcreteColleague: Colleague {
-    override func receive(message: String) {
-        print("Colleague \(name) received: \(message)")
     }
 }
 
@@ -342,13 +348,18 @@ class ConcreteColleague: Colleague {
 ### Usage
 */
 
-let messagesMediator = MessageMediator()
-let user0 = ConcreteColleague(name: "0", mediator: messagesMediator)
-let user1 = ConcreteColleague(name: "1", mediator: messagesMediator)
-messagesMediator.addColleague(user0)
-messagesMediator.addColleague(user1)
+func spamMonster(message: String, worker: MessageSending) {
+    worker.send(message: message)
+}
 
-user0.send("Hello") // user1 receives message
+let messagesMediator = MessageMediator()
+
+let user0 = Programmer(name: "Linus Torvalds")
+let user1 = Programmer(name: "Avadis 'Avie' Tevanian")
+messagesMediator.add(recipient: user0)
+messagesMediator.add(recipient: user1)
+
+spamMonster(message: "I'd Like to Add you to My Professional Network", worker: messagesMediator)
 /*:
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Mediator)
 */
@@ -360,66 +371,84 @@ The memento pattern is used to capture the current state of an object and store 
 
 ### Example
 */
-typealias Memento = Dictionary<NSObject, AnyObject>
-
-let DPMementoKeyChapter = "com.valve.halflife.chapter"
-let DPMementoKeyWeapon = "com.valve.halflife.weapon"
-let DPMementoGameState = "com.valve.halflife.state"
+typealias Memento = NSDictionary
 /*:
 Originator
 */
-class GameState {
-    var chapter: String = ""
-    var weapon: String = ""
 
-    func toMemento() -> Memento {
-        return [ DPMementoKeyChapter:chapter, DPMementoKeyWeapon:weapon ]
+protocol MementoConvertible {
+    var memento: Memento { get }
+    init?(memento: Memento)
+}
+
+struct GameState: MementoConvertible {
+
+    private struct Keys {
+        static let chapter = "com.valve.halflife.chapter"
+        static let weapon = "com.valve.halflife.weapon"
     }
 
-    func restoreFromMemento(memento: Memento) {
-        chapter = memento[DPMementoKeyChapter] as? String ?? "n/a"
-        weapon = memento[DPMementoKeyWeapon] as? String ?? "n/a"
+    var chapter: String
+    var weapon: String
+
+    init(chapter: String, weapon: String) {
+        self.chapter = chapter
+        self.weapon = weapon
+    }
+
+    init?(memento: Memento) {
+        guard let mementoChapter = memento[Keys.chapter] as? String,
+              let mementoWeapon = memento[Keys.weapon] as? String else {
+            return nil
+        }
+
+        chapter = mementoChapter
+        weapon = mementoWeapon
+    }
+
+    var memento: Memento {
+        return [ Keys.chapter: chapter, Keys.weapon: weapon ]
     }
 }
+
+
 /*:
 Caretaker
 */
 enum CheckPoint {
-    static func saveState(memento: Memento, keyName: String = DPMementoGameState) {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject(memento, forKey: keyName)
+    static func save(_ state: MementoConvertible, saveName: String) {
+        let defaults = UserDefaults.standard
+        defaults.set(state.memento, forKey: saveName)
         defaults.synchronize()
     }
 
-    static func restorePreviousState(keyName keyName: String = DPMementoGameState) -> Memento {
-        let defaults = NSUserDefaults.standardUserDefaults()
+    static func restore(saveName: String) -> Memento? {
+        let defaults = UserDefaults.standard
 
-        return defaults.objectForKey(keyName) as? Memento ?? Memento()
+        return defaults.object(forKey: saveName) as? Memento
     }
 }
 /*:
  ### Usage
 */
-var gameState = GameState()
-gameState.restoreFromMemento(CheckPoint.restorePreviousState())
-
-gameState.chapter = "Black Mesa Inbound"
-gameState.weapon = "Crowbar"
-CheckPoint.saveState(gameState.toMemento())
+var gameState = GameState(chapter: "Black Mesa Inbound", weapon: "Crowbar")
 
 gameState.chapter = "Anomalous Materials"
 gameState.weapon = "Glock 17"
-gameState.restoreFromMemento(CheckPoint.restorePreviousState())
+CheckPoint.save(gameState, saveName: "gameState1")
 
 gameState.chapter = "Unforeseen Consequences"
 gameState.weapon = "MP5"
-CheckPoint.saveState(gameState.toMemento(), keyName: "gameState2")
+CheckPoint.save(gameState, saveName: "gameState2")
 
 gameState.chapter = "Office Complex"
 gameState.weapon = "Crossbow"
-CheckPoint.saveState(gameState.toMemento())
+CheckPoint.save(gameState, saveName: "gameState3")
 
-gameState.restoreFromMemento(CheckPoint.restorePreviousState(keyName: "gameState2"))
+if let memento = CheckPoint.restore(saveName: "gameState1") {
+    let finalState = GameState(memento: memento)
+    dump(finalState)
+}
 
 /*:
 👓 Observer
@@ -431,32 +460,34 @@ Other objects subscribe to be immediately notified of any changes.
 ### Example
 */
 protocol PropertyObserver : class {
-    func willChangePropertyName(propertyName:String, newPropertyValue:AnyObject?)
-    func didChangePropertyName(propertyName:String, oldPropertyValue:AnyObject?)
+    func willChange(propertyName: String, newPropertyValue: Any?)
+    func didChange(propertyName: String, oldPropertyValue: Any?)
 }
 
 class TestChambers {
 
     weak var observer:PropertyObserver?
 
+    private let testChamberNumberName = "testChamberNumber"
+
     var testChamberNumber: Int = 0 {
         willSet(newValue) {
-            observer?.willChangePropertyName("testChamberNumber", newPropertyValue:newValue)
+            observer?.willChange(propertyName: testChamberNumberName, newPropertyValue: newValue)
         }
         didSet {
-            observer?.didChangePropertyName("testChamberNumber", oldPropertyValue:oldValue)
+            observer?.didChange(propertyName: testChamberNumberName, oldPropertyValue: oldValue)
         }
     }
 }
 
 class Observer : PropertyObserver {
-    func willChangePropertyName(propertyName: String, newPropertyValue: AnyObject?) {
+    func willChange(propertyName: String, newPropertyValue: Any?) {
         if newPropertyValue as? Int == 1 {
             print("Okay. Look. We both said a lot of things that you're going to regret.")
         }
     }
 
-    func didChangePropertyName(propertyName: String, oldPropertyValue: AnyObject?) {
+    func didChange(propertyName: String, oldPropertyValue: Any?) {
         if oldPropertyValue as? Int == 0 {
             print("Sorry about the mess. I've really let the place go since you killed me.")
         }
@@ -468,7 +499,7 @@ class Observer : PropertyObserver {
 var observerInstance = Observer()
 var testChambers = TestChambers()
 testChambers.observer = observerInstance
-testChambers.testChamberNumber++
+testChambers.testChamberNumber += 1
 /*:
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Observer)
 */
@@ -481,18 +512,18 @@ The pattern allows the class for an object to apparently change at run-time.
 
 ### Example
 */
-class Context {
+final class Context {
 	private var state: State = UnauthorizedState()
 
     var isAuthorized: Bool {
-        get { return state.isAuthorized(self) }
+        get { return state.isAuthorized(context: self) }
     }
 
     var userId: String? {
-        get { return state.userId(self) }
+        get { return state.userId(context: self) }
     }
 
-	func changeStateToAuthorized(userId userId: String) {
+	func changeStateToAuthorized(userId: String) {
 		state = AuthorizedState(userId: userId)
 	}
 
@@ -525,12 +556,12 @@ class AuthorizedState: State {
 /*:
 ### Usage
 */
-let context = Context()
-(context.isAuthorized, context.userId)
-context.changeStateToAuthorized(userId: "admin")
-(context.isAuthorized, context.userId) // now logged in as "admin"
-context.changeStateToUnauthorized()
-(context.isAuthorized, context.userId)
+let userContext = Context()
+(userContext.isAuthorized, userContext.userId)
+userContext.changeStateToAuthorized(userId: "admin")
+(userContext.isAuthorized, userContext.userId) // now logged in as "admin"
+userContext.changeStateToUnauthorized()
+(userContext.isAuthorized, userContext.userId)
 /*:
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-State)
 */
@@ -543,15 +574,15 @@ The strategy pattern is used to create an interchangeable family of algorithms f
 ### Example
 */
 protocol PrintStrategy {
-    func printString(string: String) -> String
+    func print(_ string: String) -> String
 }
 
-class Printer {
+final class Printer {
 
-    let strategy: PrintStrategy
+    private let strategy: PrintStrategy
     
-    func printString(string: String) -> String {
-        return self.strategy.printString(string)
+    func print(_ string: String) -> String {
+        return self.strategy.print(string)
     }
     
     init(strategy: PrintStrategy) {
@@ -559,25 +590,25 @@ class Printer {
     }
 }
 
-class UpperCaseStrategy : PrintStrategy {
-    func printString(string:String) -> String {
-        return string.uppercaseString
+final class UpperCaseStrategy: PrintStrategy {
+    func print(_ string: String) -> String {
+        return string.uppercased()
     }
 }
 
-class LowerCaseStrategy : PrintStrategy {
-    func printString(string:String) -> String {
-        return string.lowercaseString
+final class LowerCaseStrategy: PrintStrategy {
+    func print(_ string:String) -> String {
+        return string.lowercased()
     }
 }
 /*:
 ### Usage
 */
-var lower = Printer(strategy:LowerCaseStrategy())
-lower.printString("O tempora, o mores!")
+var lower = Printer(strategy: LowerCaseStrategy())
+lower.print("O tempora, o mores!")
 
-var upper = Printer(strategy:UpperCaseStrategy())
-upper.printString("O tempora, o mores!")
+var upper = Printer(strategy: UpperCaseStrategy())
+upper.print("O tempora, o mores!")
 /*:
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Strategy)
 */
@@ -590,31 +621,32 @@ The visitor pattern is used to separate a relatively complex set of structured d
 ### Example
 */
 protocol PlanetVisitor {
-	func visit(planet: PlanetAlderaan)
-	func visit(planet: PlanetCoruscant)
-	func visit(planet: PlanetTatooine)
+	func visit(_ planet: PlanetAlderaan)
+	func visit(_ planet: PlanetCoruscant)
+	func visit(_ planet: PlanetTatooine)
 }
 
 protocol Planet {
-	func accept(visitor: PlanetVisitor)
+	func accept(_ visitor: PlanetVisitor)
 }
 
-class PlanetAlderaan: Planet {
-	func accept(visitor: PlanetVisitor) { visitor.visit(self) }
+final class PlanetAlderaan: Planet {
+	func accept(_ visitor: PlanetVisitor) { visitor.visit(self) }
 }
-class PlanetCoruscant: Planet {
-	func accept(visitor: PlanetVisitor) { visitor.visit(self) }
+final class PlanetCoruscant: Planet {
+	func accept(_ visitor: PlanetVisitor) { visitor.visit(self) }
 }
-class PlanetTatooine: Planet {
-	func accept(visitor: PlanetVisitor) { visitor.visit(self) }
+final class PlanetTatooine: Planet {
+	func accept(_ visitor: PlanetVisitor) { visitor.visit(self) }
 }
 
-class NameVisitor: PlanetVisitor {
+final class NameVisitor: PlanetVisitor {
+
 	var name = ""
 
-	func visit(planet: PlanetAlderaan)  { name = "Alderaan" }
-	func visit(planet: PlanetCoruscant) { name = "Coruscant" }
-	func visit(planet: PlanetTatooine)  { name = "Tatooine" }
+	func visit(_ planet: PlanetAlderaan)  { name = "Alderaan" }
+	func visit(_ planet: PlanetCoruscant) { name = "Coruscant" }
+	func visit(_ planet: PlanetTatooine)  { name = "Tatooine" }
 }
 /*:
 ### Usage

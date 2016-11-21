@@ -7,41 +7,41 @@ The strategy pattern is used to create an interchangeable family of algorithms f
 ### Example
 */
 protocol PrintStrategy {
-    func printString(string: String) -> String
+    func print(_ string: String) -> String
 }
 
-class Printer {
+final class Printer {
 
-    let strategy: PrintStrategy
-    
-    func printString(string: String) -> String {
-        return self.strategy.printString(string)
+    private let strategy: PrintStrategy
+
+    func print(_ string: String) -> String {
+        return self.strategy.print(string)
     }
-    
+
     init(strategy: PrintStrategy) {
         self.strategy = strategy
     }
 }
 
-class UpperCaseStrategy : PrintStrategy {
-    func printString(string:String) -> String {
-        return string.uppercaseString
+final class UpperCaseStrategy: PrintStrategy {
+    func print(_ string: String) -> String {
+        return string.uppercased()
     }
 }
 
-class LowerCaseStrategy : PrintStrategy {
-    func printString(string:String) -> String {
-        return string.lowercaseString
+final class LowerCaseStrategy: PrintStrategy {
+    func print(_ string:String) -> String {
+        return string.lowercased()
     }
 }
 /*:
 ### Usage
 */
-var lower = Printer(strategy:LowerCaseStrategy())
-lower.printString("O tempora, o mores!")
+var lower = Printer(strategy: LowerCaseStrategy())
+lower.print("O tempora, o mores!")
 
-var upper = Printer(strategy:UpperCaseStrategy())
-upper.printString("O tempora, o mores!")
+var upper = Printer(strategy: UpperCaseStrategy())
+upper.print("O tempora, o mores!")
 /*:
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Strategy)
 */
