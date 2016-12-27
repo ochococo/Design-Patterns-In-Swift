@@ -13,14 +13,6 @@ A short cheat-sheet with Xcode 8.2 Playground ([Design-Patterns.playground.zip](
 * [Creational](#creational)
 * [Structural](#structural)
 
-
-```swift
-
- Behavioral |
- [Creational](Creational) |
- [Structural](Structural)
-```
-
 Behavioral
 ==========
 
