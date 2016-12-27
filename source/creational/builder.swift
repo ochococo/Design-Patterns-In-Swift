@@ -28,7 +28,7 @@ struct DeathStar : CustomStringConvertible {
 
     init?(builder: DeathStarBuilder) {
 
-        if let x = builder.x, y = builder.y, z = builder.z {
+        if let x = builder.x, let y = builder.y, let z = builder.z {
             self.x = x
             self.y = y
             self.z = z

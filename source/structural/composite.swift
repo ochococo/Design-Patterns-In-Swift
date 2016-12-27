@@ -15,13 +15,13 @@ protocol Shape {
 /*: 
 Leafs
 */ 
-class Square : Shape {
+final class Square : Shape {
     func draw(fillColor: String) {
         print("Drawing a Square with color \(fillColor)")
     }
 }
 
-class Circle : Shape {
+final class Circle : Shape {
     func draw(fillColor: String) {
         print("Drawing a circle with color \(fillColor)")
     }
@@ -30,16 +30,16 @@ class Circle : Shape {
 /*:
 Composite
 */
-class Whiteboard : Shape {
+final class Whiteboard : Shape {
     lazy var shapes = [Shape]()
     
     init(_ shapes:Shape...) {
         self.shapes = shapes
     }
     
-    func draw(fillColor:String) {
+    func draw(fillColor: String) {
         for shape in self.shapes {
-            shape.draw(fillColor)
+            shape.draw(fillColor: fillColor)
         }
     }
 }

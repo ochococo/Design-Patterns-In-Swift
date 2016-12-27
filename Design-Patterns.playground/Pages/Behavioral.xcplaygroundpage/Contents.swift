@@ -19,18 +19,18 @@ The chain of responsibility pattern is used to process varied requests, each of 
 
 ### Example:
 */
-class MoneyPile {
+final class MoneyPile {
 
     let value: Int
     var quantity: Int
     var nextPile: MoneyPile?
-    
+
     init(value: Int, quantity: Int, nextPile: MoneyPile?) {
         self.value = value
         self.quantity = quantity
         self.nextPile = nextPile
     }
-    
+
     func canWithdraw(amount: Int) -> Bool {
 
         var amount = amount
@@ -38,7 +38,7 @@ class MoneyPile {
         func canTakeSomeBill(want: Int) -> Bool {
             return (want / self.value) > 0
         }
-        
+
         var quantity = self.quantity
 
         while canTakeSomeBill(want: amount) {
@@ -63,19 +63,19 @@ class MoneyPile {
     }
 }
 
-class ATM {
+final class ATM {
     private var hundred: MoneyPile
     private var fifty: MoneyPile
     private var twenty: MoneyPile
     private var ten: MoneyPile
-    
+
     private var startPile: MoneyPile {
         return self.hundred
     }
-    
-    init(hundred: MoneyPile, 
-           fifty: MoneyPile, 
-          twenty: MoneyPile, 
+
+    init(hundred: MoneyPile,
+           fifty: MoneyPile,
+          twenty: MoneyPile,
              ten: MoneyPile) {
 
         self.hundred = hundred
@@ -83,7 +83,7 @@ class ATM {
         self.twenty = twenty
         self.ten = ten
     }
-    
+
     func canWithdraw(amount: Int) -> String {
         return "Can withdraw: \(self.startPile.canWithdraw(amount: amount))"
     }
@@ -184,11 +184,11 @@ protocol IntegerExpression {
 
 final class IntegerContext {
     private var data: [Character:Int] = [:]
-    
+
     func lookup(name: Character) -> Int {
         return self.data[name]!
     }
-    
+
     func assign(expression: IntegerVariableExpression, value: Int) {
         self.data[expression.name] = value
     }
@@ -196,15 +196,15 @@ final class IntegerContext {
 
 final class IntegerVariableExpression: IntegerExpression {
     let name: Character
-    
+
     init(name: Character) {
         self.name = name
     }
-    
+
     func evaluate(_ context: IntegerContext) -> Int {
         return context.lookup(name: self.name)
     }
-    
+
     func replace(character name: Character, integerExpression: IntegerExpression) -> IntegerExpression {
         if name == self.name {
             return integerExpression.copied()
@@ -212,7 +212,7 @@ final class IntegerVariableExpression: IntegerExpression {
             return IntegerVariableExpression(name: self.name)
         }
     }
-    
+
     func copied() -> IntegerExpression {
         return IntegerVariableExpression(name: self.name)
     }
@@ -221,21 +221,21 @@ final class IntegerVariableExpression: IntegerExpression {
 final class AddExpression: IntegerExpression {
     private var operand1: IntegerExpression
     private var operand2: IntegerExpression
-    
+
     init(op1: IntegerExpression, op2: IntegerExpression) {
         self.operand1 = op1
         self.operand2 = op2
     }
-    
+
     func evaluate(_ context: IntegerContext) -> Int {
         return self.operand1.evaluate(context) + self.operand2.evaluate(context)
     }
-    
+
     func replace(character: Character, integerExpression: IntegerExpression) -> IntegerExpression {
         return AddExpression(op1: operand1.replace(character: character, integerExpression: integerExpression),
                              op2: operand2.replace(character: character, integerExpression: integerExpression))
     }
-    
+
     func copied() -> IntegerExpression {
         return AddExpression(op1: self.operand1, op2: self.operand2)
     }
@@ -311,15 +311,14 @@ The mediator pattern is used to reduce coupling between classes that communicate
 
 ### Example
 */
-
 struct Programmer {
 
     let name: String
-    
+
     init(name: String) {
         self.name = name
     }
-    
+
     func receive(message: String) {
         print("\(name) received: \(message)")
     }
@@ -332,22 +331,20 @@ protocol MessageSending {
 final class MessageMediator: MessageSending {
 
     private var recipients: [Programmer] = []
-    
+
     func add(recipient: Programmer) {
         recipients.append(recipient)
     }
-    
+
     func send(message: String) {
         for recipient in recipients {
             recipient.receive(message: message)
         }
     }
 }
-
 /*:
 ### Usage
 */
-
 func spamMonster(message: String, worker: MessageSending) {
     worker.send(message: message)
 }
@@ -375,7 +372,6 @@ typealias Memento = NSDictionary
 /*:
 Originator
 */
-
 protocol MementoConvertible {
     var memento: Memento { get }
     init?(memento: Memento)
@@ -410,8 +406,6 @@ struct GameState: MementoConvertible {
         return [ Keys.chapter: chapter, Keys.weapon: weapon ]
     }
 }
-
-
 /*:
 Caretaker
 */
@@ -449,12 +443,11 @@ if let memento = CheckPoint.restore(saveName: "gameState1") {
     let finalState = GameState(memento: memento)
     dump(finalState)
 }
-
 /*:
 👓 Observer
 -----------
 
-The observer pattern is used to allow an object to publish changes to its state. 
+The observer pattern is used to allow an object to publish changes to its state.
 Other objects subscribe to be immediately notified of any changes.
 
 ### Example
@@ -464,7 +457,7 @@ protocol PropertyObserver : class {
     func didChange(propertyName: String, oldPropertyValue: Any?)
 }
 
-class TestChambers {
+final class TestChambers {
 
     weak var observer:PropertyObserver?
 
@@ -480,7 +473,7 @@ class TestChambers {
     }
 }
 
-class Observer : PropertyObserver {
+final class Observer : PropertyObserver {
     func willChange(propertyName: String, newPropertyValue: Any?) {
         if newPropertyValue as? Int == 1 {
             print("Okay. Look. We both said a lot of things that you're going to regret.")
@@ -507,7 +500,7 @@ testChambers.testChamberNumber += 1
 🐉 State
 ---------
 
-The state pattern is used to alter the behaviour of an object as its internal state changes. 
+The state pattern is used to alter the behaviour of an object as its internal state changes.
 The pattern allows the class for an object to apparently change at run-time.
 
 ### Example
@@ -530,7 +523,7 @@ final class Context {
 	func changeStateToUnauthorized() {
 		state = UnauthorizedState()
 	}
-    
+
 }
 
 protocol State {
@@ -580,11 +573,11 @@ protocol PrintStrategy {
 final class Printer {
 
     private let strategy: PrintStrategy
-    
+
     func print(_ string: String) -> String {
         return self.strategy.print(string)
     }
-    
+
     init(strategy: PrintStrategy) {
         self.strategy = strategy
     }
@@ -621,41 +614,51 @@ The visitor pattern is used to separate a relatively complex set of structured d
 ### Example
 */
 protocol PlanetVisitor {
-	func visit(_ planet: PlanetAlderaan)
-	func visit(_ planet: PlanetCoruscant)
-	func visit(_ planet: PlanetTatooine)
+	func visit(planet: PlanetAlderaan)
+	func visit(planet: PlanetCoruscant)
+	func visit(planet: PlanetTatooine)
+    func visit(planet: PlanetJedah)
 }
 
 protocol Planet {
-	func accept(_ visitor: PlanetVisitor)
+	func accept(visitor: PlanetVisitor)
 }
 
-final class PlanetAlderaan: Planet {
-	func accept(_ visitor: PlanetVisitor) { visitor.visit(self) }
-}
-final class PlanetCoruscant: Planet {
-	func accept(_ visitor: PlanetVisitor) { visitor.visit(self) }
-}
-final class PlanetTatooine: Planet {
-	func accept(_ visitor: PlanetVisitor) { visitor.visit(self) }
+class PlanetJedah: Planet {
+    func accept(visitor: PlanetVisitor) { visitor.visit(planet: self) }
 }
 
-final class NameVisitor: PlanetVisitor {
+class PlanetAlderaan: Planet {
+    func accept(visitor: PlanetVisitor) { visitor.visit(planet: self) }
+}
 
+class PlanetCoruscant: Planet {
+	func accept(visitor: PlanetVisitor) { visitor.visit(planet: self) }
+}
+
+class PlanetTatooine: Planet {
+	func accept(visitor: PlanetVisitor) { visitor.visit(planet: self) }
+}
+
+
+
+class NameVisitor: PlanetVisitor {
 	var name = ""
 
-	func visit(_ planet: PlanetAlderaan)  { name = "Alderaan" }
-	func visit(_ planet: PlanetCoruscant) { name = "Coruscant" }
-	func visit(_ planet: PlanetTatooine)  { name = "Tatooine" }
+	func visit(planet: PlanetAlderaan)  { name = "Alderaan" }
+	func visit(planet: PlanetCoruscant) { name = "Coruscant" }
+	func visit(planet: PlanetTatooine)  { name = "Tatooine" }
+    func visit(planet: PlanetJedah)     { name = "Jedah" }
 }
+
 /*:
 ### Usage
 */
-let planets: [Planet] = [PlanetAlderaan(), PlanetCoruscant(), PlanetTatooine()]
+let planets: [Planet] = [PlanetAlderaan(), PlanetCoruscant(), PlanetTatooine(), PlanetJedah()]
 
 let names = planets.map { (planet: Planet) -> String in
 	let visitor = NameVisitor()
-	planet.accept(visitor)
+    planet.accept(visitor: visitor)
 	return visitor.name
 }
 

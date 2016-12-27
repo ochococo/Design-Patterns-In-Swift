@@ -42,11 +42,11 @@ struct OldDeathStarSuperlaserTarget : OlderDeathStarSuperLaserAiming {
     private let target : DeathStarSuperlaserTarget
 
     var angleV:NSNumber {
-        return NSNumber(double: target.angleVertical)
+        return NSNumber(value: target.angleVertical)
     }
 
     var angleH:NSNumber {
-        return NSNumber(double: target.angleHorizontal)
+        return NSNumber(value: target.angleHorizontal)
     }
 
     init(_ target:DeathStarSuperlaserTarget) {
@@ -129,13 +129,13 @@ protocol Shape {
 /*: 
 Leafs
 */ 
-class Square : Shape {
+final class Square : Shape {
     func draw(fillColor: String) {
         print("Drawing a Square with color \(fillColor)")
     }
 }
 
-class Circle : Shape {
+final class Circle : Shape {
     func draw(fillColor: String) {
         print("Drawing a circle with color \(fillColor)")
     }
@@ -144,16 +144,16 @@ class Circle : Shape {
 /*:
 Composite
 */
-class Whiteboard : Shape {
+final class Whiteboard : Shape {
     lazy var shapes = [Shape]()
     
     init(_ shapes:Shape...) {
         self.shapes = shapes
     }
     
-    func draw(fillColor:String) {
+    func draw(fillColor: String) {
         for shape in self.shapes {
-            shape.draw(fillColor)
+            shape.draw(fillColor: fillColor)
         }
     }
 }
@@ -188,7 +188,7 @@ class SimpleCoffee: Coffee {
 
 class CoffeeDecorator: Coffee {
     private let decoratedCoffee: Coffee
-    private let ingredientSeparator: String = ", "
+    fileprivate let ingredientSeparator: String = ", "
 
     required init(decoratedCoffee: Coffee) {
         self.decoratedCoffee = decoratedCoffee
@@ -203,7 +203,7 @@ class CoffeeDecorator: Coffee {
     }
 }
 
-class Milk: CoffeeDecorator {
+final class Milk: CoffeeDecorator {
     required init(decoratedCoffee: Coffee) {
         super.init(decoratedCoffee: decoratedCoffee)
     }
@@ -217,7 +217,7 @@ class Milk: CoffeeDecorator {
     }
 }
 
-class WhipCoffee: CoffeeDecorator {
+final class WhipCoffee: CoffeeDecorator {
     required init(decoratedCoffee: Coffee) {
         super.init(decoratedCoffee: decoratedCoffee)
     }
@@ -249,66 +249,66 @@ The facade pattern is used to define a simplified interface to a more complex su
 */
 enum Eternal {
 
-    static func setObject(value: AnyObject!, forKey defaultName: String!) {
-        let defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject(value, forKey:defaultName)
+    static func set(_ object: Any, forKey defaultName: String) {
+        let defaults: UserDefaults = UserDefaults.standard
+        defaults.set(object, forKey:defaultName)
         defaults.synchronize()
     }
 
-    static func objectForKey(defaultName: String!) -> AnyObject! {
-        let defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
-
-        return defaults.objectForKey(defaultName)
+    static func object(forKey key: String) -> AnyObject! {
+        let defaults: UserDefaults = UserDefaults.standard
+        return defaults.object(forKey: key) as AnyObject!
     }
 
 }
 /*:
 ### Usage
 */
-Eternal.setObject("Disconnect me. I’d rather be nothing", forKey:"Bishop")
-Eternal.objectForKey("Bishop")
+Eternal.set("Disconnect me. I’d rather be nothing", forKey:"Bishop")
+Eternal.object(forKey: "Bishop")
 /*:
 ## 🍃 Flyweight
 The flyweight pattern is used to minimize memory usage or computational expenses by sharing as much as possible with other similar objects.
 ### Example
 */
 // Instances of CoffeeFlavour will be the Flyweights
-class CoffeeFlavor : Printable {
-    var flavor: String
+final class SpecialityCoffee: CustomStringConvertible {
+    var origin: String
     var description: String {
         get {
-            return flavor
+            return origin
         }
     }
 
-    init(flavor: String) {
-        self.flavor = flavor
+    init(origin: String) {
+        self.origin = origin
     }
 }
 
 // Menu acts as a factory and cache for CoffeeFlavour flyweight objects
-class Menu {
-    private var flavors: [String: CoffeeFlavor] = [:]
+final class Menu {
+    private var coffeeAvailable: [String: SpecialityCoffee] = [:]
 
-    func lookup(flavor: String) -> CoffeeFlavor {
-        if flavors.indexForKey(flavor) == nil {
-            flavors[flavor] = CoffeeFlavor(flavor: flavor)
+    func lookup(origin: String) -> SpecialityCoffee? {
+        if coffeeAvailable.index(forKey: origin) == nil {
+            coffeeAvailable[origin] = SpecialityCoffee(origin: origin)
         }
-        return flavors[flavor]!
+
+        return coffeeAvailable[origin]
     }
 }
 
-class CoffeeShop {
-    private var orders: [Int: CoffeeFlavor] = [:]
+final class CoffeeShop {
+    private var orders: [Int: SpecialityCoffee] = [:]
     private var menu = Menu()
 
-    func takeOrder(#flavor: String, table: Int) {
-        orders[table] = menu.lookup(flavor)
+    func takeOrder(origin: String, table: Int) {
+        orders[table] = menu.lookup(origin: origin)
     }
 
     func serve() {
-        for (table, flavor) in orders {
-            println("Serving \(flavor) to table \(table)")
+        for (table, origin) in orders {
+            print("Serving \(origin) to table \(table)")
         }
     }
 }
@@ -317,18 +317,8 @@ class CoffeeShop {
 */
 let coffeeShop = CoffeeShop()
 
-coffeeShop.takeOrder(flavor: "Cappuccino", table: 1)
-coffeeShop.takeOrder(flavor: "Frappe", table: 3);
-coffeeShop.takeOrder(flavor: "Espresso", table: 2);
-coffeeShop.takeOrder(flavor: "Frappe", table: 15);
-coffeeShop.takeOrder(flavor: "Cappuccino", table: 10);
-coffeeShop.takeOrder(flavor: "Frappe", table: 8);
-coffeeShop.takeOrder(flavor: "Espresso", table: 7);
-coffeeShop.takeOrder(flavor: "Cappuccino", table: 4);
-coffeeShop.takeOrder(flavor: "Espresso", table: 9);
-coffeeShop.takeOrder(flavor: "Frappe", table: 12);
-coffeeShop.takeOrder(flavor: "Cappuccino", table: 13);
-coffeeShop.takeOrder(flavor: "Espresso", table: 5);
+coffeeShop.takeOrder(origin: "Yirgacheffe, Ethiopia", table: 1)
+coffeeShop.takeOrder(origin: "Buziraguhindwa, Burundi", table: 3)
 
 coffeeShop.serve()
 /*:
@@ -341,11 +331,11 @@ Protection proxy is restricting access.
 ### Example
 */
 protocol DoorOperator {
-    func openDoors(doors: String) -> String
+    func open(doors: String) -> String
 }
 
 class HAL9000 : DoorOperator {
-    func openDoors(doors: String) -> String {
+    func open(doors: String) -> String {
         return ("HAL9000: Affirmative, Dave. I read you. Opened \(doors).")
     }
 }
@@ -353,9 +343,9 @@ class HAL9000 : DoorOperator {
 class CurrentComputer : DoorOperator {
     private var computer: HAL9000!
 
-    func authenticateWithPassword(pass: String) -> Bool {
+    func authenticate(password: String) -> Bool {
 
-        guard pass == "pass" else {
+        guard password == "pass" else {
             return false;
         }
 
@@ -364,25 +354,25 @@ class CurrentComputer : DoorOperator {
         return true
     }
 
-    func openDoors(doors: String) -> String {
+    func open(doors: String) -> String {
 
         guard computer != nil else {
             return "Access Denied. I'm afraid I can't do that."
         }
 
-        return computer.openDoors(doors)
+        return computer.open(doors: doors)
     }
 }
 /*:
 ### Usage
 */
 let computer = CurrentComputer()
-let doors = "Pod Bay Doors"
+let podBay = "Pod Bay Doors"
 
-computer.openDoors(doors)
+computer.open(doors: podBay)
 
-computer.authenticateWithPassword("pass")
-computer.openDoors(doors)
+computer.authenticate(password: "pass")
+computer.open(doors: podBay)
 /*:
 🍬 Virtual Proxy
 ----------------
