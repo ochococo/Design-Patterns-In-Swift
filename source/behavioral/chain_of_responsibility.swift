@@ -6,60 +6,63 @@ The chain of responsibility pattern is used to process varied requests, each of 
 
 ### Example:
 */
-class MoneyPile {
+final class MoneyPile {
+
     let value: Int
     var quantity: Int
     var nextPile: MoneyPile?
-    
+
     init(value: Int, quantity: Int, nextPile: MoneyPile?) {
         self.value = value
         self.quantity = quantity
         self.nextPile = nextPile
     }
-    
-    func canWithdraw(v: Int) -> Bool {
 
-        var v = v
+    func canWithdraw(amount: Int) -> Bool {
+
+        var amount = amount
 
         func canTakeSomeBill(want: Int) -> Bool {
             return (want / self.value) > 0
         }
-        
-        var q = self.quantity
 
-        while canTakeSomeBill(v) {
+        var quantity = self.quantity
 
-            if q == 0 {
+        while canTakeSomeBill(want: amount) {
+
+            if quantity == 0 {
                 break
             }
 
-            v -= self.value
-            q -= 1
+            amount -= self.value
+            quantity -= 1
         }
 
-        if v == 0 {
+        guard amount > 0 else {
             return true
-        } else if let next = self.nextPile {
-            return next.canWithdraw(v)
+        }
+
+        if let next = self.nextPile {
+            return next.canWithdraw(amount: amount)
         }
 
         return false
     }
 }
 
-class ATM {
+final class ATM {
     private var hundred: MoneyPile
     private var fifty: MoneyPile
     private var twenty: MoneyPile
     private var ten: MoneyPile
-    
+
     private var startPile: MoneyPile {
         return self.hundred
     }
-    
-    init(hundred: MoneyPile, 
-           fifty: MoneyPile, 
-          twenty: MoneyPile, 
+
+    init(hundred: MoneyPile,
+           fifty: MoneyPile,
+          twenty: MoneyPile,
              ten: MoneyPile) {
 
         self.hundred = hundred
@@ -67,9 +70,9 @@ class ATM {
         self.twenty = twenty
         self.ten = ten
     }
-    
-    func canWithdraw(value: Int) -> String {
-        return "Can withdraw: \(self.startPile.canWithdraw(value))"
+
+    func canWithdraw(amount: Int) -> String {
+        return "Can withdraw: \(self.startPile.canWithdraw(amount: amount))"
     }
 }
 /*:
@@ -83,10 +86,10 @@ let hundred = MoneyPile(value: 100, quantity: 1, nextPile: fifty)
 
 // Build ATM.
 var atm = ATM(hundred: hundred, fifty: fifty, twenty: twenty, ten: ten)
-atm.canWithdraw(310) // Cannot because ATM has only 300
-atm.canWithdraw(100) // Can withdraw - 1x100
-atm.canWithdraw(165) // Cannot withdraw because ATM doesn't has bill with value of 5
-atm.canWithdraw(30)  // Can withdraw - 1x20, 2x10
+atm.canWithdraw(amount: 310) // Cannot because ATM has only 300
+atm.canWithdraw(amount: 100) // Can withdraw - 1x100
+atm.canWithdraw(amount: 165) // Cannot withdraw because ATM doesn't has bill with value of 5
+atm.canWithdraw(amount: 30)  // Can withdraw - 1x20, 2x10
 /*:
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Chain-Of-Responsibility)
 */

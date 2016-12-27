@@ -20,24 +20,24 @@ typealias NumberFactory = (String) -> Decimal
 
 // Number implementations with factory methods
 
-struct NextStepNumber : Decimal {
-    private var nextStepNumber : NSNumber
+struct NextStepNumber: Decimal {
+    private var nextStepNumber: NSNumber
 
     func stringValue() -> String { return nextStepNumber.stringValue }
     
     // factory
-    static func make(string : String) -> Decimal {
-        return NextStepNumber(nextStepNumber:NSNumber(longLong:(string as NSString).longLongValue))
+    static func make(string: String) -> Decimal {
+        return NextStepNumber(nextStepNumber: NSNumber(value: (string as NSString).longLongValue))
     }
 }
 
 struct SwiftNumber : Decimal {
-    private var swiftInt : Int
+    private var swiftInt: Int
 
     func stringValue() -> String { return "\(swiftInt)" }
     
     // factory
-    static func make(string : String) -> Decimal {
+    static func make(string: String) -> Decimal {
         return SwiftNumber(swiftInt:(string as NSString).integerValue)
     }
 }
@@ -45,15 +45,15 @@ struct SwiftNumber : Decimal {
 Abstract factory
 */
 enum NumberType {
-    case NextStep, Swift
+    case nextStep, swift
 }
 
 enum NumberHelper {
-    static func factoryFor(type : NumberType) -> NumberFactory {
+    static func factory(for type: NumberType) -> NumberFactory {
         switch type {
-        case .NextStep:
+        case .nextStep:
             return NextStepNumber.make
-        case .Swift:
+        case .swift:
             return SwiftNumber.make
         }
     }
@@ -61,10 +61,10 @@ enum NumberHelper {
 /*:
 ### Usage
 */
-let factoryOne = NumberHelper.factoryFor(.NextStep)
+let factoryOne = NumberHelper.factory(for: .nextStep)
 let numberOne = factoryOne("1")
 numberOne.stringValue()
 
-let factoryTwo = NumberHelper.factoryFor(.Swift)
+let factoryTwo = NumberHelper.factory(for: .swift)
 let numberTwo = factoryTwo("2")
 numberTwo.stringValue()

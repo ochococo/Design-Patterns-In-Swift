@@ -7,87 +7,86 @@ The interpreter pattern is used to evaluate sentences in a language.
 ### Example
 */
 
-protocol IntegerExp {
-    func evaluate(context: IntegerContext) -> Int
-    func replace(character: Character, integerExp: IntegerExp) -> IntegerExp
-    func copy() -> IntegerExp
+protocol IntegerExpression {
+    func evaluate(_ context: IntegerContext) -> Int
+    func replace(character: Character, integerExpression: IntegerExpression) -> IntegerExpression
+    func copied() -> IntegerExpression
 }
 
-class IntegerContext {
+final class IntegerContext {
     private var data: [Character:Int] = [:]
-    
+
     func lookup(name: Character) -> Int {
         return self.data[name]!
     }
-    
-    func assign(integerVarExp: IntegerVarExp, value: Int) {
-        self.data[integerVarExp.name] = value
+
+    func assign(expression: IntegerVariableExpression, value: Int) {
+        self.data[expression.name] = value
     }
 }
 
-class IntegerVarExp: IntegerExp {
+final class IntegerVariableExpression: IntegerExpression {
     let name: Character
-    
+
     init(name: Character) {
         self.name = name
     }
-    
-    func evaluate(context: IntegerContext) -> Int {
-        return context.lookup(self.name)
+
+    func evaluate(_ context: IntegerContext) -> Int {
+        return context.lookup(name: self.name)
     }
-    
-    func replace(name: Character, integerExp: IntegerExp) -> IntegerExp {
+
+    func replace(character name: Character, integerExpression: IntegerExpression) -> IntegerExpression {
         if name == self.name {
-            return integerExp.copy()
+            return integerExpression.copied()
         } else {
-            return IntegerVarExp(name: self.name)
+            return IntegerVariableExpression(name: self.name)
         }
     }
-    
-    func copy() -> IntegerExp {
-        return IntegerVarExp(name: self.name)
+
+    func copied() -> IntegerExpression {
+        return IntegerVariableExpression(name: self.name)
     }
 }
 
-class AddExp: IntegerExp {
-    private var operand1: IntegerExp
-    private var operand2: IntegerExp
-    
-    init(op1: IntegerExp, op2: IntegerExp) {
+final class AddExpression: IntegerExpression {
+    private var operand1: IntegerExpression
+    private var operand2: IntegerExpression
+
+    init(op1: IntegerExpression, op2: IntegerExpression) {
         self.operand1 = op1
         self.operand2 = op2
     }
-    
-    func evaluate(context: IntegerContext) -> Int {
+
+    func evaluate(_ context: IntegerContext) -> Int {
         return self.operand1.evaluate(context) + self.operand2.evaluate(context)
     }
-    
-    func replace(character: Character, integerExp: IntegerExp) -> IntegerExp {
-        return AddExp(op1: operand1.replace(character, integerExp: integerExp),
-            op2: operand2.replace(character, integerExp: integerExp))
+
+    func replace(character: Character, integerExpression: IntegerExpression) -> IntegerExpression {
+        return AddExpression(op1: operand1.replace(character: character, integerExpression: integerExpression),
+                             op2: operand2.replace(character: character, integerExpression: integerExpression))
     }
-    
-    func copy() -> IntegerExp {
-        return AddExp(op1: self.operand1, op2: self.operand2)
+
+    func copied() -> IntegerExpression {
+        return AddExpression(op1: self.operand1, op2: self.operand2)
     }
 }
 /*:
 ### Usage
 */
-var expression: IntegerExp?
-var intContext = IntegerContext()
+var context = IntegerContext()
 
-var a = IntegerVarExp(name: "A")
-var b = IntegerVarExp(name: "B")
-var c = IntegerVarExp(name: "C")
+var a = IntegerVariableExpression(name: "A")
+var b = IntegerVariableExpression(name: "B")
+var c = IntegerVariableExpression(name: "C")
 
-expression = AddExp(op1: a, op2: AddExp(op1: b, op2: c)) // a + (b + c)
+var expression = AddExpression(op1: a, op2: AddExpression(op1: b, op2: c)) // a + (b + c)
 
-intContext.assign(a, value: 2)
-intContext.assign(b, value: 1)
-intContext.assign(c, value: 3)
+context.assign(expression: a, value: 2)
+context.assign(expression: b, value: 1)
+context.assign(expression: c, value: 3)
 
-var result = expression?.evaluate(intContext)
+var result = expression.evaluate(context)
 /*:
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Interpreter)
 */

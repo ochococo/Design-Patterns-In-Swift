@@ -4,42 +4,43 @@ The flyweight pattern is used to minimize memory usage or computational expenses
 ### Example
 */
 // Instances of CoffeeFlavour will be the Flyweights
-class CoffeeFlavor : Printable {
-    var flavor: String
+final class SpecialityCoffee: CustomStringConvertible {
+    var origin: String
     var description: String {
         get {
-            return flavor
+            return origin
         }
     }
 
-    init(flavor: String) {
-        self.flavor = flavor
+    init(origin: String) {
+        self.origin = origin
     }
 }
 
 // Menu acts as a factory and cache for CoffeeFlavour flyweight objects
-class Menu {
-    private var flavors: [String: CoffeeFlavor] = [:]
+final class Menu {
+    private var coffeeAvailable: [String: SpecialityCoffee] = [:]
 
-    func lookup(flavor: String) -> CoffeeFlavor {
-        if flavors.indexForKey(flavor) == nil {
-            flavors[flavor] = CoffeeFlavor(flavor: flavor)
+    func lookup(origin: String) -> SpecialityCoffee? {
+        if coffeeAvailable.index(forKey: origin) == nil {
+            coffeeAvailable[origin] = SpecialityCoffee(origin: origin)
         }
-        return flavors[flavor]!
+
+        return coffeeAvailable[origin]
     }
 }
 
-class CoffeeShop {
-    private var orders: [Int: CoffeeFlavor] = [:]
+final class CoffeeShop {
+    private var orders: [Int: SpecialityCoffee] = [:]
     private var menu = Menu()
 
-    func takeOrder(#flavor: String, table: Int) {
-        orders[table] = menu.lookup(flavor)
+    func takeOrder(origin: String, table: Int) {
+        orders[table] = menu.lookup(origin: origin)
     }
 
     func serve() {
-        for (table, flavor) in orders {
-            println("Serving \(flavor) to table \(table)")
+        for (table, origin) in orders {
+            print("Serving \(origin) to table \(table)")
         }
     }
 }
@@ -48,17 +49,7 @@ class CoffeeShop {
 */
 let coffeeShop = CoffeeShop()
 
-coffeeShop.takeOrder(flavor: "Cappuccino", table: 1)
-coffeeShop.takeOrder(flavor: "Frappe", table: 3);
-coffeeShop.takeOrder(flavor: "Espresso", table: 2);
-coffeeShop.takeOrder(flavor: "Frappe", table: 15);
-coffeeShop.takeOrder(flavor: "Cappuccino", table: 10);
-coffeeShop.takeOrder(flavor: "Frappe", table: 8);
-coffeeShop.takeOrder(flavor: "Espresso", table: 7);
-coffeeShop.takeOrder(flavor: "Cappuccino", table: 4);
-coffeeShop.takeOrder(flavor: "Espresso", table: 9);
-coffeeShop.takeOrder(flavor: "Frappe", table: 12);
-coffeeShop.takeOrder(flavor: "Cappuccino", table: 13);
-coffeeShop.takeOrder(flavor: "Espresso", table: 5);
+coffeeShop.takeOrder(origin: "Yirgacheffe, Ethiopia", table: 1)
+coffeeShop.takeOrder(origin: "Buziraguhindwa, Burundi", table: 3)
 
 coffeeShop.serve()

@@ -24,7 +24,7 @@ class SimpleCoffee: Coffee {
 
 class CoffeeDecorator: Coffee {
     private let decoratedCoffee: Coffee
-    private let ingredientSeparator: String = ", "
+    fileprivate let ingredientSeparator: String = ", "
 
     required init(decoratedCoffee: Coffee) {
         self.decoratedCoffee = decoratedCoffee
@@ -39,7 +39,7 @@ class CoffeeDecorator: Coffee {
     }
 }
 
-class Milk: CoffeeDecorator {
+final class Milk: CoffeeDecorator {
     required init(decoratedCoffee: Coffee) {
         super.init(decoratedCoffee: decoratedCoffee)
     }
@@ -53,7 +53,7 @@ class Milk: CoffeeDecorator {
     }
 }
 
-class WhipCoffee: CoffeeDecorator {
+final class WhipCoffee: CoffeeDecorator {
     required init(decoratedCoffee: Coffee) {
         super.init(decoratedCoffee: decoratedCoffee)
     }

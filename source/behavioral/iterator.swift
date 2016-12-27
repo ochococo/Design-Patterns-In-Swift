@@ -6,22 +6,38 @@ The iterator pattern is used to provide a standard interface for traversing a co
 
 ### Example:
 */
-struct NovellasCollection<T> {
-    let novellas: [T]
+struct Novella {
+    let name: String
 }
 
-extension NovellasCollection: SequenceType {
-    typealias Generator = AnyGenerator<T>
-    
-    func generate() -> AnyGenerator<T> {
-        var i = 0
-        return AnyGenerator { i += 1; return i >= self.novellas.count ? nil : self.novellas[i] }
+struct Novellas {
+    let novellas: [Novella]
+}
+
+struct NovellasIterator: IteratorProtocol {
+
+    private var current = 0
+    private let novellas: [Novella]
+
+    init(novellas: [Novella]) {
+        self.novellas = novellas
+    }
+
+    mutating func next() -> Novella? {
+        defer { current += 1 }
+        return novellas.count > current ? novellas[current] : nil
+    }
+}
+
+extension Novellas: Sequence {
+    func makeIterator() -> NovellasIterator {
+        return NovellasIterator(novellas: novellas)
     }
 }
 /*:
 ### Usage
 */
-let greatNovellas = NovellasCollection(novellas:["Mist"])
+let greatNovellas = Novellas(novellas: [Novella(name: "The Mist")] )
 
 for novella in greatNovellas {
     print("I've read: \(novella)")
