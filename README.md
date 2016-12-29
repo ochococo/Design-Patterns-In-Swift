@@ -474,8 +474,7 @@ enum CheckPoint {
     }
 }
 ```
-
- ### Usage
+### Usage
 
 ```swift
 
