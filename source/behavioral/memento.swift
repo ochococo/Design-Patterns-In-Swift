@@ -61,7 +61,7 @@ enum CheckPoint {
     }
 }
 /*:
- ### Usage
+### Usage
 */
 var gameState = GameState(chapter: "Black Mesa Inbound", weapon: "Crowbar")
 
