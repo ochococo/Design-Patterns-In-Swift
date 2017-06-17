@@ -13,6 +13,14 @@ A short cheat-sheet with Xcode 8.2 Playground ([Design-Patterns.playground.zip](
 * [Creational](#creational)
 * [Structural](#structural)
 
+
+```swift
+
+ Behavioral |
+ [Creational](Creational) |
+ [Structural](Structural)
+```
+
 Behavioral
 ==========
 
@@ -126,6 +134,9 @@ atm.canWithdraw(amount: 30)  // Can withdraw - 1x20, 2x10
 
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Chain-Of-Responsibility)
 
+```swift
+
+```
 
 👫 Command
 ----------
@@ -291,6 +302,10 @@ var result = expression.evaluate(context)
 
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Interpreter)
 
+```swift
+
+```
+
 🍫 Iterator
 -----------
 
@@ -403,6 +418,9 @@ spamMonster(message: "I'd Like to Add you to My Professional Network", worker: m
 
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Mediator)
 
+```swift
+
+```
 
 💾 Memento
 ----------
@@ -557,6 +575,9 @@ testChambers.testChamberNumber += 1
 
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Observer)
 
+```swift
+
+```
 
 🐉 State
 ---------
@@ -625,6 +646,9 @@ userContext.changeStateToUnauthorized()
 
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-State)
 
+```swift
+
+```
 
 💡 Strategy
 -----------
@@ -677,6 +701,87 @@ upper.print("O tempora, o mores!")
 ```
 
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Strategy)
+
+```swift
+
+```
+
+🍪 Template
+-----------
+
+The Template Pattern is used when two or more implementations of an
+algorithm exist. The template is defined and then built upon with further
+variations. Use this method when most (or all) subclasses need to implement
+the same behavior. Traditionally, this would be accomplished with abstract
+classes and protected methods (as in Java). However in Swift, because
+abstract classes don't exist (yet - maybe someday),  we need to accomplish
+the behavior using interface delegation.
+
+
+### Example
+
+```swift
+
+
+protocol ICodeGenerator {
+    func crossCompile()
+}
+
+protocol IGeneratorPhases {
+    func collectSource()
+    func crossCompile()
+}
+
+class CodeGenerator : ICodeGenerator{
+    var delegate: IGeneratorPhases
+
+    init(delegate: IGeneratorPhases) {
+        self.delegate = delegate
+    }
+
+
+    //Template method
+    final func crossCompile() {
+        delegate.collectSource()
+        delegate.crossCompile()
+    }
+}
+
+class HTMLGeneratorPhases : IGeneratorPhases {
+    func collectSource() {
+        print("HTMLGeneratorPhases collectSource() executed")
+    }
+
+    func crossCompile() {
+        print("HTMLGeneratorPhases crossCompile() executed")
+    }
+}
+
+class JSONGeneratorPhases : IGeneratorPhases {
+    func collectSource() {
+        print("JSONGeneratorPhases collectSource() executed")
+    }
+
+    func crossCompile() {
+        print("JSONGeneratorPhases crossCompile() executed")
+    }
+}
+
+
+
+```
+
+### Usage
+
+```swift
+
+
+let htmlGen : ICodeGenerator = CodeGenerator(delegate: HTMLGeneratorPhases())
+let jsonGen: ICodeGenerator = CodeGenerator(delegate: JSONGeneratorPhases())
+
+htmlGen.crossCompile()
+jsonGen.crossCompile()
+```
 
 🏃 Visitor
 ----------
@@ -771,6 +876,10 @@ The abstract factory pattern is used to provide a client with a set of related o
 The "family" of objects created by the factory are determined at run-time.
 
 ### Example
+
+```swift
+
+```
  
 Protocols
 
@@ -903,6 +1012,10 @@ let deathStar = DeathStar(builder:empire)
 
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Builder)
 
+```swift
+
+```
+
 🏭 Factory Method
 -----------------
 
@@ -1011,6 +1124,10 @@ Eduardo.name = "Eduardo"
 
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Prototype)
 
+```swift
+
+```
+
 💍 Singleton
 ------------
 
@@ -1118,6 +1235,10 @@ oldFormat.angleV
 
 >**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Adapter)
 
+```swift
+
+```
+
 🌉 Bridge
 ----------
 
@@ -1191,11 +1312,11 @@ protocol Shape {
     func draw(fillColor: String)
 }
 ```
- 
+
 Leafs
 
 ```swift
- 
+
 final class Square : Shape {
     func draw(fillColor: String) {
         print("Drawing a Square with color \(fillColor)")
@@ -1216,11 +1337,11 @@ Composite
 
 final class Whiteboard : Shape {
     lazy var shapes = [Shape]()
-    
+
     init(_ shapes:Shape...) {
         self.shapes = shapes
     }
-    
+
     func draw(fillColor: String) {
         for shape in self.shapes {
             shape.draw(fillColor: fillColor)
@@ -1234,7 +1355,7 @@ final class Whiteboard : Shape {
 ```swift
 
 var whiteboard = Whiteboard(Circle(), Square())
-whiteboard.draw("Red")
+whiteboard.draw(fillColor: "Red")
 ```
 
 🍧 Decorator
@@ -1475,7 +1596,7 @@ computer.open(doors: podBay)
 🍬 Virtual Proxy
 ----------------
 
-The proxy pattern is used to provide a surrogate or placeholder object, which references an underlying object. 
+The proxy pattern is used to provide a surrogate or placeholder object, which references an underlying object.
 Virtual proxy is used for loading object on demand.
 
 ### Example
@@ -1488,7 +1609,7 @@ protocol HEVSuitMedicalAid {
 
 class HEVSuit : HEVSuitMedicalAid {
     func administerMorphine() -> String {
-        return "Morphine aministered."
+        return "Morphine administered."
     }
 }
 
@@ -1514,3 +1635,6 @@ Info
 ====
 
 📖 Descriptions from: [Gang of Four Design Patterns Reference Sheet](http://www.blackwasp.co.uk/GangOfFour.aspx)
+
+
+```swift
