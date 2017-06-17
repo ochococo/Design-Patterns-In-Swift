@@ -739,12 +739,18 @@ class CodeGenerator : ICodeGenerator{
         self.delegate = delegate
     }
 
+    private func fetchDataforGeneration(){
+        //common implementation
+        print("fetchDataforGeneration invoked")
+    }
 
     //Template method
     final func crossCompile() {
+        fetchDataforGeneration()
         delegate.collectSource()
         delegate.crossCompile()
     }
+    
 }
 
 class HTMLGeneratorPhases : IGeneratorPhases {
