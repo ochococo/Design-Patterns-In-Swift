@@ -715,6 +715,83 @@ upper.print("O tempora, o mores!")
 
 ```
 
+🍪 Template
+-----------
+
+The Template Pattern is used when two or more implementations of an
+algorithm exist. The template is defined and then built upon with further
+variations. Use this method when most (or all) subclasses need to implement
+the same behavior. Traditionally, this would be accomplished with abstract
+classes and protected methods (as in Java). However in Swift, because
+abstract classes don't exist (yet - maybe someday),  we need to accomplish
+the behavior using interface delegation.
+
+
+### Example
+
+```swift
+
+
+protocol ICodeGenerator {
+    func crossCompile()
+}
+
+protocol IGeneratorPhases {
+    func collectSource()
+    func crossCompile()
+}
+
+class CodeGenerator : ICodeGenerator{
+    var delegate: IGeneratorPhases
+
+    init(delegate: IGeneratorPhases) {
+        self.delegate = delegate
+    }
+
+
+    //Template method
+    final func crossCompile() {
+        delegate.collectSource()
+        delegate.crossCompile()
+    }
+}
+
+class HTMLGeneratorPhases : IGeneratorPhases {
+    func collectSource() {
+        print("HTMLGeneratorPhases collectSource() executed")
+    }
+
+    func crossCompile() {
+        print("HTMLGeneratorPhases crossCompile() executed")
+    }
+}
+
+class JSONGeneratorPhases : IGeneratorPhases {
+    func collectSource() {
+        print("JSONGeneratorPhases collectSource() executed")
+    }
+
+    func crossCompile() {
+        print("JSONGeneratorPhases crossCompile() executed")
+    }
+}
+
+
+
+```
+
+### Usage
+
+```swift
+
+
+let htmlGen : ICodeGenerator = CodeGenerator(delegate: HTMLGeneratorPhases())
+let jsonGen: ICodeGenerator = CodeGenerator(delegate: JSONGeneratorPhases())
+
+htmlGen.crossCompile()
+jsonGen.crossCompile()
+```
+
 🏃 Visitor
 ----------
 
@@ -1244,11 +1321,11 @@ protocol Shape {
     func draw(fillColor: String)
 }
 ```
- 
+
 Leafs
 
 ```swift
- 
+
 final class Square : Shape {
     func draw(fillColor: String) {
         print("Drawing a Square with color \(fillColor)")
@@ -1269,11 +1346,11 @@ Composite
 
 final class Whiteboard : Shape {
     lazy var shapes = [Shape]()
-    
+
     init(_ shapes:Shape...) {
         self.shapes = shapes
     }
-    
+
     func draw(fillColor: String) {
         for shape in self.shapes {
             shape.draw(fillColor: fillColor)
@@ -1287,7 +1364,7 @@ final class Whiteboard : Shape {
 ```swift
 
 var whiteboard = Whiteboard(Circle(), Square())
-whiteboard.draw("Red")
+whiteboard.draw(fillColor: "Red")
 ```
 
 🍧 Decorator
@@ -1528,7 +1605,7 @@ computer.open(doors: podBay)
 🍬 Virtual Proxy
 ----------------
 
-The proxy pattern is used to provide a surrogate or placeholder object, which references an underlying object. 
+The proxy pattern is used to provide a surrogate or placeholder object, which references an underlying object.
 Virtual proxy is used for loading object on demand.
 
 ### Example
