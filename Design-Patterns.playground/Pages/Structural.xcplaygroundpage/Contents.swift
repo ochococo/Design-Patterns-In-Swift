@@ -388,7 +388,7 @@ protocol HEVSuitMedicalAid {
 
 class HEVSuit : HEVSuitMedicalAid {
     func administerMorphine() -> String {
-        return "Morphine aministered."
+        return "Morphine administered."
     }
 }
 
