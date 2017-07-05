@@ -6,41 +6,50 @@ The mediator pattern is used to reduce coupling between classes that communicate
 
 ### Example
 */
-struct Programmer {
+protocol Receiver {
+    associatedtype MessageType
+    func receive(message: MessageType)
+}
 
+protocol Sender {
+    associatedtype MessageType
+    associatedtype ReceiverType: Receiver
+    
+    var recipients: [ReceiverType] { get }
+    
+    func send(message: MessageType)
+}
+
+struct Programmer: Receiver {
     let name: String
-
+    
     init(name: String) {
         self.name = name
     }
-
+    
     func receive(message: String) {
         print("\(name) received: \(message)")
     }
 }
 
-protocol MessageSending {
-    func send(message: String)
-}
-
-final class MessageMediator: MessageSending {
-
-    private var recipients: [Programmer] = []
-
+final class MessageMediator: Sender {
+    internal var recipients: [Programmer] = []
+    
     func add(recipient: Programmer) {
         recipients.append(recipient)
     }
-
+    
     func send(message: String) {
         for recipient in recipients {
             recipient.receive(message: message)
         }
     }
 }
+
 /*:
 ### Usage
 */
-func spamMonster(message: String, worker: MessageSending) {
+func spamMonster(message: String, worker: MessageMediator) {
     worker.send(message: message)
 }
 
