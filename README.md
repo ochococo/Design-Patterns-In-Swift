@@ -811,14 +811,14 @@ protocol PlanetVisitor {
 	func visit(planet: PlanetAlderaan)
 	func visit(planet: PlanetCoruscant)
 	func visit(planet: PlanetTatooine)
-    func visit(planet: MoonJedah)
+    func visit(planet: MoonJedha)
 }
 
 protocol Planet {
 	func accept(visitor: PlanetVisitor)
 }
 
-class MoonJedah: Planet {
+class MoonJedha: Planet {
     func accept(visitor: PlanetVisitor) { visitor.visit(planet: self) }
 }
 
@@ -842,7 +842,7 @@ class NameVisitor: PlanetVisitor {
 	func visit(planet: PlanetAlderaan)  { name = "Alderaan" }
 	func visit(planet: PlanetCoruscant) { name = "Coruscant" }
 	func visit(planet: PlanetTatooine)  { name = "Tatooine" }
-    func visit(planet: MoonJedah)     	{ name = "Jedah" }
+    func visit(planet: MoonJedha)     	{ name = "Jedha" }
 }
 
 ```
@@ -851,7 +851,7 @@ class NameVisitor: PlanetVisitor {
 
 ```swift
 
-let planets: [Planet] = [PlanetAlderaan(), PlanetCoruscant(), PlanetTatooine(), MoonJedah()]
+let planets: [Planet] = [PlanetAlderaan(), PlanetCoruscant(), PlanetTatooine(), MoonJedha()]
 
 let names = planets.map { (planet: Planet) -> String in
 	let visitor = NameVisitor()
