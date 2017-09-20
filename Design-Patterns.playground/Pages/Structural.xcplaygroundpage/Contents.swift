@@ -126,9 +126,9 @@ Component
 protocol Shape {
     func draw(fillColor: String)
 }
-/*: 
+/*:
 Leafs
-*/ 
+*/
 final class Square : Shape {
     func draw(fillColor: String) {
         print("Drawing a Square with color \(fillColor)")
@@ -146,11 +146,11 @@ Composite
 */
 final class Whiteboard : Shape {
     lazy var shapes = [Shape]()
-    
+
     init(_ shapes:Shape...) {
         self.shapes = shapes
     }
-    
+
     func draw(fillColor: String) {
         for shape in self.shapes {
             shape.draw(fillColor: fillColor)
@@ -161,7 +161,7 @@ final class Whiteboard : Shape {
 ### Usage:
 */
 var whiteboard = Whiteboard(Circle(), Square())
-whiteboard.draw("Red")
+whiteboard.draw(fillColor: "Red")
 /*:
 🍧 Decorator
 ------------
@@ -377,7 +377,7 @@ computer.open(doors: podBay)
 🍬 Virtual Proxy
 ----------------
 
-The proxy pattern is used to provide a surrogate or placeholder object, which references an underlying object. 
+The proxy pattern is used to provide a surrogate or placeholder object, which references an underlying object.
 Virtual proxy is used for loading object on demand.
 
 ### Example
