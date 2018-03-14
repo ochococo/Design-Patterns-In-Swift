@@ -454,7 +454,7 @@ protocol MementoConvertible {
 
 struct GameState: MementoConvertible {
 
-    private struct Keys {
+    private enum Keys {
         static let chapter = "com.valve.halflife.chapter"
         static let weapon = "com.valve.halflife.weapon"
     }
