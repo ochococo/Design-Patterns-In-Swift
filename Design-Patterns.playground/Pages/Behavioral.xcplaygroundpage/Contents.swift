@@ -639,8 +639,8 @@ protocol IGeneratorPhases {
     func crossCompile()
 }
 
-class CodeGenerator : ICodeGenerator{
-    var delegate: IGeneratorPhases
+class CodeGenerator: ICodeGenerator{
+    weak var delegate: IGeneratorPhases
 
     init(delegate: IGeneratorPhases) {
         self.delegate = delegate
@@ -657,10 +657,9 @@ class CodeGenerator : ICodeGenerator{
         delegate.collectSource()
         delegate.crossCompile()
     }
-    
 }
 
-class HTMLGeneratorPhases : IGeneratorPhases {
+class HTMLGeneratorPhases: IGeneratorPhases {
     func collectSource() {
         print("HTMLGeneratorPhases collectSource() executed")
     }
@@ -670,7 +669,7 @@ class HTMLGeneratorPhases : IGeneratorPhases {
     }
 }
 
-class JSONGeneratorPhases : IGeneratorPhases {
+class JSONGeneratorPhases: IGeneratorPhases {
     func collectSource() {
         print("JSONGeneratorPhases collectSource() executed")
     }
@@ -686,7 +685,7 @@ class JSONGeneratorPhases : IGeneratorPhases {
 ### Usage
 */
 
-let htmlGen : ICodeGenerator = CodeGenerator(delegate: HTMLGeneratorPhases())
+let htmlGen: ICodeGenerator = CodeGenerator(delegate: HTMLGeneratorPhases())
 let jsonGen: ICodeGenerator = CodeGenerator(delegate: JSONGeneratorPhases())
 
 htmlGen.crossCompile()
