@@ -24,7 +24,7 @@ protocol IGeneratorPhases {
 }
 
 class CodeGenerator: ICodeGenerator{
-    var delegate: IGeneratorPhases
+    weak var delegate: IGeneratorPhases
 
     init(delegate: IGeneratorPhases) {
         self.delegate = delegate
