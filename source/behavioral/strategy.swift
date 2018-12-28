@@ -43,5 +43,7 @@ lower.print("O tempora, o mores!")
 var upper = Printer(strategy: UpperCaseStrategy())
 upper.print("O tempora, o mores!")
 /*:
->**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Strategy)
+>**Further Examples:**
+> <br /> [Design Patterns in Swift](https://github.com/kingreza/Swift-Strategy)
+> <br /> [swift-design-patterns](https://github.com/jVirus/swift-design-patterns/blob/master/Common%20Design%20Patterns/Behavioral/Strategy/Strategy.md)
 */

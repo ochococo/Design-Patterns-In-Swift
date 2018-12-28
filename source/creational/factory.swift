@@ -58,3 +58,7 @@ CurrencyFactory.currency(for: .greece)?.code() ?? noCurrencyCode
 CurrencyFactory.currency(for: .spain)?.code() ?? noCurrencyCode
 CurrencyFactory.currency(for: .unitedStates)?.code() ?? noCurrencyCode
 CurrencyFactory.currency(for: .uk)?.code() ?? noCurrencyCode
+/*:
+ >**Further Examples:**
+ > <br /> [swift-design-patterns](https://github.com/jVirus/swift-design-patterns/blob/master/Common%20Design%20Patterns/Creational/FactoryMethod/FactoryMethod.md)
+*/

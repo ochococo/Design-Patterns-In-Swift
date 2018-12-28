@@ -81,3 +81,8 @@ if let memento = CheckPoint.restore(saveName: "gameState1") {
     let finalState = GameState(memento: memento)
     dump(finalState)
 }
+/*:
+ >**Further Examples:**
+ > <br /> [swift-design-patterns](https://github.com/jVirus/swift-design-patterns/blob/master/Common%20Design%20Patterns/Behavioral/Memento/Memento.md)
+*/
+

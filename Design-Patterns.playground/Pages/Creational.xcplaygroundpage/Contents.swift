@@ -82,6 +82,10 @@ let factoryTwo = NumberHelper.factory(for: .swift)
 let numberTwo = factoryTwo("2")
 numberTwo.stringValue()
 /*:
+ >**Further Examples:**
+ > <br /> [swift-design-patterns](https://github.com/jVirus/swift-design-patterns/blob/master/Common%20Design%20Patterns/Creational/AbstractFactory/AbstractFactory.md)
+*/
+/*:
 👷 Builder
 ----------
 
@@ -135,7 +139,9 @@ let empire = DeathStarBuilder { builder in
 
 let deathStar = DeathStar(builder:empire)
 /*:
->**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Builder)
+>**Further Examples:**
+> <br /r> [Design Patterns in Swift](https://github.com/kingreza/Swift-Builder)
+> <br /> [swift-design-patterns](https://github.com/jVirus/swift-design-patterns/blob/master/Common%20Design%20Patterns/Creational/Builder/Builder.md)
 */
 /*:
 🏭 Factory Method
@@ -198,6 +204,10 @@ CurrencyFactory.currency(for: .spain)?.code() ?? noCurrencyCode
 CurrencyFactory.currency(for: .unitedStates)?.code() ?? noCurrencyCode
 CurrencyFactory.currency(for: .uk)?.code() ?? noCurrencyCode
 /*:
+ >**Further Examples:**
+ > <br /> [swift-design-patterns](https://github.com/jVirus/swift-design-patterns/blob/master/Common%20Design%20Patterns/Creational/FactoryMethod/FactoryMethod.md)
+*/
+/*:
 🃏 Prototype
 ------------
 
@@ -232,7 +242,9 @@ Christoph.name = "Christoph"
 let Eduardo = Prototype.clone()
 Eduardo.name = "Eduardo"
 /*:
->**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Prototype)
+>**Further Examples:**
+> <br /> [Design Patterns in Swift](https://github.com/kingreza/Swift-
+> <br /> [swift-design-patterns](https://github.com/jVirus/swift-design-patterns/blob/master/Common%20Design%20Patterns/Creational/Prototype/Prototype.md)
 */
 /*:
 💍 Singleton
@@ -255,3 +267,7 @@ class DeathStarSuperlaser {
 ### Usage:
 */
 let laser = DeathStarSuperlaser.sharedInstance
+/*:
+ >**Further Examples:**
+ > <br /> [swift-design-patterns](https://github.com/jVirus/swift-design-patterns/blob/master/Common%20Design%20Patterns/Creational/Singleton/Sinpleton.md)
+ */

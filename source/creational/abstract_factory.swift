@@ -68,3 +68,7 @@ numberOne.stringValue()
 let factoryTwo = NumberHelper.factory(for: .swift)
 let numberTwo = factoryTwo("2")
 numberTwo.stringValue()
+/*:
+ >**Further Examples:**
+ > <br /> [swift-design-patterns](https://github.com/jVirus/swift-design-patterns/blob/master/Common%20Design%20Patterns/Creational/AbstractFactory/AbstractFactory.md)
+*/

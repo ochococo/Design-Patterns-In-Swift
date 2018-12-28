@@ -25,3 +25,7 @@ enum Eternal {
 */
 Eternal.set("Disconnect me. I’d rather be nothing", forKey:"Bishop")
 Eternal.object(forKey: "Bishop")
+/*:
+ >**Further Examples:**
+ > <br /> [swift-design-patterns](https://github.com/jVirus/swift-design-patterns/blob/master/Common%20Design%20Patterns/Structural/Facade/Facade.md)
+*/

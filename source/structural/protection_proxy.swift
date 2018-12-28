@@ -50,3 +50,7 @@ computer.open(doors: podBay)
 
 computer.authenticate(password: "pass")
 computer.open(doors: podBay)
+/*:
+ >**Further Examples:**
+ > <br /> [swift-design-patterns](https://github.com/jVirus/swift-design-patterns/blob/master/Common%20Design%20Patterns/Structural/Proxy/Proxy.md)
+*/

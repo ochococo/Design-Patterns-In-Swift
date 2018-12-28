@@ -42,3 +42,7 @@ let greatNovellas = Novellas(novellas: [Novella(name: "The Mist")] )
 for novella in greatNovellas {
     print("I've read: \(novella)")
 }
+/*:
+ >**Further Examples:**
+ > <br /> [swift-design-patterns](https://github.com/jVirus/swift-design-patterns/blob/master/Common%20Design%20Patterns/Behavioral/Iterator/Iterator.md)
+*/

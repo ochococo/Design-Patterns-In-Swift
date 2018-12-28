@@ -59,3 +59,7 @@ let doorModule = HAL9000DoorsOperations(doors:podBayDoors)
 
 doorModule.open()
 doorModule.close()
+/*:
+>**Further Examples:** 
+> <br /> [swift-design-patterns](https://github.com/jVirus/swift-design-patterns/blob/master/Common%20Design%20Patterns/Behavioral/Command/Command.md)
+*/

@@ -168,6 +168,9 @@ let doorModule = HAL9000DoorsOperations(doors:podBayDoors)
 doorModule.open()
 doorModule.close()
 /*:
+>**Further Examples:** 
+> <br /> [swift-design-patterns](https://github.com/jVirus/swift-design-patterns/blob/master/Common%20Design%20Patterns/Behavioral/Command/Command.md)
+*//*:
 🎶 Interpreter
 --------------
 
@@ -304,6 +307,10 @@ for novella in greatNovellas {
     print("I've read: \(novella)")
 }
 /*:
+ >**Further Examples:**
+ > <br /> [swift-design-patterns](https://github.com/jVirus/swift-design-patterns/blob/master/Common%20Design%20Patterns/Behavioral/Iterator/Iterator.md)
+*/
+/*:
 💐 Mediator
 -----------
 
@@ -367,7 +374,9 @@ messagesMediator.add(recipient: user1)
 
 spamMonster(message: "I'd Like to Add you to My Professional Network", worker: messagesMediator)
 /*:
->**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Mediator)
+>**Further Examples:** 
+> <br /> [Design Patterns in Swift](https://github.com/kingreza/Swift-Mediator)
+> <br /> [swift-design-patterns](https://github.com/jVirus/swift-design-patterns/blob/master/Common%20Design%20Patterns/Behavioral/Mediator/Mediator.md)
 */
 /*:
 💾 Memento
@@ -453,6 +462,11 @@ if let memento = CheckPoint.restore(saveName: "gameState1") {
     dump(finalState)
 }
 /*:
+ >**Further Examples:**
+ > <br /> [swift-design-patterns](https://github.com/jVirus/swift-design-patterns/blob/master/Common%20Design%20Patterns/Behavioral/Memento/Memento.md)
+*/
+
+/*:
 👓 Observer
 -----------
 
@@ -503,7 +517,9 @@ var testChambers = TestChambers()
 testChambers.observer = observerInstance
 testChambers.testChamberNumber += 1
 /*:
->**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Observer)
+>**Further Examples:**
+> <br /> [Design Patterns in Swift](https://github.com/kingreza/Swift-Observer)
+> <br /> [swift-design-patterns](https://github.com/jVirus/swift-design-patterns/blob/master/Common%20Design%20Patterns/Behavioral/Observer/Observer.md)
 */
 /*:
 🐉 State
@@ -565,7 +581,9 @@ userContext.changeStateToAuthorized(userId: "admin")
 userContext.changeStateToUnauthorized()
 (userContext.isAuthorized, userContext.userId)
 /*:
->**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-State)
+>**Further Examples:**
+> <br /> [Design Patterns in Swift](https://github.com/kingreza/Swift-State)
+> <br /> [swift-design-patterns](https://github.com/jVirus/swift-design-patterns/blob/master/Common%20Design%20Patterns/Behavioral/State/State.md)
 */
 /*:
 💡 Strategy
@@ -612,7 +630,9 @@ lower.print("O tempora, o mores!")
 var upper = Printer(strategy: UpperCaseStrategy())
 upper.print("O tempora, o mores!")
 /*:
->**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Strategy)
+>**Further Examples:**
+> <br /> [Design Patterns in Swift](https://github.com/kingreza/Swift-Strategy)
+> <br /> [swift-design-patterns](https://github.com/jVirus/swift-design-patterns/blob/master/Common%20Design%20Patterns/Behavioral/Strategy/Strategy.md)
 */
 /*:
 🍪 Template

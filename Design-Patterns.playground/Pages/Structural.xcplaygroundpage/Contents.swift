@@ -62,7 +62,9 @@ let oldFormat = OldDeathStarSuperlaserTarget(target)
 oldFormat.angleH
 oldFormat.angleV
 /*:
->**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Adapter)
+>**Further Examples:**
+> <br /> [Design Patterns in Swift](https://github.com/kingreza/Swift-Adapter)
+> <br /> [swift-design-patterns](https://github.com/jVirus/swift-design-patterns/blob/master/Common%20Design%20Patterns/Structural/Adapter/Adapter.md)
 */
 /*:
 🌉 Bridge
@@ -112,6 +114,10 @@ tvRemoteControl.turnOn()
 
 var fancyVacuumCleanerRemoteControl = RemoteControl(appliance: VacuumCleaner())
 fancyVacuumCleanerRemoteControl.turnOn()
+/*:
+ >**Further Examples:**
+ > <br /> [swift-design-patterns](https://github.com/jVirus/swift-design-patterns/blob/master/Common%20Design%20Patterns/Structural/Bridge/Bridge.md)
+*/
 /*:
 🌿 Composite
 -------------
@@ -267,6 +273,10 @@ enum Eternal {
 Eternal.set("Disconnect me. I’d rather be nothing", forKey:"Bishop")
 Eternal.object(forKey: "Bishop")
 /*:
+ >**Further Examples:**
+ > <br /> [swift-design-patterns](https://github.com/jVirus/swift-design-patterns/blob/master/Common%20Design%20Patterns/Structural/Facade/Facade.md)
+*/
+/*:
 ## 🍃 Flyweight
 The flyweight pattern is used to minimize memory usage or computational expenses by sharing as much as possible with other similar objects.
 ### Example
@@ -373,6 +383,10 @@ computer.open(doors: podBay)
 
 computer.authenticate(password: "pass")
 computer.open(doors: podBay)
+/*:
+ >**Further Examples:**
+ > <br /> [swift-design-patterns](https://github.com/jVirus/swift-design-patterns/blob/master/Common%20Design%20Patterns/Structural/Proxy/Proxy.md)
+*/
 /*:
 🍬 Virtual Proxy
 ----------------

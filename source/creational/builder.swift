@@ -52,5 +52,7 @@ let empire = DeathStarBuilder { builder in
 
 let deathStar = DeathStar(builder:empire)
 /*:
->**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Builder)
+>**Further Examples:**
+> <br /r> [Design Patterns in Swift](https://github.com/kingreza/Swift-Builder)
+> <br /> [swift-design-patterns](https://github.com/jVirus/swift-design-patterns/blob/master/Common%20Design%20Patterns/Creational/Builder/Builder.md)
 */

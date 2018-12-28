@@ -19,3 +19,7 @@ class DeathStarSuperlaser {
 ### Usage:
 */
 let laser = DeathStarSuperlaser.sharedInstance
+/*:
+ >**Further Examples:**
+ > <br /> [swift-design-patterns](https://github.com/jVirus/swift-design-patterns/blob/master/Common%20Design%20Patterns/Creational/Singleton/Sinpleton.md)
+ */

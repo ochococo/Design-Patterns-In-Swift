@@ -58,5 +58,7 @@ userContext.changeStateToAuthorized(userId: "admin")
 userContext.changeStateToUnauthorized()
 (userContext.isAuthorized, userContext.userId)
 /*:
->**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-State)
+>**Further Examples:**
+> <br /> [Design Patterns in Swift](https://github.com/kingreza/Swift-State)
+> <br /> [swift-design-patterns](https://github.com/jVirus/swift-design-patterns/blob/master/Common%20Design%20Patterns/Behavioral/State/State.md)
 */

@@ -205,6 +205,12 @@ doorModule.open()
 doorModule.close()
 ```
 
+>**Further Examples:** 
+> <br /> [swift-design-patterns](https://github.com/jVirus/swift-design-patterns/blob/master/Common%20Design%20Patterns/Behavioral/Command/Command.md)
+
+```swift
+```
+
 🎶 Interpreter
 --------------
 
@@ -356,6 +362,13 @@ for novella in greatNovellas {
 }
 ```
 
+ >**Further Examples:**
+ > <br /> [swift-design-patterns](https://github.com/jVirus/swift-design-patterns/blob/master/Common%20Design%20Patterns/Behavioral/Iterator/Iterator.md)
+
+```swift
+
+```
+
 💐 Mediator
 -----------
 
@@ -425,7 +438,9 @@ messagesMediator.add(recipient: user1)
 spamMonster(message: "I'd Like to Add you to My Professional Network", worker: messagesMediator)
 ```
 
->**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Mediator)
+>**Further Examples:** 
+> <br /> [Design Patterns in Swift](https://github.com/kingreza/Swift-Mediator)
+> <br /> [swift-design-patterns](https://github.com/jVirus/swift-design-patterns/blob/master/Common%20Design%20Patterns/Behavioral/Mediator/Mediator.md)
 
 ```swift
 
@@ -526,6 +541,14 @@ if let memento = CheckPoint.restore(saveName: "gameState1") {
 }
 ```
 
+ >**Further Examples:**
+ > <br /> [swift-design-patterns](https://github.com/jVirus/swift-design-patterns/blob/master/Common%20Design%20Patterns/Behavioral/Memento/Memento.md)
+
+```swift
+
+
+```
+
 👓 Observer
 -----------
 
@@ -582,7 +605,9 @@ testChambers.observer = observerInstance
 testChambers.testChamberNumber += 1
 ```
 
->**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Observer)
+>**Further Examples:**
+> <br /> [Design Patterns in Swift](https://github.com/kingreza/Swift-Observer)
+> <br /> [swift-design-patterns](https://github.com/jVirus/swift-design-patterns/blob/master/Common%20Design%20Patterns/Behavioral/Observer/Observer.md)
 
 ```swift
 
@@ -653,7 +678,9 @@ userContext.changeStateToUnauthorized()
 (userContext.isAuthorized, userContext.userId)
 ```
 
->**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-State)
+>**Further Examples:**
+> <br /> [Design Patterns in Swift](https://github.com/kingreza/Swift-State)
+> <br /> [swift-design-patterns](https://github.com/jVirus/swift-design-patterns/blob/master/Common%20Design%20Patterns/Behavioral/State/State.md)
 
 ```swift
 
@@ -709,7 +736,9 @@ var upper = Printer(strategy: UpperCaseStrategy())
 upper.print("O tempora, o mores!")
 ```
 
->**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Strategy)
+>**Further Examples:**
+> <br /> [Design Patterns in Swift](https://github.com/kingreza/Swift-Strategy)
+> <br /> [swift-design-patterns](https://github.com/jVirus/swift-design-patterns/blob/master/Common%20Design%20Patterns/Behavioral/Strategy/Strategy.md)
 
 ```swift
 
@@ -966,6 +995,13 @@ let numberTwo = factoryTwo("2")
 numberTwo.stringValue()
 ```
 
+ >**Further Examples:**
+ > <br /> [swift-design-patterns](https://github.com/jVirus/swift-design-patterns/blob/master/Common%20Design%20Patterns/Creational/AbstractFactory/AbstractFactory.md)
+
+```swift
+
+```
+
 👷 Builder
 ----------
 
@@ -1025,7 +1061,9 @@ let empire = DeathStarBuilder { builder in
 let deathStar = DeathStar(builder:empire)
 ```
 
->**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Builder)
+>**Further Examples:**
+> <br /r> [Design Patterns in Swift](https://github.com/kingreza/Swift-Builder)
+> <br /> [swift-design-patterns](https://github.com/jVirus/swift-design-patterns/blob/master/Common%20Design%20Patterns/Creational/Builder/Builder.md)
 
 ```swift
 
@@ -1097,6 +1135,13 @@ CurrencyFactory.currency(for: .unitedStates)?.code() ?? noCurrencyCode
 CurrencyFactory.currency(for: .uk)?.code() ?? noCurrencyCode
 ```
 
+ >**Further Examples:**
+ > <br /> [swift-design-patterns](https://github.com/jVirus/swift-design-patterns/blob/master/Common%20Design%20Patterns/Creational/FactoryMethod/FactoryMethod.md)
+
+```swift
+
+```
+
 🃏 Prototype
 ------------
 
@@ -1137,7 +1182,9 @@ let Eduardo = Prototype.clone()
 Eduardo.name = "Eduardo"
 ```
 
->**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Prototype)
+>**Further Examples:**
+> <br /> [Design Patterns in Swift](https://github.com/kingreza/Swift-
+> <br /> [swift-design-patterns](https://github.com/jVirus/swift-design-patterns/blob/master/Common%20Design%20Patterns/Creational/Prototype/Prototype.md)
 
 ```swift
 
@@ -1168,6 +1215,13 @@ class DeathStarSuperlaser {
 ```swift
 
 let laser = DeathStarSuperlaser.sharedInstance
+```
+
+ >**Further Examples:**
+ > <br /> [swift-design-patterns](https://github.com/jVirus/swift-design-patterns/blob/master/Common%20Design%20Patterns/Creational/Singleton/Sinpleton.md)
+ 
+```swift
+
  [Behavioral](Behavioral) |
  [Creational](Creational) |
  Structural
@@ -1248,7 +1302,9 @@ oldFormat.angleH
 oldFormat.angleV
 ```
 
->**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Adapter)
+>**Further Examples:**
+> <br /> [Design Patterns in Swift](https://github.com/kingreza/Swift-Adapter)
+> <br /> [swift-design-patterns](https://github.com/jVirus/swift-design-patterns/blob/master/Common%20Design%20Patterns/Structural/Adapter/Adapter.md)
 
 ```swift
 
@@ -1306,6 +1362,13 @@ tvRemoteControl.turnOn()
 
 var fancyVacuumCleanerRemoteControl = RemoteControl(appliance: VacuumCleaner())
 fancyVacuumCleanerRemoteControl.turnOn()
+```
+
+ >**Further Examples:**
+ > <br /> [swift-design-patterns](https://github.com/jVirus/swift-design-patterns/blob/master/Common%20Design%20Patterns/Structural/Bridge/Bridge.md)
+
+```swift
+
 ```
 
 🌿 Composite
@@ -1489,6 +1552,13 @@ Eternal.set("Disconnect me. I’d rather be nothing", forKey:"Bishop")
 Eternal.object(forKey: "Bishop")
 ```
 
+ >**Further Examples:**
+ > <br /> [swift-design-patterns](https://github.com/jVirus/swift-design-patterns/blob/master/Common%20Design%20Patterns/Structural/Facade/Facade.md)
+
+```swift
+
+```
+
 ## 🍃 Flyweight
 The flyweight pattern is used to minimize memory usage or computational expenses by sharing as much as possible with other similar objects.
 ### Example
@@ -1606,6 +1676,13 @@ computer.open(doors: podBay)
 
 computer.authenticate(password: "pass")
 computer.open(doors: podBay)
+```
+
+ >**Further Examples:**
+ > <br /> [swift-design-patterns](https://github.com/jVirus/swift-design-patterns/blob/master/Common%20Design%20Patterns/Structural/Proxy/Proxy.md)
+
+```swift
+
 ```
 
 🍬 Virtual Proxy
