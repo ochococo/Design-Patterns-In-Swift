@@ -1,5 +1,3 @@
-
-
-- [ ] Do not change the `.playground` nor `README.md` manually.
-- [ ] Go to `/source` and edit .swift files.
-- [ ] Run: `generate-playground.sh`
+- [ ] Added description
+- [ ] Linked to or created issue
+- [ ] Generated files as described [GENERATE.md](https://github.com/ochococo/Design-Patterns-In-Swift/blob/master/GENERATE.md)

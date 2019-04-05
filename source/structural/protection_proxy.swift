@@ -7,23 +7,23 @@ Protection proxy is restricting access.
 
 ### Example
 */
-protocol DoorOperator {
+protocol DoorOpening {
     func open(doors: String) -> String
 }
 
-class HAL9000 : DoorOperator {
+final class HAL9000: DoorOpening {
     func open(doors: String) -> String {
         return ("HAL9000: Affirmative, Dave. I read you. Opened \(doors).")
     }
 }
 
-class CurrentComputer : DoorOperator {
+final class CurrentComputer: DoorOpening {
     private var computer: HAL9000!
 
     func authenticate(password: String) -> Bool {
 
         guard password == "pass" else {
-            return false;
+            return false
         }
 
         computer = HAL9000()

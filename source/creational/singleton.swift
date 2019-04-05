@@ -8,8 +8,9 @@ There are very few applications, do not overuse this pattern!
 
 ### Example:
 */
-class DeathStarSuperlaser {
-    static let sharedInstance = DeathStarSuperlaser()
+final class ElonMusk {
+
+    static let shared = ElonMusk()
 
     private init() {
         // Private initialization to ensure just one instance is created.
@@ -18,4 +19,4 @@ class DeathStarSuperlaser {
 /*:
 ### Usage:
 */
-let laser = DeathStarSuperlaser.sharedInstance
+let elon = ElonMusk.shared // There is only one Elon Musk folks.

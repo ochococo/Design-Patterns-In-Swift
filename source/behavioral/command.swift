@@ -10,7 +10,7 @@ protocol DoorCommand {
     func execute() -> String
 }
 
-class OpenCommand : DoorCommand {
+final class OpenCommand: DoorCommand {
     let doors:String
 
     required init(doors: String) {
@@ -22,7 +22,7 @@ class OpenCommand : DoorCommand {
     }
 }
 
-class CloseCommand : DoorCommand {
+final class CloseCommand: DoorCommand {
     let doors:String
 
     required init(doors: String) {
@@ -34,7 +34,7 @@ class CloseCommand : DoorCommand {
     }
 }
 
-class HAL9000DoorsOperations {
+final class HAL9000DoorsOperations {
     let openCommand: DoorCommand
     let closeCommand: DoorCommand
     

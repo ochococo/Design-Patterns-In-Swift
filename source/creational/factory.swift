@@ -6,42 +6,45 @@ The factory pattern is used to replace class constructors, abstracting the proce
 
 ### Example
 */
-protocol Currency {
-    func symbol() -> String
-    func code() -> String
+protocol CurrencyDescribing {
+    var symbol: String { get }
+    var code: String { get }
 }
 
-class Euro : Currency {
-    func symbol() -> String {
+final class Euro: CurrencyDescribing {
+    var symbol: String {
         return "€"
     }
     
-    func code() -> String {
+    var code: String {
         return "EUR"
     }
 }
 
-class UnitedStatesDolar : Currency {
-    func symbol() -> String {
+final class UnitedStatesDolar: CurrencyDescribing {
+    var symbol: String {
         return "$"
     }
     
-    func code() -> String {
+    var code: String {
         return "USD"
     }
 }
 
 enum Country {
-    case unitedStates, spain, uk, greece
+    case unitedStates
+    case spain
+    case uk
+    case greece
 }
 
 enum CurrencyFactory {
-    static func currency(for country:Country) -> Currency? {
+    static func currency(for country: Country) -> CurrencyDescribing? {
 
         switch country {
-            case .spain, .greece :
+            case .spain, .greece:
                 return Euro()
-            case .unitedStates :
+            case .unitedStates:
                 return UnitedStatesDolar()
             default:
                 return nil
@@ -54,7 +57,7 @@ enum CurrencyFactory {
 */
 let noCurrencyCode = "No Currency Code Available"
 
-CurrencyFactory.currency(for: .greece)?.code() ?? noCurrencyCode
-CurrencyFactory.currency(for: .spain)?.code() ?? noCurrencyCode
-CurrencyFactory.currency(for: .unitedStates)?.code() ?? noCurrencyCode
-CurrencyFactory.currency(for: .uk)?.code() ?? noCurrencyCode
+CurrencyFactory.currency(for: .greece)?.code ?? noCurrencyCode
+CurrencyFactory.currency(for: .spain)?.code ?? noCurrencyCode
+CurrencyFactory.currency(for: .unitedStates)?.code ?? noCurrencyCode
+CurrencyFactory.currency(for: .uk)?.code ?? noCurrencyCode

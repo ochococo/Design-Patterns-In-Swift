@@ -61,6 +61,4 @@ messagesMediator.add(recipient: user0)
 messagesMediator.add(recipient: user1)
 
 spamMonster(message: "I'd Like to Add you to My Professional Network", worker: messagesMediator)
-/*:
->**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Mediator)
-*/
+

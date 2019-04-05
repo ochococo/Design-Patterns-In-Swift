@@ -7,7 +7,7 @@ The bridge pattern is used to separate the abstract elements of a class from the
 ### Example
 */
 protocol Switch {
-    var appliance: Appliance {get set}
+    var appliance: Appliance { get set }
     func turnOn()
 }
 
@@ -15,7 +15,7 @@ protocol Appliance {
     func run()
 }
 
-class RemoteControl: Switch {
+final class RemoteControl: Switch {
     var appliance: Appliance
 
     func turnOn() {
@@ -27,13 +27,13 @@ class RemoteControl: Switch {
     }
 }
 
-class TV: Appliance {
+final class TV: Appliance {
     func run() {
         print("tv turned on");
     }
 }
 
-class VacuumCleaner: Appliance {
+final class VacuumCleaner: Appliance {
     func run() {
         print("vacuum cleaner turned on")
     }
@@ -41,8 +41,8 @@ class VacuumCleaner: Appliance {
 /*:
 ### Usage
 */
-var tvRemoteControl = RemoteControl(appliance: TV())
+let tvRemoteControl = RemoteControl(appliance: TV())
 tvRemoteControl.turnOn()
 
-var fancyVacuumCleanerRemoteControl = RemoteControl(appliance: VacuumCleaner())
+let fancyVacuumCleanerRemoteControl = RemoteControl(appliance: VacuumCleaner())
 fancyVacuumCleanerRemoteControl.turnOn()

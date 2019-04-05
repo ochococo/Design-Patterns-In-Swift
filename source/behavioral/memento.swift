@@ -6,7 +6,7 @@ The memento pattern is used to capture the current state of an object and store 
 
 ### Example
 */
-typealias Memento = NSDictionary
+typealias Memento = [String: String]
 /*:
 Originator
 */
@@ -31,8 +31,8 @@ struct GameState: MementoConvertible {
     }
 
     init?(memento: Memento) {
-        guard let mementoChapter = memento[Keys.chapter] as? String,
-              let mementoWeapon = memento[Keys.weapon] as? String else {
+        guard let mementoChapter = memento[Keys.chapter],
+              let mementoWeapon = memento[Keys.weapon] else {
             return nil
         }
 
@@ -48,20 +48,20 @@ struct GameState: MementoConvertible {
 Caretaker
 */
 enum CheckPoint {
+
+    private static let defaults = UserDefaults.standard
+
     static func save(_ state: MementoConvertible, saveName: String) {
-        let defaults = UserDefaults.standard
         defaults.set(state.memento, forKey: saveName)
         defaults.synchronize()
     }
 
-    static func restore(saveName: String) -> Memento? {
-        let defaults = UserDefaults.standard
-
-        return defaults.object(forKey: saveName) as? Memento
+    static func restore(saveName: String) -> Any? {
+        return defaults.object(forKey: saveName)
     }
 }
 /*:
- ### Usage
+### Usage
 */
 var gameState = GameState(chapter: "Black Mesa Inbound", weapon: "Crowbar")
 
@@ -77,7 +77,7 @@ gameState.chapter = "Office Complex"
 gameState.weapon = "Crossbow"
 CheckPoint.save(gameState, saveName: "gameState3")
 
-if let memento = CheckPoint.restore(saveName: "gameState1") {
+if let memento = CheckPoint.restore(saveName: "gameState1") as? Memento {
     let finalState = GameState(memento: memento)
     dump(finalState)
 }
