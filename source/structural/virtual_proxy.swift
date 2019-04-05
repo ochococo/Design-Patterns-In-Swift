@@ -11,13 +11,14 @@ protocol HEVSuitMedicalAid {
     func administerMorphine() -> String
 }
 
-class HEVSuit : HEVSuitMedicalAid {
+final class HEVSuit: HEVSuitMedicalAid {
     func administerMorphine() -> String {
         return "Morphine administered."
     }
 }
 
-class HEVSuitHumanInterface : HEVSuitMedicalAid {
+final class HEVSuitHumanInterface: HEVSuitMedicalAid {
+
     lazy private var physicalSuit: HEVSuit = HEVSuit()
 
     func administerMorphine() -> String {

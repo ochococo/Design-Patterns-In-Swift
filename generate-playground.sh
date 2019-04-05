@@ -1,34 +1,63 @@
 #!/bin/bash
 
-cleanThisMessForReadme () {
+# Note: I think this part is absolute garbage but it's a snapshot of my current skills with Bash. 
+# Would love to rewrite it in Swift soon.
 
-	FILENAME=$1
-
-	{ rm $FILENAME && awk '{gsub("\\*/", "\n```swift\n", $0); print}' > $FILENAME; } < $FILENAME
-	{ rm $FILENAME && awk '{gsub("\\*//\\*:", "", $0); print}' > $FILENAME; } < $FILENAME
-	{ rm $FILENAME && awk '{gsub("/\\*:", "```\n", $0); print}' > $FILENAME; } < $FILENAME
-	{ rm $FILENAME && awk '{gsub("//\\*:", "", $0); print}' > $FILENAME; } < $FILENAME
-	{ rm $FILENAME && awk '{gsub("//:", "", $0); print}' > $FILENAME; } < $FILENAME
-	{ rm $FILENAME && awk 'NR>1{print buf}{buf = $0}' > $FILENAME; } < $FILENAME
+combineSwift() {
+	cat source/startComment > $2
+	cat $1/header.md  >> $2
+	cat source/contents.md  >> $2
+	cat source/endComment >> $2
+	cat source/imports.swift >> $2
+	cat $1/*.swift >> $2
+	{ rm $2 && awk '{gsub("\\*//\\*:", "", $0); print}' > $2; } < $2
 }
 
-cat source/behavioral/* > ./Behavioral.swift
-cat source/creational/* > ./Creational.swift
-cat source/structural/* > ./Structural.swift
+move() {
+	mv $1.swift Design-Patterns.playground/Pages/$1.xcplaygroundpage/Contents.swift
+}
 
-cp ./Behavioral.swift ./Design-Patterns.playground/Pages/Behavioral.xcplaygroundpage/Contents.swift
-cp ./Creational.swift ./Design-Patterns.playground/Pages/Creational.xcplaygroundpage/Contents.swift
-cp ./Structural.swift ./Design-Patterns.playground/Pages/Structural.xcplaygroundpage/Contents.swift
+playground() {
+	combineSwift source/$1 $1.swift 
+	move $1
+}
 
-cat source/header.swift source/*/* source/footer.swift > ./contents.swift
+combineMarkdown() {
+	cat $1/header.md  > $2
 
-cleanThisMessForReadme ./contents.swift
+	{ rm $2 && awk '{gsub("\\*/", "", $0); print}' > $2; } < $2
+	{ rm $2 && awk '{gsub("/\\*:", "", $0); print}' > $2; } < $2
 
-cp ./contents.swift ./README.md
+	cat source/startSwiftCode >> $2
+	cat $1/*.swift >> $2
+
+	{ rm $2 && awk '{gsub("\\*//\\*:", "", $0); print}' > $2; } < $2
+	{ rm $2 && awk '{gsub("\\*/", "\n```swift", $0); print}' > $2; } < $2
+	{ rm $2 && awk '{gsub("/\\*:", "```\n", $0); print}' > $2; } < $2
+	
+	cat source/endSwiftCode >> $2
+
+	{ rm $2 && awk '{gsub("```swift```", "", $0); print}' > $2; } < $2
+
+	cat $2 >> README.md
+	rm $2
+}
+
+readme() {
+	combineMarkdown source/$1 $1.md
+}
+
+playground Index
+playground Behavioral
+playground Creational
+playground Structural
 
 zip -r -X Design-Patterns.playground.zip ./Design-Patterns.playground
 
-rm ./Behavioral.swift
-rm ./Creational.swift
-rm ./Structural.swift
-rm ./contents.swift
+echo "" > README.md
+
+readme Index
+readme Behavioral
+readme Creational
+readme Structural
+cat source/footer.md  >> README.md

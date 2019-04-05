@@ -6,22 +6,31 @@ The facade pattern is used to define a simplified interface to a more complex su
 
 ### Example
 */
-enum Eternal {
+final class Defaults {
 
-    static func set(_ object: Any, forKey defaultName: String) {
-        let defaults: UserDefaults = UserDefaults.standard
-        defaults.set(object, forKey:defaultName)
-        defaults.synchronize()
+    private let defaults: UserDefaults
+
+    init(defaults: UserDefaults = .standard) {
+        self.defaults = defaults
     }
 
-    static func object(forKey key: String) -> AnyObject! {
-        let defaults: UserDefaults = UserDefaults.standard
-        return defaults.object(forKey: key) as AnyObject!
-    }
+    subscript(key: String) -> String? {
+        get {
+            return defaults.string(forKey: key)
+        }
 
+        set {
+            defaults.set(newValue, forKey: key)
+        }
+    }
 }
 /*:
 ### Usage
 */
-Eternal.set("Disconnect me. I’d rather be nothing", forKey:"Bishop")
-Eternal.object(forKey: "Bishop")
+let storage = Defaults()
+
+// Store
+storage["Bishop"] = "Disconnect me. I’d rather be nothing"
+
+// Read
+storage["Bishop"]

@@ -6,18 +6,18 @@ The adapter pattern is used to provide a link between two otherwise incompatible
 
 ### Example
 */
-protocol OlderDeathStarSuperLaserAiming {
-    var angleV: NSNumber {get}
-    var angleH: NSNumber {get}
+protocol NewDeathStarSuperLaserAiming {
+    var angleV: Double { get }
+    var angleH: Double { get }
 }
 /*:
 **Adaptee**
 */
-struct DeathStarSuperlaserTarget {
-    let angleHorizontal: Double
-    let angleVertical: Double
+struct OldDeathStarSuperlaserTarget {
+    let angleHorizontal: Float
+    let angleVertical: Float
 
-    init(angleHorizontal:Double, angleVertical:Double) {
+    init(angleHorizontal: Float, angleVertical: Float) {
         self.angleHorizontal = angleHorizontal
         self.angleVertical = angleVertical
     }
@@ -25,29 +25,27 @@ struct DeathStarSuperlaserTarget {
 /*:
 **Adapter**
 */
-struct OldDeathStarSuperlaserTarget : OlderDeathStarSuperLaserAiming {
-    private let target : DeathStarSuperlaserTarget
+struct NewDeathStarSuperlaserTarget: NewDeathStarSuperLaserAiming {
 
-    var angleV:NSNumber {
-        return NSNumber(value: target.angleVertical)
+    private let target: OldDeathStarSuperlaserTarget
+
+    var angleV: Double {
+        return Double(target.angleVertical)
     }
 
-    var angleH:NSNumber {
-        return NSNumber(value: target.angleHorizontal)
+    var angleH: Double {
+        return Double(target.angleHorizontal)
     }
 
-    init(_ target:DeathStarSuperlaserTarget) {
+    init(_ target: OldDeathStarSuperlaserTarget) {
         self.target = target
     }
 }
 /*:
 ### Usage
 */
-let target = DeathStarSuperlaserTarget(angleHorizontal: 14.0, angleVertical: 12.0)
-let oldFormat = OldDeathStarSuperlaserTarget(target)
+let target = OldDeathStarSuperlaserTarget(angleHorizontal: 14.0, angleVertical: 12.0)
+let newFormat = NewDeathStarSuperlaserTarget(target)
 
-oldFormat.angleH
-oldFormat.angleV
-/*:
->**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Adapter)
-*/
+newFormat.angleH
+newFormat.angleV

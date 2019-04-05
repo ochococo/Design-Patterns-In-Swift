@@ -7,31 +7,29 @@ This practise is particularly useful when the construction of a new object is in
 
 ### Example
 */
-class ChungasRevengeDisplay {
-    var name: String?
-    let font: String
+struct MoonWorker {
 
-    init(font: String) {
-        self.font = font
+    let name: String
+    var health: Int = 100
+
+    init(name: String) {
+        self.name = name
     }
 
-    func clone() -> ChungasRevengeDisplay {
-        return ChungasRevengeDisplay(font:self.font)
+    func clone() -> MoonWorker {
+        return MoonWorker(name: name)
     }
 }
 /*:
 ### Usage
 */
-let Prototype = ChungasRevengeDisplay(font:"GotanProject")
+let prototype = MoonWorker(name: "Sam Bell")
 
-let Philippe = Prototype.clone()
-Philippe.name = "Philippe"
+var bell1 = prototype.clone()
+bell1.health = 12
 
-let Christoph = Prototype.clone()
-Christoph.name = "Christoph"
+var bell2 = prototype.clone()
+bell2.health = 23
 
-let Eduardo = Prototype.clone()
-Eduardo.name = "Eduardo"
-/*:
->**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Prototype)
-*/
+var bell3 = prototype.clone()
+bell3.health = 0

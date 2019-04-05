@@ -1,15 +1,19 @@
-//: [Behavioral](Behavioral) |
-//: [Creational](Creational) |
-//: Structural
 /*:
+
 Structural
 ==========
 
 >In software engineering, structural design patterns are design patterns that ease the design by identifying a simple way to realize relationships between entities.
 >
 >**Source:** [wikipedia.org](http://en.wikipedia.org/wiki/Structural_pattern)
+
+## Table of Contents
+
+* [Behavioral](Behavioral)
+* [Creational](Creational)
+* [Structural](Structural)
+
 */
-import Swift
 import Foundation
 /*:
 🔌 Adapter
@@ -19,18 +23,18 @@ The adapter pattern is used to provide a link between two otherwise incompatible
 
 ### Example
 */
-protocol OlderDeathStarSuperLaserAiming {
-    var angleV: NSNumber {get}
-    var angleH: NSNumber {get}
+protocol NewDeathStarSuperLaserAiming {
+    var angleV: Double { get }
+    var angleH: Double { get }
 }
 /*:
 **Adaptee**
 */
-struct DeathStarSuperlaserTarget {
-    let angleHorizontal: Double
-    let angleVertical: Double
+struct OldDeathStarSuperlaserTarget {
+    let angleHorizontal: Float
+    let angleVertical: Float
 
-    init(angleHorizontal:Double, angleVertical:Double) {
+    init(angleHorizontal: Float, angleVertical: Float) {
         self.angleHorizontal = angleHorizontal
         self.angleVertical = angleVertical
     }
@@ -38,32 +42,30 @@ struct DeathStarSuperlaserTarget {
 /*:
 **Adapter**
 */
-struct OldDeathStarSuperlaserTarget : OlderDeathStarSuperLaserAiming {
-    private let target : DeathStarSuperlaserTarget
+struct NewDeathStarSuperlaserTarget: NewDeathStarSuperLaserAiming {
 
-    var angleV:NSNumber {
-        return NSNumber(value: target.angleVertical)
+    private let target: OldDeathStarSuperlaserTarget
+
+    var angleV: Double {
+        return Double(target.angleVertical)
     }
 
-    var angleH:NSNumber {
-        return NSNumber(value: target.angleHorizontal)
+    var angleH: Double {
+        return Double(target.angleHorizontal)
     }
 
-    init(_ target:DeathStarSuperlaserTarget) {
+    init(_ target: OldDeathStarSuperlaserTarget) {
         self.target = target
     }
 }
 /*:
 ### Usage
 */
-let target = DeathStarSuperlaserTarget(angleHorizontal: 14.0, angleVertical: 12.0)
-let oldFormat = OldDeathStarSuperlaserTarget(target)
+let target = OldDeathStarSuperlaserTarget(angleHorizontal: 14.0, angleVertical: 12.0)
+let newFormat = NewDeathStarSuperlaserTarget(target)
 
-oldFormat.angleH
-oldFormat.angleV
-/*:
->**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Adapter)
-*/
+newFormat.angleH
+newFormat.angleV
 /*:
 🌉 Bridge
 ----------
@@ -73,7 +75,7 @@ The bridge pattern is used to separate the abstract elements of a class from the
 ### Example
 */
 protocol Switch {
-    var appliance: Appliance {get set}
+    var appliance: Appliance { get set }
     func turnOn()
 }
 
@@ -81,7 +83,7 @@ protocol Appliance {
     func run()
 }
 
-class RemoteControl: Switch {
+final class RemoteControl: Switch {
     var appliance: Appliance
 
     func turnOn() {
@@ -93,13 +95,13 @@ class RemoteControl: Switch {
     }
 }
 
-class TV: Appliance {
+final class TV: Appliance {
     func run() {
         print("tv turned on");
     }
 }
 
-class VacuumCleaner: Appliance {
+final class VacuumCleaner: Appliance {
     func run() {
         print("vacuum cleaner turned on")
     }
@@ -107,10 +109,10 @@ class VacuumCleaner: Appliance {
 /*:
 ### Usage
 */
-var tvRemoteControl = RemoteControl(appliance: TV())
+let tvRemoteControl = RemoteControl(appliance: TV())
 tvRemoteControl.turnOn()
 
-var fancyVacuumCleanerRemoteControl = RemoteControl(appliance: VacuumCleaner())
+let fancyVacuumCleanerRemoteControl = RemoteControl(appliance: VacuumCleaner())
 fancyVacuumCleanerRemoteControl.turnOn()
 /*:
 🌿 Composite
@@ -119,8 +121,7 @@ fancyVacuumCleanerRemoteControl.turnOn()
 The composite pattern is used to create hierarchical, recursive tree structures of related objects where any element of the structure may be accessed and utilised in a standard manner.
 
 ### Example
-*/
-/*:
+
 Component
 */
 protocol Shape {
@@ -129,13 +130,13 @@ protocol Shape {
 /*:
 Leafs
 */
-final class Square : Shape {
+final class Square: Shape {
     func draw(fillColor: String) {
         print("Drawing a Square with color \(fillColor)")
     }
 }
 
-final class Circle : Shape {
+final class Circle: Shape {
     func draw(fillColor: String) {
         print("Drawing a circle with color \(fillColor)")
     }
@@ -144,10 +145,11 @@ final class Circle : Shape {
 /*:
 Composite
 */
-final class Whiteboard : Shape {
-    lazy var shapes = [Shape]()
+final class Whiteboard: Shape {
 
-    init(_ shapes:Shape...) {
+    private lazy var shapes = [Shape]()
+
+    init(_ shapes: Shape...) {
         self.shapes = shapes
     }
 
@@ -171,74 +173,59 @@ This provides a flexible alternative to using inheritance to modify behaviour.
 
 ### Example
 */
-protocol Coffee {
-    func getCost() -> Double
-    func getIngredients() -> String
+protocol CostHaving {
+    var cost: Double { get }
 }
 
-class SimpleCoffee: Coffee {
-    func getCost() -> Double {
-        return 1.0
-    }
-
-    func getIngredients() -> String {
-        return "Coffee"
-    }
+protocol IngredientsHaving {
+    var ingredients: [String] { get }
 }
 
-class CoffeeDecorator: Coffee {
-    private let decoratedCoffee: Coffee
-    fileprivate let ingredientSeparator: String = ", "
+typealias BeverageDataHaving = CostHaving & IngredientsHaving
 
-    required init(decoratedCoffee: Coffee) {
-        self.decoratedCoffee = decoratedCoffee
-    }
-
-    func getCost() -> Double {
-        return decoratedCoffee.getCost()
-    }
-
-    func getIngredients() -> String {
-        return decoratedCoffee.getIngredients()
-    }
+struct SimpleCoffee: BeverageDataHaving {
+    let cost: Double = 1.0
+    let ingredients = ["Water", "Coffee"]
 }
 
-final class Milk: CoffeeDecorator {
-    required init(decoratedCoffee: Coffee) {
-        super.init(decoratedCoffee: decoratedCoffee)
+protocol BeverageHaving: BeverageDataHaving {
+    var beverage: BeverageDataHaving { get }
+}
+
+struct Milk: BeverageHaving {
+
+    let beverage: BeverageDataHaving
+
+    var cost: Double {
+        return beverage.cost + 0.5
     }
 
-    override func getCost() -> Double {
-        return super.getCost() + 0.5
-    }
-
-    override func getIngredients() -> String {
-        return super.getIngredients() + ingredientSeparator + "Milk"
+    var ingredients: [String] {
+        return beverage.ingredients + ["Milk"]
     }
 }
 
-final class WhipCoffee: CoffeeDecorator {
-    required init(decoratedCoffee: Coffee) {
-        super.init(decoratedCoffee: decoratedCoffee)
+struct WhipCoffee: BeverageHaving {
+
+    let beverage: BeverageDataHaving
+
+    var cost: Double {
+        return beverage.cost + 0.5
     }
 
-    override func getCost() -> Double {
-        return super.getCost() + 0.7
-    }
-
-    override func getIngredients() -> String {
-        return super.getIngredients() + ingredientSeparator + "Whip"
+    var ingredients: [String] {
+        return beverage.ingredients + ["Whip"]
     }
 }
 /*:
 ### Usage:
 */
-var someCoffee: Coffee = SimpleCoffee()
-print("Cost : \(someCoffee.getCost()); Ingredients: \(someCoffee.getIngredients())")
-someCoffee = Milk(decoratedCoffee: someCoffee)
-print("Cost : \(someCoffee.getCost()); Ingredients: \(someCoffee.getIngredients())")
-someCoffee = WhipCoffee(decoratedCoffee: someCoffee)
-print("Cost : \(someCoffee.getCost()); Ingredients: \(someCoffee.getIngredients())")
+var someCoffee: BeverageDataHaving = SimpleCoffee()
+print("Cost: \(someCoffee.cost); Ingredients: \(someCoffee.ingredients)")
+someCoffee = Milk(beverage: someCoffee)
+print("Cost: \(someCoffee.cost); Ingredients: \(someCoffee.ingredients)")
+someCoffee = WhipCoffee(beverage: someCoffee)
+print("Cost: \(someCoffee.cost); Ingredients: \(someCoffee.ingredients)")
 /*:
 🎁 Façade
 ---------
@@ -247,49 +234,54 @@ The facade pattern is used to define a simplified interface to a more complex su
 
 ### Example
 */
-enum Eternal {
+final class Defaults {
 
-    static func set(_ object: Any, forKey defaultName: String) {
-        let defaults: UserDefaults = UserDefaults.standard
-        defaults.set(object, forKey:defaultName)
-        defaults.synchronize()
+    private let defaults: UserDefaults
+
+    init(defaults: UserDefaults = .standard) {
+        self.defaults = defaults
     }
 
-    static func object(forKey key: String) -> AnyObject! {
-        let defaults: UserDefaults = UserDefaults.standard
-        return defaults.object(forKey: key) as AnyObject!
-    }
+    subscript(key: String) -> String? {
+        get {
+            return defaults.string(forKey: key)
+        }
 
+        set {
+            defaults.set(newValue, forKey: key)
+        }
+    }
 }
 /*:
 ### Usage
 */
-Eternal.set("Disconnect me. I’d rather be nothing", forKey:"Bishop")
-Eternal.object(forKey: "Bishop")
+let storage = Defaults()
+
+// Store
+storage["Bishop"] = "Disconnect me. I’d rather be nothing"
+
+// Read
+storage["Bishop"]
 /*:
 ## 🍃 Flyweight
 The flyweight pattern is used to minimize memory usage or computational expenses by sharing as much as possible with other similar objects.
 ### Example
 */
-// Instances of CoffeeFlavour will be the Flyweights
-final class SpecialityCoffee: CustomStringConvertible {
-    var origin: String
-    var description: String {
-        get {
-            return origin
-        }
-    }
-
-    init(origin: String) {
-        self.origin = origin
-    }
+// Instances of SpecialityCoffee will be the Flyweights
+struct SpecialityCoffee {
+    let origin: String
 }
 
-// Menu acts as a factory and cache for CoffeeFlavour flyweight objects
-final class Menu {
+protocol CoffeeSearching {
+    func search(origin: String) -> SpecialityCoffee?
+}
+
+// Menu acts as a factory and cache for SpecialityCoffee flyweight objects
+final class Menu: CoffeeSearching {
+
     private var coffeeAvailable: [String: SpecialityCoffee] = [:]
 
-    func lookup(origin: String) -> SpecialityCoffee? {
+    func search(origin: String) -> SpecialityCoffee? {
         if coffeeAvailable.index(forKey: origin) == nil {
             coffeeAvailable[origin] = SpecialityCoffee(origin: origin)
         }
@@ -300,10 +292,14 @@ final class Menu {
 
 final class CoffeeShop {
     private var orders: [Int: SpecialityCoffee] = [:]
-    private var menu = Menu()
+    private let menu: CoffeeSearching
+
+    init(menu: CoffeeSearching) {
+        self.menu = menu
+    }
 
     func takeOrder(origin: String, table: Int) {
-        orders[table] = menu.lookup(origin: origin)
+        orders[table] = menu.search(origin: origin)
     }
 
     func serve() {
@@ -315,7 +311,7 @@ final class CoffeeShop {
 /*:
 ### Usage
 */
-let coffeeShop = CoffeeShop()
+let coffeeShop = CoffeeShop(menu: Menu())
 
 coffeeShop.takeOrder(origin: "Yirgacheffe, Ethiopia", table: 1)
 coffeeShop.takeOrder(origin: "Buziraguhindwa, Burundi", table: 3)
@@ -330,23 +326,23 @@ Protection proxy is restricting access.
 
 ### Example
 */
-protocol DoorOperator {
+protocol DoorOpening {
     func open(doors: String) -> String
 }
 
-class HAL9000 : DoorOperator {
+final class HAL9000: DoorOpening {
     func open(doors: String) -> String {
         return ("HAL9000: Affirmative, Dave. I read you. Opened \(doors).")
     }
 }
 
-class CurrentComputer : DoorOperator {
+final class CurrentComputer: DoorOpening {
     private var computer: HAL9000!
 
     func authenticate(password: String) -> Bool {
 
         guard password == "pass" else {
-            return false;
+            return false
         }
 
         computer = HAL9000()
@@ -386,13 +382,14 @@ protocol HEVSuitMedicalAid {
     func administerMorphine() -> String
 }
 
-class HEVSuit : HEVSuitMedicalAid {
+final class HEVSuit: HEVSuitMedicalAid {
     func administerMorphine() -> String {
         return "Morphine administered."
     }
 }
 
-class HEVSuitHumanInterface : HEVSuitMedicalAid {
+final class HEVSuitHumanInterface: HEVSuitMedicalAid {
+
     lazy private var physicalSuit: HEVSuit = HEVSuit()
 
     func administerMorphine() -> String {

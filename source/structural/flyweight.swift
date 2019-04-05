@@ -3,25 +3,21 @@
 The flyweight pattern is used to minimize memory usage or computational expenses by sharing as much as possible with other similar objects.
 ### Example
 */
-// Instances of CoffeeFlavour will be the Flyweights
-final class SpecialityCoffee: CustomStringConvertible {
-    var origin: String
-    var description: String {
-        get {
-            return origin
-        }
-    }
-
-    init(origin: String) {
-        self.origin = origin
-    }
+// Instances of SpecialityCoffee will be the Flyweights
+struct SpecialityCoffee {
+    let origin: String
 }
 
-// Menu acts as a factory and cache for CoffeeFlavour flyweight objects
-final class Menu {
+protocol CoffeeSearching {
+    func search(origin: String) -> SpecialityCoffee?
+}
+
+// Menu acts as a factory and cache for SpecialityCoffee flyweight objects
+final class Menu: CoffeeSearching {
+
     private var coffeeAvailable: [String: SpecialityCoffee] = [:]
 
-    func lookup(origin: String) -> SpecialityCoffee? {
+    func search(origin: String) -> SpecialityCoffee? {
         if coffeeAvailable.index(forKey: origin) == nil {
             coffeeAvailable[origin] = SpecialityCoffee(origin: origin)
         }
@@ -32,10 +28,14 @@ final class Menu {
 
 final class CoffeeShop {
     private var orders: [Int: SpecialityCoffee] = [:]
-    private var menu = Menu()
+    private let menu: CoffeeSearching
+
+    init(menu: CoffeeSearching) {
+        self.menu = menu
+    }
 
     func takeOrder(origin: String, table: Int) {
-        orders[table] = menu.lookup(origin: origin)
+        orders[table] = menu.search(origin: origin)
     }
 
     func serve() {
@@ -47,7 +47,7 @@ final class CoffeeShop {
 /*:
 ### Usage
 */
-let coffeeShop = CoffeeShop()
+let coffeeShop = CoffeeShop(menu: Menu())
 
 coffeeShop.takeOrder(origin: "Yirgacheffe, Ethiopia", table: 1)
 coffeeShop.takeOrder(origin: "Buziraguhindwa, Burundi", table: 3)

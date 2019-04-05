@@ -6,19 +6,24 @@ The chain of responsibility pattern is used to process varied requests, each of 
 
 ### Example:
 */
-final class MoneyPile {
+
+protocol Withdrawing {
+    func withdraw(amount: Int) -> Bool
+}
+
+final class MoneyPile: Withdrawing {
 
     let value: Int
     var quantity: Int
-    var nextPile: MoneyPile?
+    var next: Withdrawing?
 
-    init(value: Int, quantity: Int, nextPile: MoneyPile?) {
+    init(value: Int, quantity: Int, next: Withdrawing?) {
         self.value = value
         self.quantity = quantity
-        self.nextPile = nextPile
+        self.next = next
     }
 
-    func canWithdraw(amount: Int) -> Bool {
+    func withdraw(amount: Int) -> Bool {
 
         var amount = amount
 
@@ -42,28 +47,29 @@ final class MoneyPile {
             return true
         }
 
-        if let next = self.nextPile {
-            return next.canWithdraw(amount: amount)
+        if let next = self.next {
+            return next.withdraw(amount: amount)
         }
 
         return false
     }
 }
 
-final class ATM {
-    private var hundred: MoneyPile
-    private var fifty: MoneyPile
-    private var twenty: MoneyPile
-    private var ten: MoneyPile
+final class ATM: Withdrawing {
 
-    private var startPile: MoneyPile {
+    private var hundred: Withdrawing
+    private var fifty: Withdrawing
+    private var twenty: Withdrawing
+    private var ten: Withdrawing
+
+    private var startPile: Withdrawing {
         return self.hundred
     }
 
-    init(hundred: MoneyPile,
-           fifty: MoneyPile,
-          twenty: MoneyPile,
-             ten: MoneyPile) {
+    init(hundred: Withdrawing,
+           fifty: Withdrawing,
+          twenty: Withdrawing,
+             ten: Withdrawing) {
 
         self.hundred = hundred
         self.fifty = fifty
@@ -71,25 +77,20 @@ final class ATM {
         self.ten = ten
     }
 
-    func canWithdraw(amount: Int) -> String {
-        return "Can withdraw: \(self.startPile.canWithdraw(amount: amount))"
+    func withdraw(amount: Int) -> Bool {
+        return startPile.withdraw(amount: amount)
     }
 }
 /*:
 ### Usage
 */
 // Create piles of money and link them together 10 < 20 < 50 < 100.**
-let ten = MoneyPile(value: 10, quantity: 6, nextPile: nil)
-let twenty = MoneyPile(value: 20, quantity: 2, nextPile: ten)
-let fifty = MoneyPile(value: 50, quantity: 2, nextPile: twenty)
-let hundred = MoneyPile(value: 100, quantity: 1, nextPile: fifty)
+let ten = MoneyPile(value: 10, quantity: 6, next: nil)
+let twenty = MoneyPile(value: 20, quantity: 2, next: ten)
+let fifty = MoneyPile(value: 50, quantity: 2, next: twenty)
+let hundred = MoneyPile(value: 100, quantity: 1, next: fifty)
 
 // Build ATM.
 var atm = ATM(hundred: hundred, fifty: fifty, twenty: twenty, ten: ten)
-atm.canWithdraw(amount: 310) // Cannot because ATM has only 300
-atm.canWithdraw(amount: 100) // Can withdraw - 1x100
-atm.canWithdraw(amount: 165) // Cannot withdraw because ATM doesn't has bill with value of 5
-atm.canWithdraw(amount: 30)  // Can withdraw - 1x20, 2x10
-/*:
->**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Chain-Of-Responsibility)
-*/
+atm.withdraw(amount: 310) // Cannot because ATM has only 300
+atm.withdraw(amount: 100) // Can withdraw - 1x100

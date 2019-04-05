@@ -7,7 +7,7 @@ An external class controls the construction algorithm.
 
 ### Example
 */
-class DeathStarBuilder {
+final class DeathStarBuilder {
 
     var x: Double?
     var y: Double?
@@ -51,6 +51,3 @@ let empire = DeathStarBuilder { builder in
 }
 
 let deathStar = DeathStar(builder:empire)
-/*:
->**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Builder)
-*/

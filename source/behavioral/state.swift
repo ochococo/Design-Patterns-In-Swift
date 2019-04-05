@@ -25,7 +25,6 @@ final class Context {
 	func changeStateToUnauthorized() {
 		state = UnauthorizedState()
 	}
-
 }
 
 protocol State {
@@ -57,6 +56,3 @@ userContext.changeStateToAuthorized(userId: "admin")
 (userContext.isAuthorized, userContext.userId) // now logged in as "admin"
 userContext.changeStateToUnauthorized()
 (userContext.isAuthorized, userContext.userId)
-/*:
->**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-State)
-*/
