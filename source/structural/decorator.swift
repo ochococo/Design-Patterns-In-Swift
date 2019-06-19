@@ -7,56 +7,71 @@ This provides a flexible alternative to using inheritance to modify behaviour.
 
 ### Example
 */
-protocol CostHaving {
-    var cost: Double { get }
+protocol Coffee {
+    func getCost() -> Double
+    func getIngredients() -> String
 }
 
-protocol IngredientsHaving {
-    var ingredients: [String] { get }
-}
-
-typealias BeverageDataHaving = CostHaving & IngredientsHaving
-
-struct SimpleCoffee: BeverageDataHaving {
-    let cost: Double = 1.0
-    let ingredients = ["Water", "Coffee"]
-}
-
-protocol BeverageHaving: BeverageDataHaving {
-    var beverage: BeverageDataHaving { get }
-}
-
-struct Milk: BeverageHaving {
-
-    let beverage: BeverageDataHaving
-
-    var cost: Double {
-        return beverage.cost + 0.5
+class SimpleCoffee: Coffee {
+    func getCost() -> Double {
+        return 1.0
     }
 
-    var ingredients: [String] {
-        return beverage.ingredients + ["Milk"]
+    func getIngredients() -> String {
+        return "Coffee"
     }
 }
 
-struct WhipCoffee: BeverageHaving {
+class CoffeeDecorator: Coffee {
+    private let decoratedCoffee: Coffee
+    fileprivate let ingredientSeparator: String = ", "
 
-    let beverage: BeverageDataHaving
-
-    var cost: Double {
-        return beverage.cost + 0.5
+    required init(decoratedCoffee: Coffee) {
+        self.decoratedCoffee = decoratedCoffee
     }
 
-    var ingredients: [String] {
-        return beverage.ingredients + ["Whip"]
+    func getCost() -> Double {
+        return decoratedCoffee.getCost()
+    }
+
+    func getIngredients() -> String {
+        return decoratedCoffee.getIngredients()
+    }
+}
+
+final class Milk: CoffeeDecorator {
+    required init(decoratedCoffee: Coffee) {
+        super.init(decoratedCoffee: decoratedCoffee)
+    }
+
+    override func getCost() -> Double {
+        return super.getCost() + 0.5
+    }
+
+    override func getIngredients() -> String {
+        return super.getIngredients() + ingredientSeparator + "Milk"
+    }
+}
+
+final class WhipCoffee: CoffeeDecorator {
+    required init(decoratedCoffee: Coffee) {
+        super.init(decoratedCoffee: decoratedCoffee)
+    }
+
+    override func getCost() -> Double {
+        return super.getCost() + 0.7
+    }
+
+    override func getIngredients() -> String {
+        return super.getIngredients() + ingredientSeparator + "Whip"
     }
 }
 /*:
 ### Usage:
 */
-var someCoffee: BeverageDataHaving = SimpleCoffee()
-print("Cost: \(someCoffee.cost); Ingredients: \(someCoffee.ingredients)")
-someCoffee = Milk(beverage: someCoffee)
-print("Cost: \(someCoffee.cost); Ingredients: \(someCoffee.ingredients)")
-someCoffee = WhipCoffee(beverage: someCoffee)
-print("Cost: \(someCoffee.cost); Ingredients: \(someCoffee.ingredients)")
+var someCoffee: Coffee = SimpleCoffee()
+print("Cost : \(someCoffee.getCost()); Ingredients: \(someCoffee.getIngredients())")
+someCoffee = Milk(decoratedCoffee: someCoffee)
+print("Cost : \(someCoffee.getCost()); Ingredients: \(someCoffee.getIngredients())")
+someCoffee = WhipCoffee(decoratedCoffee: someCoffee)
+print("Cost : \(someCoffee.getCost()); Ingredients: \(someCoffee.getIngredients())")

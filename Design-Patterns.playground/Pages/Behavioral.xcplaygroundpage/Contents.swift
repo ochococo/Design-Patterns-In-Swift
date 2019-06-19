@@ -1,19 +1,15 @@
+//: Behavioral |
+//: [Creational](Creational) |
+//: [Structural](Structural)
 /*:
-
 Behavioral
 ==========
 
 >In software engineering, behavioral design patterns are design patterns that identify common communication patterns between objects and realize these patterns. By doing so, these patterns increase flexibility in carrying out this communication.
 >
 >**Source:** [wikipedia.org](http://en.wikipedia.org/wiki/Behavioral_pattern)
-
-## Table of Contents
-
-* [Behavioral](Behavioral)
-* [Creational](Creational)
-* [Structural](Structural)
-
 */
+import Swift
 import Foundation
 /*:
 🐝 Chain Of Responsibility
@@ -23,24 +19,19 @@ The chain of responsibility pattern is used to process varied requests, each of 
 
 ### Example:
 */
-
-protocol Withdrawing {
-    func withdraw(amount: Int) -> Bool
-}
-
-final class MoneyPile: Withdrawing {
+final class MoneyPile {
 
     let value: Int
     var quantity: Int
-    var next: Withdrawing?
+    var nextPile: MoneyPile?
 
-    init(value: Int, quantity: Int, next: Withdrawing?) {
+    init(value: Int, quantity: Int, nextPile: MoneyPile?) {
         self.value = value
         self.quantity = quantity
-        self.next = next
+        self.nextPile = nextPile
     }
 
-    func withdraw(amount: Int) -> Bool {
+    func canWithdraw(amount: Int) -> Bool {
 
         var amount = amount
 
@@ -64,29 +55,28 @@ final class MoneyPile: Withdrawing {
             return true
         }
 
-        if let next = self.next {
-            return next.withdraw(amount: amount)
+        if let next = self.nextPile {
+            return next.canWithdraw(amount: amount)
         }
 
         return false
     }
 }
 
-final class ATM: Withdrawing {
+final class ATM {
+    private var hundred: MoneyPile
+    private var fifty: MoneyPile
+    private var twenty: MoneyPile
+    private var ten: MoneyPile
 
-    private var hundred: Withdrawing
-    private var fifty: Withdrawing
-    private var twenty: Withdrawing
-    private var ten: Withdrawing
-
-    private var startPile: Withdrawing {
+    private var startPile: MoneyPile {
         return self.hundred
     }
 
-    init(hundred: Withdrawing,
-           fifty: Withdrawing,
-          twenty: Withdrawing,
-             ten: Withdrawing) {
+    init(hundred: MoneyPile,
+           fifty: MoneyPile,
+          twenty: MoneyPile,
+             ten: MoneyPile) {
 
         self.hundred = hundred
         self.fifty = fifty
@@ -94,23 +84,28 @@ final class ATM: Withdrawing {
         self.ten = ten
     }
 
-    func withdraw(amount: Int) -> Bool {
-        return startPile.withdraw(amount: amount)
+    func canWithdraw(amount: Int) -> String {
+        return "Can withdraw: \(self.startPile.canWithdraw(amount: amount))"
     }
 }
 /*:
 ### Usage
 */
 // Create piles of money and link them together 10 < 20 < 50 < 100.**
-let ten = MoneyPile(value: 10, quantity: 6, next: nil)
-let twenty = MoneyPile(value: 20, quantity: 2, next: ten)
-let fifty = MoneyPile(value: 50, quantity: 2, next: twenty)
-let hundred = MoneyPile(value: 100, quantity: 1, next: fifty)
+let ten = MoneyPile(value: 10, quantity: 6, nextPile: nil)
+let twenty = MoneyPile(value: 20, quantity: 2, nextPile: ten)
+let fifty = MoneyPile(value: 50, quantity: 2, nextPile: twenty)
+let hundred = MoneyPile(value: 100, quantity: 1, nextPile: fifty)
 
 // Build ATM.
 var atm = ATM(hundred: hundred, fifty: fifty, twenty: twenty, ten: ten)
-atm.withdraw(amount: 310) // Cannot because ATM has only 300
-atm.withdraw(amount: 100) // Can withdraw - 1x100
+atm.canWithdraw(amount: 310) // Cannot because ATM has only 300
+atm.canWithdraw(amount: 100) // Can withdraw - 1x100
+atm.canWithdraw(amount: 165) // Cannot withdraw because ATM doesn't has bill with value of 5
+atm.canWithdraw(amount: 30)  // Can withdraw - 1x20, 2x10
+/*:
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Chain-Of-Responsibility)
+*/
 /*:
 👫 Command
 ----------
@@ -123,7 +118,7 @@ protocol DoorCommand {
     func execute() -> String
 }
 
-final class OpenCommand: DoorCommand {
+class OpenCommand : DoorCommand {
     let doors:String
 
     required init(doors: String) {
@@ -135,7 +130,7 @@ final class OpenCommand: DoorCommand {
     }
 }
 
-final class CloseCommand: DoorCommand {
+class CloseCommand : DoorCommand {
     let doors:String
 
     required init(doors: String) {
@@ -147,7 +142,7 @@ final class CloseCommand: DoorCommand {
     }
 }
 
-final class HAL9000DoorsOperations {
+class HAL9000DoorsOperations {
     let openCommand: DoorCommand
     let closeCommand: DoorCommand
     
@@ -262,6 +257,9 @@ context.assign(expression: c, value: 3)
 
 var result = expression.evaluate(context)
 /*:
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Interpreter)
+*/
+/*:
 🍫 Iterator
 -----------
 
@@ -368,7 +366,9 @@ messagesMediator.add(recipient: user0)
 messagesMediator.add(recipient: user1)
 
 spamMonster(message: "I'd Like to Add you to My Professional Network", worker: messagesMediator)
-
+/*:
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Mediator)
+*/
 /*:
 💾 Memento
 ----------
@@ -377,7 +377,7 @@ The memento pattern is used to capture the current state of an object and store 
 
 ### Example
 */
-typealias Memento = [String: String]
+typealias Memento = NSDictionary
 /*:
 Originator
 */
@@ -402,8 +402,8 @@ struct GameState: MementoConvertible {
     }
 
     init?(memento: Memento) {
-        guard let mementoChapter = memento[Keys.chapter],
-              let mementoWeapon = memento[Keys.weapon] else {
+        guard let mementoChapter = memento[Keys.chapter] as? String,
+              let mementoWeapon = memento[Keys.weapon] as? String else {
             return nil
         }
 
@@ -419,20 +419,20 @@ struct GameState: MementoConvertible {
 Caretaker
 */
 enum CheckPoint {
-
-    private static let defaults = UserDefaults.standard
-
     static func save(_ state: MementoConvertible, saveName: String) {
+        let defaults = UserDefaults.standard
         defaults.set(state.memento, forKey: saveName)
         defaults.synchronize()
     }
 
-    static func restore(saveName: String) -> Any? {
-        return defaults.object(forKey: saveName)
+    static func restore(saveName: String) -> Memento? {
+        let defaults = UserDefaults.standard
+
+        return defaults.object(forKey: saveName) as? Memento
     }
 }
 /*:
-### Usage
+ ### Usage
 */
 var gameState = GameState(chapter: "Black Mesa Inbound", weapon: "Crowbar")
 
@@ -448,7 +448,7 @@ gameState.chapter = "Office Complex"
 gameState.weapon = "Crossbow"
 CheckPoint.save(gameState, saveName: "gameState3")
 
-if let memento = CheckPoint.restore(saveName: "gameState1") as? Memento {
+if let memento = CheckPoint.restore(saveName: "gameState1") {
     let finalState = GameState(memento: memento)
     dump(finalState)
 }
@@ -503,6 +503,9 @@ var testChambers = TestChambers()
 testChambers.observer = observerInstance
 testChambers.testChamberNumber += 1
 /*:
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Observer)
+*/
+/*:
 🐉 State
 ---------
 
@@ -529,6 +532,7 @@ final class Context {
 	func changeStateToUnauthorized() {
 		state = UnauthorizedState()
 	}
+
 }
 
 protocol State {
@@ -561,6 +565,9 @@ userContext.changeStateToAuthorized(userId: "admin")
 userContext.changeStateToUnauthorized()
 (userContext.isAuthorized, userContext.userId)
 /*:
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-State)
+*/
+/*:
 💡 Strategy
 -----------
 
@@ -568,56 +575,122 @@ The strategy pattern is used to create an interchangeable family of algorithms f
 
 ### Example
 */
-
-struct TestSubject {
-    let pupilDiameter: Double
-    let blushResponse: Double
-    let isOrganic: Bool
+protocol PrintStrategy {
+    func print(_ string: String) -> String
 }
 
-protocol RealnessTesting: AnyObject {
-    func testRealness(_ testSubject: TestSubject) -> Bool
-}
+final class Printer {
 
-final class VoightKampffTest: RealnessTesting {
-    func testRealness(_ testSubject: TestSubject) -> Bool {
-        return testSubject.pupilDiameter < 30.0 || testSubject.blushResponse == 0.0
+    private let strategy: PrintStrategy
+
+    func print(_ string: String) -> String {
+        return self.strategy.print(string)
+    }
+
+    init(strategy: PrintStrategy) {
+        self.strategy = strategy
     }
 }
 
-final class GeneticTest: RealnessTesting {
-    func testRealness(_ testSubject: TestSubject) -> Bool {
-        return testSubject.isOrganic
+final class UpperCaseStrategy: PrintStrategy {
+    func print(_ string: String) -> String {
+        return string.uppercased()
     }
 }
 
-final class BladeRunner {
-    private let strategy: RealnessTesting
-
-    init(test: RealnessTesting) {
-        self.strategy = test
-    }
-
-    func testIfAndroid(_ testSubject: TestSubject) -> Bool {
-        return !strategy.testRealness(testSubject)
+final class LowerCaseStrategy: PrintStrategy {
+    func print(_ string:String) -> String {
+        return string.lowercased()
     }
 }
+/*:
+### Usage
+*/
+var lower = Printer(strategy: LowerCaseStrategy())
+lower.print("O tempora, o mores!")
+
+var upper = Printer(strategy: UpperCaseStrategy())
+upper.print("O tempora, o mores!")
+/*:
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Strategy)
+*/
+/*:
+🍪 Template
+-----------
+
+The Template Pattern is used when two or more implementations of an
+algorithm exist. The template is defined and then built upon with further
+variations. Use this method when most (or all) subclasses need to implement
+the same behavior. Traditionally, this would be accomplished with abstract
+classes and protected methods (as in Java). However in Swift, because
+abstract classes don't exist (yet - maybe someday),  we need to accomplish
+the behavior using interface delegation.
+
+
+### Example
+*/
+
+protocol ICodeGenerator {
+    func crossCompile()
+}
+
+protocol IGeneratorPhases {
+    func collectSource()
+    func crossCompile()
+}
+
+class CodeGenerator : ICodeGenerator{
+    var delegate: IGeneratorPhases
+
+    init(delegate: IGeneratorPhases) {
+        self.delegate = delegate
+    }
+
+    private func fetchDataforGeneration(){
+        //common implementation
+        print("fetchDataforGeneration invoked")
+    }
+
+    //Template method
+    final func crossCompile() {
+        fetchDataforGeneration()
+        delegate.collectSource()
+        delegate.crossCompile()
+    }
+    
+}
+
+class HTMLGeneratorPhases : IGeneratorPhases {
+    func collectSource() {
+        print("HTMLGeneratorPhases collectSource() executed")
+    }
+
+    func crossCompile() {
+        print("HTMLGeneratorPhases crossCompile() executed")
+    }
+}
+
+class JSONGeneratorPhases : IGeneratorPhases {
+    func collectSource() {
+        print("JSONGeneratorPhases collectSource() executed")
+    }
+
+    func crossCompile() {
+        print("JSONGeneratorPhases crossCompile() executed")
+    }
+}
+
+
 
 /*:
- ### Usage
- */
+### Usage
+*/
 
-let rachel = TestSubject(pupilDiameter: 30.2,
-                         blushResponse: 0.3,
-                         isOrganic: false)
+let htmlGen : ICodeGenerator = CodeGenerator(delegate: HTMLGeneratorPhases())
+let jsonGen: ICodeGenerator = CodeGenerator(delegate: JSONGeneratorPhases())
 
-// Deckard is using a traditional test
-let deckard = BladeRunner(test: VoightKampffTest())
-let isRachelAndroid = deckard.testIfAndroid(rachel)
-
-// Gaff is using a very precise method
-let gaff = BladeRunner(test: GeneticTest())
-let isDeckardAndroid = gaff.testIfAndroid(rachel)
+htmlGen.crossCompile()
+jsonGen.crossCompile()
 /*:
 🏃 Visitor
 ----------
@@ -630,48 +703,52 @@ protocol PlanetVisitor {
 	func visit(planet: PlanetAlderaan)
 	func visit(planet: PlanetCoruscant)
 	func visit(planet: PlanetTatooine)
-    func visit(planet: MoonJedha)
+    func visit(planet: MoonJedah)
 }
 
 protocol Planet {
 	func accept(visitor: PlanetVisitor)
 }
 
-final class MoonJedha: Planet {
+class MoonJedah: Planet {
     func accept(visitor: PlanetVisitor) { visitor.visit(planet: self) }
 }
 
-final class PlanetAlderaan: Planet {
+class PlanetAlderaan: Planet {
     func accept(visitor: PlanetVisitor) { visitor.visit(planet: self) }
 }
 
-final class PlanetCoruscant: Planet {
+class PlanetCoruscant: Planet {
 	func accept(visitor: PlanetVisitor) { visitor.visit(planet: self) }
 }
 
-final class PlanetTatooine: Planet {
+class PlanetTatooine: Planet {
 	func accept(visitor: PlanetVisitor) { visitor.visit(planet: self) }
 }
 
-final class NameVisitor: PlanetVisitor {
+
+
+class NameVisitor: PlanetVisitor {
 	var name = ""
 
 	func visit(planet: PlanetAlderaan)  { name = "Alderaan" }
 	func visit(planet: PlanetCoruscant) { name = "Coruscant" }
 	func visit(planet: PlanetTatooine)  { name = "Tatooine" }
-    func visit(planet: MoonJedha)     	{ name = "Jedha" }
+    func visit(planet: MoonJedah)     	{ name = "Jedah" }
 }
 
 /*:
 ### Usage
 */
-let planets: [Planet] = [PlanetAlderaan(), PlanetCoruscant(), PlanetTatooine(), MoonJedha()]
+let planets: [Planet] = [PlanetAlderaan(), PlanetCoruscant(), PlanetTatooine(), MoonJedah()]
 
 let names = planets.map { (planet: Planet) -> String in
 	let visitor = NameVisitor()
     planet.accept(visitor: visitor)
-
-    return visitor.name
+	return visitor.name
 }
 
 names
+/*:
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Visitor)
+*/

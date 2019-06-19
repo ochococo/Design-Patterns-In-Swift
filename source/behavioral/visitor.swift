@@ -10,48 +10,52 @@ protocol PlanetVisitor {
 	func visit(planet: PlanetAlderaan)
 	func visit(planet: PlanetCoruscant)
 	func visit(planet: PlanetTatooine)
-    func visit(planet: MoonJedha)
+    func visit(planet: MoonJedah)
 }
 
 protocol Planet {
 	func accept(visitor: PlanetVisitor)
 }
 
-final class MoonJedha: Planet {
+class MoonJedah: Planet {
     func accept(visitor: PlanetVisitor) { visitor.visit(planet: self) }
 }
 
-final class PlanetAlderaan: Planet {
+class PlanetAlderaan: Planet {
     func accept(visitor: PlanetVisitor) { visitor.visit(planet: self) }
 }
 
-final class PlanetCoruscant: Planet {
+class PlanetCoruscant: Planet {
 	func accept(visitor: PlanetVisitor) { visitor.visit(planet: self) }
 }
 
-final class PlanetTatooine: Planet {
+class PlanetTatooine: Planet {
 	func accept(visitor: PlanetVisitor) { visitor.visit(planet: self) }
 }
 
-final class NameVisitor: PlanetVisitor {
+
+
+class NameVisitor: PlanetVisitor {
 	var name = ""
 
 	func visit(planet: PlanetAlderaan)  { name = "Alderaan" }
 	func visit(planet: PlanetCoruscant) { name = "Coruscant" }
 	func visit(planet: PlanetTatooine)  { name = "Tatooine" }
-    func visit(planet: MoonJedha)     	{ name = "Jedha" }
+    func visit(planet: MoonJedah)     	{ name = "Jedah" }
 }
 
 /*:
 ### Usage
 */
-let planets: [Planet] = [PlanetAlderaan(), PlanetCoruscant(), PlanetTatooine(), MoonJedha()]
+let planets: [Planet] = [PlanetAlderaan(), PlanetCoruscant(), PlanetTatooine(), MoonJedah()]
 
 let names = planets.map { (planet: Planet) -> String in
 	let visitor = NameVisitor()
     planet.accept(visitor: visitor)
-
-    return visitor.name
+	return visitor.name
 }
 
 names
+/*:
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Visitor)
+*/

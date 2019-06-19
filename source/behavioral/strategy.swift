@@ -6,53 +6,42 @@ The strategy pattern is used to create an interchangeable family of algorithms f
 
 ### Example
 */
-
-struct TestSubject {
-    let pupilDiameter: Double
-    let blushResponse: Double
-    let isOrganic: Bool
+protocol PrintStrategy {
+    func print(_ string: String) -> String
 }
 
-protocol RealnessTesting: AnyObject {
-    func testRealness(_ testSubject: TestSubject) -> Bool
-}
+final class Printer {
 
-final class VoightKampffTest: RealnessTesting {
-    func testRealness(_ testSubject: TestSubject) -> Bool {
-        return testSubject.pupilDiameter < 30.0 || testSubject.blushResponse == 0.0
+    private let strategy: PrintStrategy
+
+    func print(_ string: String) -> String {
+        return self.strategy.print(string)
+    }
+
+    init(strategy: PrintStrategy) {
+        self.strategy = strategy
     }
 }
 
-final class GeneticTest: RealnessTesting {
-    func testRealness(_ testSubject: TestSubject) -> Bool {
-        return testSubject.isOrganic
+final class UpperCaseStrategy: PrintStrategy {
+    func print(_ string: String) -> String {
+        return string.uppercased()
     }
 }
 
-final class BladeRunner {
-    private let strategy: RealnessTesting
-
-    init(test: RealnessTesting) {
-        self.strategy = test
-    }
-
-    func testIfAndroid(_ testSubject: TestSubject) -> Bool {
-        return !strategy.testRealness(testSubject)
+final class LowerCaseStrategy: PrintStrategy {
+    func print(_ string:String) -> String {
+        return string.lowercased()
     }
 }
-
 /*:
- ### Usage
- */
+### Usage
+*/
+var lower = Printer(strategy: LowerCaseStrategy())
+lower.print("O tempora, o mores!")
 
-let rachel = TestSubject(pupilDiameter: 30.2,
-                         blushResponse: 0.3,
-                         isOrganic: false)
-
-// Deckard is using a traditional test
-let deckard = BladeRunner(test: VoightKampffTest())
-let isRachelAndroid = deckard.testIfAndroid(rachel)
-
-// Gaff is using a very precise method
-let gaff = BladeRunner(test: GeneticTest())
-let isDeckardAndroid = gaff.testIfAndroid(rachel)
+var upper = Printer(strategy: UpperCaseStrategy())
+upper.print("O tempora, o mores!")
+/*:
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Strategy)
+*/
