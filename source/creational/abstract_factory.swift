@@ -6,56 +6,65 @@ The abstract factory pattern is used to provide a client with a set of related o
 The "family" of objects created by the factory are determined at run-time.
 
 ### Example
-
+*/
+/*: 
 Protocols
 */
-
-protocol BurgerDescribing {
-    var ingredients: [String] { get }
+protocol Decimal {
+    func stringValue() -> String
+    // factory
+    static func make(string : String) -> Decimal
 }
 
-struct CheeseBurger: BurgerDescribing {
-    let ingredients: [String]
-}
-
-protocol BurgerMaking {
-    func make() -> BurgerDescribing
-}
+typealias NumberFactory = (String) -> Decimal
 
 // Number implementations with factory methods
 
-final class BigKahunaBurger: BurgerMaking {
-    func make() -> BurgerDescribing {
-        return CheeseBurger(ingredients: ["Cheese", "Burger", "Lettuce", "Tomato"])
+struct NextStepNumber: Decimal {
+    private var nextStepNumber: NSNumber
+
+    func stringValue() -> String { return nextStepNumber.stringValue }
+    
+    // factory
+    static func make(string: String) -> Decimal {
+        return NextStepNumber(nextStepNumber: NSNumber(value: (string as NSString).longLongValue))
     }
 }
 
-final class JackInTheBox: BurgerMaking {
-    func make() -> BurgerDescribing {
-        return CheeseBurger(ingredients: ["Cheese", "Burger", "Tomato", "Onions"])
+struct SwiftNumber : Decimal {
+    private var swiftInt: Int
+
+    func stringValue() -> String { return "\(swiftInt)" }
+    
+    // factory
+    static func make(string: String) -> Decimal {
+        return SwiftNumber(swiftInt:(string as NSString).integerValue)
     }
 }
-
 /*:
 Abstract factory
 */
+enum NumberType {
+    case nextStep, swift
+}
 
-enum BurgerFactoryType: BurgerMaking {
-
-    case bigKahuna
-    case jackInTheBox
-
-    func make() -> BurgerDescribing {
-        switch self {
-        case .bigKahuna:
-            return BigKahunaBurger().make()
-        case .jackInTheBox:
-            return JackInTheBox().make()
+enum NumberHelper {
+    static func factory(for type: NumberType) -> NumberFactory {
+        switch type {
+        case .nextStep:
+            return NextStepNumber.make
+        case .swift:
+            return SwiftNumber.make
         }
     }
 }
 /*:
 ### Usage
 */
-let bigKahuna = BurgerFactoryType.bigKahuna.make()
-let jackInTheBox = BurgerFactoryType.jackInTheBox.make()
+let factoryOne = NumberHelper.factory(for: .nextStep)
+let numberOne = factoryOne("1")
+numberOne.stringValue()
+
+let factoryTwo = NumberHelper.factory(for: .swift)
+let numberTwo = factoryTwo("2")
+numberTwo.stringValue()

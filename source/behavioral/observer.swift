@@ -48,3 +48,6 @@ var observerInstance = Observer()
 var testChambers = TestChambers()
 testChambers.observer = observerInstance
 testChambers.testChamberNumber += 1
+/*:
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Observer)
+*/

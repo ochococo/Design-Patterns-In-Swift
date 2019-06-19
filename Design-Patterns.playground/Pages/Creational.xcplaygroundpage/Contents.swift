@@ -1,19 +1,15 @@
+//: [Behavioral](Behavioral) |
+//: Creational |
+//: [Structural](Structural)
 /*:
-
 Creational
 ==========
 
 > In software engineering, creational design patterns are design patterns that deal with object creation mechanisms, trying to create objects in a manner suitable to the situation. The basic form of object creation could result in design problems or added complexity to the design. Creational design patterns solve this problem by somehow controlling this object creation.
 >
 >**Source:** [wikipedia.org](http://en.wikipedia.org/wiki/Creational_pattern)
-
-## Table of Contents
-
-* [Behavioral](Behavioral)
-* [Creational](Creational)
-* [Structural](Structural)
-
 */
+import Swift
 import Foundation
 /*:
 🌰 Abstract Factory
@@ -23,59 +19,68 @@ The abstract factory pattern is used to provide a client with a set of related o
 The "family" of objects created by the factory are determined at run-time.
 
 ### Example
-
+*/
+/*: 
 Protocols
 */
-
-protocol BurgerDescribing {
-    var ingredients: [String] { get }
+protocol Decimal {
+    func stringValue() -> String
+    // factory
+    static func make(string : String) -> Decimal
 }
 
-struct CheeseBurger: BurgerDescribing {
-    let ingredients: [String]
-}
-
-protocol BurgerMaking {
-    func make() -> BurgerDescribing
-}
+typealias NumberFactory = (String) -> Decimal
 
 // Number implementations with factory methods
 
-final class BigKahunaBurger: BurgerMaking {
-    func make() -> BurgerDescribing {
-        return CheeseBurger(ingredients: ["Cheese", "Burger", "Lettuce", "Tomato"])
+struct NextStepNumber: Decimal {
+    private var nextStepNumber: NSNumber
+
+    func stringValue() -> String { return nextStepNumber.stringValue }
+    
+    // factory
+    static func make(string: String) -> Decimal {
+        return NextStepNumber(nextStepNumber: NSNumber(value: (string as NSString).longLongValue))
     }
 }
 
-final class JackInTheBox: BurgerMaking {
-    func make() -> BurgerDescribing {
-        return CheeseBurger(ingredients: ["Cheese", "Burger", "Tomato", "Onions"])
+struct SwiftNumber : Decimal {
+    private var swiftInt: Int
+
+    func stringValue() -> String { return "\(swiftInt)" }
+    
+    // factory
+    static func make(string: String) -> Decimal {
+        return SwiftNumber(swiftInt:(string as NSString).integerValue)
     }
 }
-
 /*:
 Abstract factory
 */
+enum NumberType {
+    case nextStep, swift
+}
 
-enum BurgerFactoryType: BurgerMaking {
-
-    case bigKahuna
-    case jackInTheBox
-
-    func make() -> BurgerDescribing {
-        switch self {
-        case .bigKahuna:
-            return BigKahunaBurger().make()
-        case .jackInTheBox:
-            return JackInTheBox().make()
+enum NumberHelper {
+    static func factory(for type: NumberType) -> NumberFactory {
+        switch type {
+        case .nextStep:
+            return NextStepNumber.make
+        case .swift:
+            return SwiftNumber.make
         }
     }
 }
 /*:
 ### Usage
 */
-let bigKahuna = BurgerFactoryType.bigKahuna.make()
-let jackInTheBox = BurgerFactoryType.jackInTheBox.make()
+let factoryOne = NumberHelper.factory(for: .nextStep)
+let numberOne = factoryOne("1")
+numberOne.stringValue()
+
+let factoryTwo = NumberHelper.factory(for: .swift)
+let numberTwo = factoryTwo("2")
+numberTwo.stringValue()
 /*:
 👷 Builder
 ----------
@@ -85,7 +90,7 @@ An external class controls the construction algorithm.
 
 ### Example
 */
-final class DeathStarBuilder {
+class DeathStarBuilder {
 
     var x: Double?
     var y: Double?
@@ -130,6 +135,9 @@ let empire = DeathStarBuilder { builder in
 
 let deathStar = DeathStar(builder:empire)
 /*:
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Builder)
+*/
+/*:
 🏭 Factory Method
 -----------------
 
@@ -137,45 +145,42 @@ The factory pattern is used to replace class constructors, abstracting the proce
 
 ### Example
 */
-protocol CurrencyDescribing {
-    var symbol: String { get }
-    var code: String { get }
+protocol Currency {
+    func symbol() -> String
+    func code() -> String
 }
 
-final class Euro: CurrencyDescribing {
-    var symbol: String {
+class Euro : Currency {
+    func symbol() -> String {
         return "€"
     }
     
-    var code: String {
+    func code() -> String {
         return "EUR"
     }
 }
 
-final class UnitedStatesDolar: CurrencyDescribing {
-    var symbol: String {
+class UnitedStatesDolar : Currency {
+    func symbol() -> String {
         return "$"
     }
     
-    var code: String {
+    func code() -> String {
         return "USD"
     }
 }
 
 enum Country {
-    case unitedStates
-    case spain
-    case uk
-    case greece
+    case unitedStates, spain, uk, greece
 }
 
 enum CurrencyFactory {
-    static func currency(for country: Country) -> CurrencyDescribing? {
+    static func currency(for country:Country) -> Currency? {
 
         switch country {
-            case .spain, .greece:
+            case .spain, .greece :
                 return Euro()
-            case .unitedStates:
+            case .unitedStates :
                 return UnitedStatesDolar()
             default:
                 return nil
@@ -188,10 +193,10 @@ enum CurrencyFactory {
 */
 let noCurrencyCode = "No Currency Code Available"
 
-CurrencyFactory.currency(for: .greece)?.code ?? noCurrencyCode
-CurrencyFactory.currency(for: .spain)?.code ?? noCurrencyCode
-CurrencyFactory.currency(for: .unitedStates)?.code ?? noCurrencyCode
-CurrencyFactory.currency(for: .uk)?.code ?? noCurrencyCode
+CurrencyFactory.currency(for: .greece)?.code() ?? noCurrencyCode
+CurrencyFactory.currency(for: .spain)?.code() ?? noCurrencyCode
+CurrencyFactory.currency(for: .unitedStates)?.code() ?? noCurrencyCode
+CurrencyFactory.currency(for: .uk)?.code() ?? noCurrencyCode
 /*:
 🃏 Prototype
 ------------
@@ -201,32 +206,34 @@ This practise is particularly useful when the construction of a new object is in
 
 ### Example
 */
-struct MoonWorker {
+class ChungasRevengeDisplay {
+    var name: String?
+    let font: String
 
-    let name: String
-    var health: Int = 100
-
-    init(name: String) {
-        self.name = name
+    init(font: String) {
+        self.font = font
     }
 
-    func clone() -> MoonWorker {
-        return MoonWorker(name: name)
+    func clone() -> ChungasRevengeDisplay {
+        return ChungasRevengeDisplay(font:self.font)
     }
 }
 /*:
 ### Usage
 */
-let prototype = MoonWorker(name: "Sam Bell")
+let Prototype = ChungasRevengeDisplay(font:"GotanProject")
 
-var bell1 = prototype.clone()
-bell1.health = 12
+let Philippe = Prototype.clone()
+Philippe.name = "Philippe"
 
-var bell2 = prototype.clone()
-bell2.health = 23
+let Christoph = Prototype.clone()
+Christoph.name = "Christoph"
 
-var bell3 = prototype.clone()
-bell3.health = 0
+let Eduardo = Prototype.clone()
+Eduardo.name = "Eduardo"
+/*:
+>**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Prototype)
+*/
 /*:
 💍 Singleton
 ------------
@@ -237,9 +244,8 @@ There are very few applications, do not overuse this pattern!
 
 ### Example:
 */
-final class ElonMusk {
-
-    static let shared = ElonMusk()
+class DeathStarSuperlaser {
+    static let sharedInstance = DeathStarSuperlaser()
 
     private init() {
         // Private initialization to ensure just one instance is created.
@@ -248,4 +254,4 @@ final class ElonMusk {
 /*:
 ### Usage:
 */
-let elon = ElonMusk.shared // There is only one Elon Musk folks.
+let laser = DeathStarSuperlaser.sharedInstance
