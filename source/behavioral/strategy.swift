@@ -1,25 +1,26 @@
 /*:
-💡 Strategy
------------
-
-The strategy pattern is used to create an interchangeable family of algorithms from which the required process is chosen at run-time.
-
-### Example
-*/
+ 策略（Strategy）
+ --------------
+ 对象有某个行为，但是在不同的场景中，该行为有不同的实现算法。策略模式：
+ * 定义了一族算法（业务规则）；
+ * 封装了每个算法；
+ * 这族的算法可互换代替（interchangeable）。
+ ### 示例：
+ */
 protocol PrintStrategy {
     func print(_ string: String) -> String
 }
 
 final class Printer {
-
+    
     private let strategy: PrintStrategy
-
-    func print(_ string: String) -> String {
-        return self.strategy.print(string)
-    }
-
+    
     init(strategy: PrintStrategy) {
         self.strategy = strategy
+    }
+    
+    func print(_ string: String) -> String {
+        return self.strategy.print(string)
     }
 }
 
@@ -30,18 +31,18 @@ final class UpperCaseStrategy: PrintStrategy {
 }
 
 final class LowerCaseStrategy: PrintStrategy {
-    func print(_ string:String) -> String {
+    func print(_ string: String) -> String {
         return string.lowercased()
     }
 }
 /*:
-### Usage
-*/
+ ### 用法
+ */
 var lower = Printer(strategy: LowerCaseStrategy())
-lower.print("O tempora, o mores!")
+lower.print("0 tempora, o mores")
 
 var upper = Printer(strategy: UpperCaseStrategy())
-upper.print("O tempora, o mores!")
+upper.print("0 tempora, o mores")
 /*:
->**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Strategy)
-*/
+ > 更多示例：[Design Patterns in Swift](https://github.com/kingreza/Swift-Strategy)
+ */

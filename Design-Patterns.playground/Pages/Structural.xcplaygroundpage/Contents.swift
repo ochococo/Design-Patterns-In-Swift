@@ -1,79 +1,76 @@
-//: [Behavioral](Behavioral) |
-//: [Creational](Creational) |
-//: Structural
+//: [行为型模式](Behavioral) |
+//: [创建型模式](Creational) |
+//: 结构型模式
 /*:
-Structural
-==========
-
->In software engineering, structural design patterns are design patterns that ease the design by identifying a simple way to realize relationships between entities.
->
->**Source:** [wikipedia.org](http://en.wikipedia.org/wiki/Structural_pattern)
-*/
+ 结构型模式（Structural）
+ ====================
+ 
+ > 在软件工程中结构型模式是设计模式，借由一以贯之的方式来了解元件间的关系，以简化设计。
+ >
+ >**来源：** [维基百科](https://zh.wikipedia.org/wiki/%E7%B5%90%E6%A7%8B%E5%9E%8B%E6%A8%A1%E5%BC%8F)
+ */
 import Swift
 import Foundation
 /*:
-🔌 Adapter
-----------
-
-The adapter pattern is used to provide a link between two otherwise incompatible types by wrapping the "adaptee" with a class that supports the interface required by the client.
-
-### Example
-*/
+ 适配器（Adapter）
+ --------------
+ 
+ 适配器模式有时候也称包装样式或者包装(wrapper)。将一个类的接口转接成用户所期待的。一个适配使得因接口不兼容而不能在一起工作的类工作在一起，做法是将类自己的接口包裹在一个已存在的类中。
+ ### 示例：
+ */
 protocol OlderDeathStarSuperLaserAiming {
-    var angleV: NSNumber {get}
-    var angleH: NSNumber {get}
+    var angleV: NSNumber { get }
+    var angleH: NSNumber { get }
 }
 /*:
-**Adaptee**
-*/
+ **被适配者**
+ */
 struct DeathStarSuperlaserTarget {
     let angleHorizontal: Double
     let angleVertical: Double
-
-    init(angleHorizontal:Double, angleVertical:Double) {
+    
+    init(angleHorizontal: Double, angleVertical: Double) {
         self.angleHorizontal = angleHorizontal
         self.angleVertical = angleVertical
     }
 }
 /*:
-**Adapter**
-*/
-struct OldDeathStarSuperlaserTarget : OlderDeathStarSuperLaserAiming {
-    private let target : DeathStarSuperlaserTarget
-
-    var angleV:NSNumber {
+ **适配器**
+ */
+struct OldDeathStarSuperlaserTarget: OlderDeathStarSuperLaserAiming {
+    private let target: DeathStarSuperlaserTarget
+    
+    var angleV: NSNumber {
         return NSNumber(value: target.angleVertical)
     }
-
-    var angleH:NSNumber {
+    
+    var angleH: NSNumber {
         return NSNumber(value: target.angleHorizontal)
     }
-
-    init(_ target:DeathStarSuperlaserTarget) {
+    
+    init(_ target: DeathStarSuperlaserTarget) {
         self.target = target
     }
 }
 /*:
-### Usage
-*/
+ ### 用法：
+ */
 let target = DeathStarSuperlaserTarget(angleHorizontal: 14.0, angleVertical: 12.0)
 let oldFormat = OldDeathStarSuperlaserTarget(target)
 
 oldFormat.angleH
 oldFormat.angleV
 /*:
->**Further Examples:** [Design Patterns in Swift](https://github.com/kingreza/Swift-Adapter)
-*/
+ 更多示例：[Design Patterns in Swift](https://github.com/kingreza/Swift-Adapter)
+ */
 /*:
-🌉 Bridge
-----------
-
-The bridge pattern is used to separate the abstract elements of a class from the implementation details, providing the means to replace the implementation details without modifying the abstraction.
-
-### Example
-*/
+ 桥接（Bridge）
+ -----------
+ 桥接模式将抽象部分与实现部分分离，使它们都可以独立的变化。
+ ### 示例：
+ */
 protocol Switch {
-    var appliance: Appliance {get set}
+    var appliance: Appliance { get set }
     func turnOn()
 }
 
@@ -83,7 +80,7 @@ protocol Appliance {
 
 class RemoteControl: Switch {
     var appliance: Appliance
-
+    
     func turnOn() {
         self.appliance.run()
     }
@@ -95,62 +92,59 @@ class RemoteControl: Switch {
 
 class TV: Appliance {
     func run() {
-        print("tv turned on");
+        print("📺 打开了")
     }
 }
 
 class VacuumCleaner: Appliance {
     func run() {
-        print("vacuum cleaner turned on")
+        print("吸尘器打开了")
     }
 }
 /*:
-### Usage
-*/
+ ### 用法：
+ */
 var tvRemoteControl = RemoteControl(appliance: TV())
 tvRemoteControl.turnOn()
 
 var fancyVacuumCleanerRemoteControl = RemoteControl(appliance: VacuumCleaner())
 fancyVacuumCleanerRemoteControl.turnOn()
 /*:
-🌿 Composite
--------------
-
-The composite pattern is used to create hierarchical, recursive tree structures of related objects where any element of the structure may be accessed and utilised in a standard manner.
-
-### Example
-*/
+ 组合（Composite）
+ --------------
+ 将对象组合成树形结构以表示‘部分-整体’的层次结构。组合模式使得用户对单个对象和组合对象的使用具有一致性。
+ ### 示例：
+ */
 /*:
-Component
-*/
+ 组件（Component）
+ */
 protocol Shape {
     func draw(fillColor: String)
 }
 /*:
-Leafs
-*/
-final class Square : Shape {
+ 叶子节点（Leafs）
+ */
+final class Square: Shape {
     func draw(fillColor: String) {
-        print("Drawing a Square with color \(fillColor)")
+        print("画（\(fillColor)）颜色的方形")
     }
 }
 
-final class Circle : Shape {
+final class Circle: Shape {
     func draw(fillColor: String) {
-        print("Drawing a circle with color \(fillColor)")
+        print("画（\(fillColor)）颜色的圆形")
     }
 }
-
 /*:
-Composite
-*/
-final class Whiteboard : Shape {
+ 组合
+ */
+final class Whiteboard: Shape {
     lazy var shapes = [Shape]()
-
-    init(_ shapes:Shape...) {
+    
+    init(_ shapes: Shape...) {
         self.shapes = shapes
     }
-
+    
     func draw(fillColor: String) {
         for shape in self.shapes {
             shape.draw(fillColor: fillColor)
@@ -158,19 +152,17 @@ final class Whiteboard : Shape {
     }
 }
 /*:
-### Usage:
-*/
+ ### 用法：
+ */
 var whiteboard = Whiteboard(Circle(), Square())
-whiteboard.draw(fillColor: "Red")
+whiteboard.draw(fillColor: "红")
 /*:
-🍧 Decorator
-------------
-
-The decorator pattern is used to extend or alter the functionality of objects at run- time by wrapping them in an object of a decorator class. 
-This provides a flexible alternative to using inheritance to modify behaviour.
-
-### Example
-*/
+ 修饰（Decorator）
+ --------------
+ 修饰模式，是面向对象编程领域中，一种动态地往一个类中添加新的行为的设计模式。
+ 就功能而言，修饰模式相比生成子类更为灵活，这样可以给某个对象而不是整个类添加一些功能。
+ ### 示例：
+ */
 protocol Coffee {
     func getCost() -> Double
     func getIngredients() -> String
@@ -180,7 +172,7 @@ class SimpleCoffee: Coffee {
     func getCost() -> Double {
         return 1.0
     }
-
+    
     func getIngredients() -> String {
         return "Coffee"
     }
@@ -188,16 +180,16 @@ class SimpleCoffee: Coffee {
 
 class CoffeeDecorator: Coffee {
     private let decoratedCoffee: Coffee
-    fileprivate let ingredientSeparator: String = ", "
-
+    fileprivate let ingredientSeparator: String = ","
+    
     required init(decoratedCoffee: Coffee) {
         self.decoratedCoffee = decoratedCoffee
     }
-
+    
     func getCost() -> Double {
         return decoratedCoffee.getCost()
     }
-
+    
     func getIngredients() -> String {
         return decoratedCoffee.getIngredients()
     }
@@ -207,11 +199,11 @@ final class Milk: CoffeeDecorator {
     required init(decoratedCoffee: Coffee) {
         super.init(decoratedCoffee: decoratedCoffee)
     }
-
+    
     override func getCost() -> Double {
         return super.getCost() + 0.5
     }
-
+    
     override func getIngredients() -> String {
         return super.getIngredients() + ingredientSeparator + "Milk"
     }
@@ -221,18 +213,18 @@ final class WhipCoffee: CoffeeDecorator {
     required init(decoratedCoffee: Coffee) {
         super.init(decoratedCoffee: decoratedCoffee)
     }
-
+    
     override func getCost() -> Double {
         return super.getCost() + 0.7
     }
-
+    
     override func getIngredients() -> String {
         return super.getIngredients() + ingredientSeparator + "Whip"
     }
 }
 /*:
-### Usage:
-*/
+ ### 用法：
+ */
 var someCoffee: Coffee = SimpleCoffee()
 print("Cost : \(someCoffee.getCost()); Ingredients: \(someCoffee.getIngredients())")
 someCoffee = Milk(decoratedCoffee: someCoffee)
@@ -240,38 +232,35 @@ print("Cost : \(someCoffee.getCost()); Ingredients: \(someCoffee.getIngredients(
 someCoffee = WhipCoffee(decoratedCoffee: someCoffee)
 print("Cost : \(someCoffee.getCost()); Ingredients: \(someCoffee.getIngredients())")
 /*:
-🎁 Façade
----------
-
-The facade pattern is used to define a simplified interface to a more complex subsystem.
-
-### Example
-*/
+ 外观（Facade）
+ -----------
+ 外观模式为子系统中的一组接口提供一个统一的高层接口，使得子系统更容易使用。
+ ### 示例：
+ */
 enum Eternal {
-
+    
     static func set(_ object: Any, forKey defaultName: String) {
         let defaults: UserDefaults = UserDefaults.standard
-        defaults.set(object, forKey:defaultName)
+        defaults.set(object, forKey: defaultName)
         defaults.synchronize()
     }
-
+    
     static func object(forKey key: String) -> AnyObject! {
         let defaults: UserDefaults = UserDefaults.standard
-        return defaults.object(forKey: key) as AnyObject!
+        return defaults.object(forKey: key) as AnyObject
     }
-
 }
 /*:
-### Usage
-*/
+ ### 用法：
+ */
 Eternal.set("Disconnect me. I’d rather be nothing", forKey:"Bishop")
 Eternal.object(forKey: "Bishop")
 /*:
-## 🍃 Flyweight
-The flyweight pattern is used to minimize memory usage or computational expenses by sharing as much as possible with other similar objects.
-### Example
-*/
-// Instances of CoffeeFlavour will be the Flyweights
+ 享元（Flyweight）
+ --------------
+ 使用共享物件，用来尽可能减少内存使用量以及分享资讯给尽可能多的相似物件；它适合用于当大量物件只是重复因而导致无法令人接受的使用大量内存。
+ ### 示例：
+ */
 final class SpecialityCoffee: CustomStringConvertible {
     var origin: String
     var description: String {
@@ -279,21 +268,20 @@ final class SpecialityCoffee: CustomStringConvertible {
             return origin
         }
     }
-
+    
     init(origin: String) {
         self.origin = origin
     }
 }
 
-// Menu acts as a factory and cache for CoffeeFlavour flyweight objects
 final class Menu {
     private var coffeeAvailable: [String: SpecialityCoffee] = [:]
-
+    
     func lookup(origin: String) -> SpecialityCoffee? {
         if coffeeAvailable.index(forKey: origin) == nil {
             coffeeAvailable[origin] = SpecialityCoffee(origin: origin)
         }
-
+        
         return coffeeAvailable[origin]
     }
 }
@@ -301,11 +289,11 @@ final class Menu {
 final class CoffeeShop {
     private var orders: [Int: SpecialityCoffee] = [:]
     private var menu = Menu()
-
+    
     func takeOrder(origin: String, table: Int) {
         orders[table] = menu.lookup(origin: origin)
     }
-
+    
     func serve() {
         for (table, origin) in orders {
             print("Serving \(origin) to table \(table)")
@@ -313,8 +301,8 @@ final class CoffeeShop {
     }
 }
 /*:
-### Usage
-*/
+ ### 用法：
+ */
 let coffeeShop = CoffeeShop()
 
 coffeeShop.takeOrder(origin: "Yirgacheffe, Ethiopia", table: 1)
@@ -377,7 +365,7 @@ computer.open(doors: podBay)
 🍬 Virtual Proxy
 ----------------
 
-The proxy pattern is used to provide a surrogate or placeholder object, which references an underlying object.
+The proxy pattern is used to provide a surrogate or placeholder object, which references an underlying object. 
 Virtual proxy is used for loading object on demand.
 
 ### Example
@@ -388,7 +376,7 @@ protocol HEVSuitMedicalAid {
 
 class HEVSuit : HEVSuitMedicalAid {
     func administerMorphine() -> String {
-        return "Morphine administered."
+        return "Morphine aministered."
     }
 }
 

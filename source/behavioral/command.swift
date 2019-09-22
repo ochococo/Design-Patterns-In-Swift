@@ -1,46 +1,47 @@
 /*:
-👫 Command
-----------
-
-The command pattern is used to express a request, including the call to be made and all of its required parameters, in a command object. The command may then be executed immediately or held for later use.
-
-### Example:
-*/
+ 命令（Command）
+ ------------
+ 命令模式是一种设计模式，它尝试以对象来代表实际行动。命令对象可以把行动(action) 及其参数封装起来，于是这些行动可以被：
+ * 重复多次
+ * 取消（如果该对象有实现的话）
+ * 取消后又再重做
+ ### 示例：
+ */
 protocol DoorCommand {
     func execute() -> String
 }
 
-class OpenCommand : DoorCommand {
-    let doors:String
-
+class OpenCommand: DoorCommand {
+    let doors: String
+    
     required init(doors: String) {
         self.doors = doors
     }
     
     func execute() -> String {
-        return "Opened \(doors)"
+        return "\(doors)打开了"
     }
 }
 
-class CloseCommand : DoorCommand {
-    let doors:String
-
+class CloseCommand: DoorCommand {
+    let doors: String
+    
     required init(doors: String) {
         self.doors = doors
     }
     
     func execute() -> String {
-        return "Closed \(doors)"
+        return "\(doors)关闭了"
     }
 }
 
-class HAL9000DoorsOperations {
+class ZhimaDoorsOperations {
     let openCommand: DoorCommand
     let closeCommand: DoorCommand
     
     init(doors: String) {
-        self.openCommand = OpenCommand(doors:doors)
-        self.closeCommand = CloseCommand(doors:doors)
+        self.openCommand = OpenCommand(doors: doors)
+        self.closeCommand = CloseCommand(doors: doors)
     }
     
     func close() -> String {
@@ -52,10 +53,10 @@ class HAL9000DoorsOperations {
     }
 }
 /*:
-### Usage:
-*/
-let podBayDoors = "Pod Bay Doors"
-let doorModule = HAL9000DoorsOperations(doors:podBayDoors)
+ ### 用法：
+ */
+let zhimaDoors = "芝麻门"
+let doorModule = ZhimaDoorsOperations(doors: zhimaDoors)
 
 doorModule.open()
 doorModule.close()

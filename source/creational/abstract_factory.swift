@@ -1,49 +1,48 @@
 /*:
-🌰 Abstract Factory
--------------------
-
-The abstract factory pattern is used to provide a client with a set of related or dependant objects. 
-The "family" of objects created by the factory are determined at run-time.
-
-### Example
-*/
-/*: 
-Protocols
-*/
+ 抽象工厂（Abstract Factory）
+ -------------
+ 抽象工厂模式提供了一种方式，可以将一组具有同一主题的单独的工厂封装起来。在正常使用中，客户端程序需要创建抽象工厂的具体实现，然后使用抽象工厂作为接口来创建这一主题的具体对象。
+ ### 示例：
+ */
+/*:
+ 协议
+ */
 protocol Decimal {
     func stringValue() -> String
-    // factory
-    static func make(string : String) -> Decimal
+    // 工厂
+    static func make(string: String) -> Decimal
 }
 
 typealias NumberFactory = (String) -> Decimal
 
-// Number implementations with factory methods
+// 工厂方法实现
 
 struct NextStepNumber: Decimal {
     private var nextStepNumber: NSNumber
-
-    func stringValue() -> String { return nextStepNumber.stringValue }
     
-    // factory
+    func stringValue() -> String {
+        return nextStepNumber.stringValue
+    }
+    
     static func make(string: String) -> Decimal {
         return NextStepNumber(nextStepNumber: NSNumber(value: (string as NSString).longLongValue))
     }
 }
 
-struct SwiftNumber : Decimal {
+struct SwiftNumber: Decimal {
     private var swiftInt: Int
-
-    func stringValue() -> String { return "\(swiftInt)" }
     
-    // factory
+    func stringValue() -> String {
+        return "\(swiftInt)"
+    }
+    
     static func make(string: String) -> Decimal {
-        return SwiftNumber(swiftInt:(string as NSString).integerValue)
+        return SwiftNumber(swiftInt: (string as NSString).integerValue)
     }
 }
 /*:
-Abstract factory
-*/
+ 抽象工厂
+ */
 enum NumberType {
     case nextStep, swift
 }
@@ -59,12 +58,12 @@ enum NumberHelper {
     }
 }
 /*:
-### Usage
-*/
+ 用法：
+ */
 let factoryOne = NumberHelper.factory(for: .nextStep)
 let numberOne = factoryOne("1")
 numberOne.stringValue()
 
 let factoryTwo = NumberHelper.factory(for: .swift)
-let numberTwo = factoryTwo("2")
-numberTwo.stringValue()
+let nemberTwo = factoryTwo("2")
+nemberTwo.stringValue()

@@ -1,16 +1,14 @@
 
-Design Patterns implemented in Swift 3.0
+设计模式
 ========================================
-A short cheat-sheet with Xcode 8.2 Playground ([Design-Patterns.playground.zip](https://raw.githubusercontent.com/ochococo/Design-Patterns-In-Swift/master/Design-Patterns.playground.zip)).
+👷 Project maintained by: 
 
-👷 Project maintained by: [@nsmeme](http://twitter.com/nsmeme) (Oktawian Chojnacki)
+本项目翻译自 [@nsmeme](http://twitter.com/nsmeme) (Oktawian Chojnacki) 的「[源项目](https://github.com/ochococo/Design-Patterns-In-Swift)」
 
-🚀 How to generate README, Playground and zip from source: [GENERATE.md](https://github.com/ochococo/Design-Patterns-In-Swift/blob/master/GENERATE.md)
+## 目录
 
-## Table of Contents
-
-* [Behavioral](#behavioral)
-* [Creational](#creational)
-* [Structural](#structural)
+* [行为型模式](#behavioral)
+* [创建型模式](#creational)
+* [结构型模式](#structural)
 
 */
