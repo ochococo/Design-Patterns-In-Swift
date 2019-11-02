@@ -7,7 +7,10 @@ A short cheat-sheet with Xcode 10.2 Playground ([Design-Patterns.playground.zip]
 
 👷 Project maintained by: [@nsmeme](http://twitter.com/nsmeme) (Oktawian Chojnacki)
 
-🚀 How to generate README, Playground and zip from source: [GENERATE.md](https://github.com/ochococo/Design-Patterns-In-Swift/blob/master/GENERATE.md)
+❤️ Please consider supporting my work, [become my Sponsor!](https://github.com/sponsors/ochococo) 🙏
+
+
+How to generate README, Playground and zip from source: [GENERATE.md](https://github.com/ochococo/Design-Patterns-In-Swift/blob/master/GENERATE.md)
 
 
 ```swift
