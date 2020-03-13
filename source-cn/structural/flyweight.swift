@@ -1,9 +1,12 @@
 /*:
-## 🍃 Flyweight
-The flyweight pattern is used to minimize memory usage or computational expenses by sharing as much as possible with other similar objects.
-### Example
+🍃 享元（Flyweight）
+--------------
+
+使用共享物件，用来尽可能减少内存使用量以及分享资讯给尽可能多的相似物件；它适合用于当大量物件只是重复因而导致无法令人接受的使用大量内存。
+
+### 示例：
 */
-// Instances of SpecialityCoffee will be the Flyweights
+// 特指咖啡生成的对象会是享元
 struct SpecialityCoffee {
     let origin: String
 }
