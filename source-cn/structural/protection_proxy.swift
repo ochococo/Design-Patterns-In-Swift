@@ -1,11 +1,11 @@
 /*:
-☔ Protection Proxy
+☔ 保护代理模式（Protection Proxy）
 ------------------
 
-The proxy pattern is used to provide a surrogate or placeholder object, which references an underlying object. 
-Protection proxy is restricting access.
+在代理模式中，创建一个类代表另一个底层类的功能。
+保护代理用于限制访问。
 
-### Example
+### 示例：
 */
 protocol DoorOpening {
     func open(doors: String) -> String
@@ -41,7 +41,7 @@ final class CurrentComputer: DoorOpening {
     }
 }
 /*:
-### Usage
+### 用法
 */
 let computer = CurrentComputer()
 let podBay = "Pod Bay Doors"

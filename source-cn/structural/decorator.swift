@@ -1,11 +1,11 @@
 /*:
-🍧 Decorator
-------------
+🍧 修饰（Decorator）
+--------------
 
-The decorator pattern is used to extend or alter the functionality of objects at run- time by wrapping them in an object of a decorator class. 
-This provides a flexible alternative to using inheritance to modify behaviour.
+修饰模式，是面向对象编程领域中，一种动态地往一个类中添加新的行为的设计模式。
+就功能而言，修饰模式相比生成子类更为灵活，这样可以给某个对象而不是整个类添加一些功能。
 
-### Example
+### 示例：
 */
 protocol CostHaving {
     var cost: Double { get }
@@ -52,7 +52,7 @@ struct WhipCoffee: BeverageHaving {
     }
 }
 /*:
-### Usage:
+### 用法
 */
 var someCoffee: BeverageDataHaving = SimpleCoffee()
 print("Cost: \(someCoffee.cost); Ingredients: \(someCoffee.ingredients)")

@@ -1,11 +1,10 @@
 /*:
-👷 Builder
-----------
+👷 生成器（Builder）
+--------------
 
-The builder pattern is used to create complex objects with constituent parts that must be created in the same order or using a specific algorithm. 
-An external class controls the construction algorithm.
+一种对象构建模式。它可以将复杂对象的建造过程抽象出来（抽象类别），使这个抽象过程的不同实现方法可以构造出不同表现（属性）的对象。
 
-### Example
+### 示例：
 */
 final class DeathStarBuilder {
 
@@ -42,7 +41,7 @@ struct DeathStar : CustomStringConvertible {
     }
 }
 /*:
-### Usage
+### 用法
 */
 let empire = DeathStarBuilder { builder in
     builder.x = 0.1

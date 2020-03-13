@@ -1,10 +1,10 @@
 /*:
-🏭 Factory Method
------------------
+🏭 工厂方法（Factory Method）
+-----------------------
 
-The factory pattern is used to replace class constructors, abstracting the process of object generation so that the type of the object instantiated can be determined at run-time.
+定义一个创建对象的接口，但让实现这个接口的类来决定实例化哪个类。工厂方法让类的实例化推迟到子类中进行。
 
-### Example
+### 示例：
 */
 protocol CurrencyDescribing {
     var symbol: String { get }
@@ -53,7 +53,7 @@ enum CurrencyFactory {
     }
 }
 /*:
-### Usage
+### 用法
 */
 let noCurrencyCode = "No Currency Code Available"
 

@@ -1,10 +1,10 @@
 /*:
-🍫 Iterator
------------
+🍫 迭代器（Iterator）
+ ---------------
 
-The iterator pattern is used to provide a standard interface for traversing a collection of items in an aggregate object without the need to understand its underlying structure.
-
-### Example:
+ 迭代器模式可以让用户通过特定的接口巡访容器中的每一个元素而不用了解底层的实现。
+ 
+ ### 示例：
 */
 struct Novella {
     let name: String
@@ -35,7 +35,7 @@ extension Novellas: Sequence {
     }
 }
 /*:
-### Usage
+### 用法
 */
 let greatNovellas = Novellas(novellas: [Novella(name: "The Mist")] )
 

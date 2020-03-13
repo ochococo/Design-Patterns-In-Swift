@@ -1,11 +1,11 @@
 /*:
-🐉 State
+🐉 状态（State）
 ---------
 
-The state pattern is used to alter the behaviour of an object as its internal state changes.
-The pattern allows the class for an object to apparently change at run-time.
+在状态模式中，对象的行为是基于它的内部状态而改变的。
+这个模式允许某个类对象在运行时发生改变。
 
-### Example
+### 示例：
 */
 final class Context {
 	private var state: State = UnauthorizedState()
@@ -48,7 +48,7 @@ class AuthorizedState: State {
 	func userId(context: Context) -> String? { return userId }
 }
 /*:
-### Usage
+### 用法
 */
 let userContext = Context()
 (userContext.isAuthorized, userContext.userId)

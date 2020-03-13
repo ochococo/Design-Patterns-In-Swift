@@ -1,11 +1,11 @@
 /*:
-🍬 Virtual Proxy
+🍬 虚拟代理（Virtual Proxy）
 ----------------
 
-The proxy pattern is used to provide a surrogate or placeholder object, which references an underlying object.
-Virtual proxy is used for loading object on demand.
+在代理模式中，创建一个类代表另一个底层类的功能。
+虚拟代理用于对象的需时加载。
 
-### Example
+### 示例：
 */
 protocol HEVSuitMedicalAid {
     func administerMorphine() -> String
@@ -26,7 +26,7 @@ final class HEVSuitHumanInterface: HEVSuitMedicalAid {
     }
 }
 /*:
-### Usage
+### 用法
 */
 let humanInterface = HEVSuitHumanInterface()
 humanInterface.administerMorphine()

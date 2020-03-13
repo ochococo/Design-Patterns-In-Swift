@@ -1,10 +1,13 @@
 /*:
-💡 Strategy
------------
+💡 策略（Strategy）
+--------------
 
-The strategy pattern is used to create an interchangeable family of algorithms from which the required process is chosen at run-time.
+对象有某个行为，但是在不同的场景中，该行为有不同的实现算法。策略模式：
+* 定义了一族算法（业务规则）；
+* 封装了每个算法；
+* 这族的算法可互换代替（interchangeable）。
 
-### Example
+### 示例：
 */
 
 struct TestSubject {
@@ -42,7 +45,7 @@ final class BladeRunner {
 }
 
 /*:
- ### Usage
+ ### 用法
  */
 
 let rachel = TestSubject(pupilDiameter: 30.2,

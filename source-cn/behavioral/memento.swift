@@ -1,14 +1,14 @@
 /*:
-💾 Memento
-----------
+💾 备忘录（Memento）
+--------------
 
-The memento pattern is used to capture the current state of an object and store it in such a manner that it can be restored at a later time without breaking the rules of encapsulation.
+在不破坏封装性的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态。这样就可以将该对象恢复到原先保存的状态
 
-### Example
+### 示例：
 */
 typealias Memento = [String: String]
 /*:
-Originator
+发起人（Originator）
 */
 protocol MementoConvertible {
     var memento: Memento { get }
@@ -45,7 +45,7 @@ struct GameState: MementoConvertible {
     }
 }
 /*:
-Caretaker
+管理者（Caretaker）
 */
 enum CheckPoint {
 
@@ -61,7 +61,7 @@ enum CheckPoint {
     }
 }
 /*:
-### Usage
+### 用法
 */
 var gameState = GameState(chapter: "Black Mesa Inbound", weapon: "Crowbar")
 

@@ -1,10 +1,10 @@
 /*:
-🌉 Bridge
-----------
+🌉 桥接（Bridge）
+-----------
 
-The bridge pattern is used to separate the abstract elements of a class from the implementation details, providing the means to replace the implementation details without modifying the abstraction.
+桥接模式将抽象部分与实现部分分离，使它们都可以独立的变化。
 
-### Example
+### 示例：
 */
 protocol Switch {
     var appliance: Appliance { get set }
@@ -39,7 +39,7 @@ final class VacuumCleaner: Appliance {
     }
 }
 /*:
-### Usage
+### 用法
 */
 let tvRemoteControl = RemoteControl(appliance: TV())
 tvRemoteControl.turnOn()

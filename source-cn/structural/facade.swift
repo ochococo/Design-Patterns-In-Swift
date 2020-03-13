@@ -1,10 +1,10 @@
 /*:
-🎁 Façade
----------
+🎁 外观（Facade）
+-----------
 
-The facade pattern is used to define a simplified interface to a more complex subsystem.
+外观模式为子系统中的一组接口提供一个统一的高层接口，使得子系统更容易使用。
 
-### Example
+### 示例：
 */
 final class Defaults {
 
@@ -25,7 +25,7 @@ final class Defaults {
     }
 }
 /*:
-### Usage
+### 用法
 */
 let storage = Defaults()
 
