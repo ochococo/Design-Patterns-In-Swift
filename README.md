@@ -1,16 +1,11 @@
 
 
-Design Patterns implemented in Swift 5.0
+设计模式（Swift 5.0 实现）
 ========================================
 
-A short cheat-sheet with Xcode 10.2 Playground ([Design-Patterns.playground.zip](https://raw.githubusercontent.com/ochococo/Design-Patterns-In-Swift/master/Design-Patterns.playground.zip)).
+👷 源项目由 [@nsmeme](http://twitter.com/nsmeme) (Oktawian Chojnacki) 维护。
 
-👷 Project maintained by: [@nsmeme](http://twitter.com/nsmeme) (Oktawian Chojnacki)
-
-❤️ Please consider supporting my work, [become my Sponsor!](https://github.com/sponsors/ochococo) 🙏
-
-
-How to generate README, Playground and zip from source: [GENERATE.md](https://github.com/ochococo/Design-Patterns-In-Swift/blob/master/GENERATE.md)
+🇨🇳 中文版由 [@binglogo](https://twitter.com/binglogo) 整理翻译。
 
 
 ```swift
@@ -34,22 +29,22 @@ print("Welcome!")
 | [🏃 Visitor](#-visitor)                                 |                                          |                                          |
 
 
-Behavioral
-==========
-
->In software engineering, behavioral design patterns are design patterns that identify common communication patterns between objects and realize these patterns. By doing so, these patterns increase flexibility in carrying out this communication.
->
->**Source:** [wikipedia.org](http://en.wikipedia.org/wiki/Behavioral_pattern)
-
-
+ 行为型模式
+ ========
+ 
+ >在软件工程中， 行为型模式为设计模式的一种类型，用来识别对象之间的常用交流模式并加以实现。如此，可在进行这些交流活动时增强弹性。
+ >
+ >**来源：** [维基百科](https://zh.wikipedia.org/wiki/%E8%A1%8C%E7%82%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F)
 
 
-🐝 Chain Of Responsibility
---------------------------
 
-The chain of responsibility pattern is used to process varied requests, each of which may be dealt with by a different handler.
 
-### Example:
+🐝 责任链（Chain Of Responsibility）
+------------------------------
+
+责任链模式在面向对象程式设计里是一种软件设计模式，它包含了一些命令对象和一系列的处理对象。每一个处理对象决定它能处理哪些命令对象，它也知道如何将它不能处理的命令对象传递给该链中的下一个处理对象。
+
+### 示例：
 
 ```swift
 
@@ -129,27 +124,28 @@ final class ATM: Withdrawing {
 }
 ```
 
-### Usage
-
+ ### 用法
+ 
 ```swift
-// Create piles of money and link them together 10 < 20 < 50 < 100.**
+// 创建一系列的钱堆，并将其链接起来：10<20<50<100
 let ten = MoneyPile(value: 10, quantity: 6, next: nil)
 let twenty = MoneyPile(value: 20, quantity: 2, next: ten)
 let fifty = MoneyPile(value: 50, quantity: 2, next: twenty)
 let hundred = MoneyPile(value: 100, quantity: 1, next: fifty)
 
-// Build ATM.
+// 创建 ATM 实例
 var atm = ATM(hundred: hundred, fifty: fifty, twenty: twenty, ten: ten)
 atm.withdraw(amount: 310) // Cannot because ATM has only 300
 atm.withdraw(amount: 100) // Can withdraw - 1x100
 ```
 
-👫 Command
-----------
-
-The command pattern is used to express a request, including the call to be made and all of its required parameters, in a command object. The command may then be executed immediately or held for later use.
-
-### Example:
+👫 命令（Command）
+ ------------
+ 命令模式是一种设计模式，它尝试以对象来代表实际行动。命令对象可以把行动(action) 及其参数封装起来，于是这些行动可以被：
+ * 重复多次
+ * 取消（如果该对象有实现的话）
+ * 取消后又再重做
+ ### 示例：
 
 ```swift
 protocol DoorCommand {
@@ -199,7 +195,7 @@ final class HAL9000DoorsOperations {
 }
 ```
 
-### Usage:
+### 用法
 
 ```swift
 let podBayDoors = "Pod Bay Doors"
@@ -209,12 +205,12 @@ doorModule.open()
 doorModule.close()
 ```
 
-🎶 Interpreter
---------------
+🎶 解释器（Interpreter）
+ ------------------
 
-The interpreter pattern is used to evaluate sentences in a language.
+ 给定一种语言，定义他的文法的一种表示，并定义一个解释器，该解释器使用该表示来解释语言中句子。
 
-### Example
+ ### 示例：
 
 ```swift
 
@@ -284,7 +280,7 @@ final class AddExpression: IntegerExpression {
 }
 ```
 
-### Usage
+### 用法
 
 ```swift
 var context = IntegerContext()
@@ -302,12 +298,12 @@ context.assign(expression: c, value: 3)
 var result = expression.evaluate(context)
 ```
 
-🍫 Iterator
------------
+🍫 迭代器（Iterator）
+ ---------------
 
-The iterator pattern is used to provide a standard interface for traversing a collection of items in an aggregate object without the need to understand its underlying structure.
-
-### Example:
+ 迭代器模式可以让用户通过特定的接口巡访容器中的每一个元素而不用了解底层的实现。
+ 
+ ### 示例：
 
 ```swift
 struct Novella {
@@ -340,7 +336,7 @@ extension Novellas: Sequence {
 }
 ```
 
-### Usage
+### 用法
 
 ```swift
 let greatNovellas = Novellas(novellas: [Novella(name: "The Mist")] )
@@ -350,12 +346,12 @@ for novella in greatNovellas {
 }
 ```
 
-💐 Mediator
------------
+💐 中介者（Mediator）
+ ---------------
 
-The mediator pattern is used to reduce coupling between classes that communicate with each other. Instead of classes communicating directly, and thus requiring knowledge of their implementation, the classes send messages via a mediator object.
+ 用一个中介者对象封装一系列的对象交互，中介者使各对象不需要显示地相互作用，从而使耦合松散，而且可以独立地改变它们之间的交互。
 
-### Example
+ ### 示例：
 
 ```swift
 protocol Receiver {
@@ -400,7 +396,7 @@ final class MessageMediator: Sender {
 
 ```
 
-### Usage
+### 用法
 
 ```swift
 func spamMonster(message: String, worker: MessageMediator) {
@@ -418,18 +414,18 @@ spamMonster(message: "I'd Like to Add you to My Professional Network", worker: m
 
 ```
 
-💾 Memento
-----------
+💾 备忘录（Memento）
+--------------
 
-The memento pattern is used to capture the current state of an object and store it in such a manner that it can be restored at a later time without breaking the rules of encapsulation.
+在不破坏封装性的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态。这样就可以将该对象恢复到原先保存的状态
 
-### Example
+### 示例：
 
 ```swift
 typealias Memento = [String: String]
 ```
 
-Originator
+发起人（Originator）
 
 ```swift
 protocol MementoConvertible {
@@ -468,7 +464,7 @@ struct GameState: MementoConvertible {
 }
 ```
 
-Caretaker
+管理者（Caretaker）
 
 ```swift
 enum CheckPoint {
@@ -486,7 +482,7 @@ enum CheckPoint {
 }
 ```
 
-### Usage
+### 用法
 
 ```swift
 var gameState = GameState(chapter: "Black Mesa Inbound", weapon: "Crowbar")
@@ -509,13 +505,12 @@ if let memento = CheckPoint.restore(saveName: "gameState1") as? Memento {
 }
 ```
 
-👓 Observer
------------
+👓 观察者（Observer）
+---------------
 
-The observer pattern is used to allow an object to publish changes to its state.
-Other objects subscribe to be immediately notified of any changes.
+一个目标对象管理所有相依于它的观察者对象，并且在它本身的状态改变时主动发出通知
 
-### Example
+### 示例：
 
 ```swift
 protocol PropertyObserver : class {
@@ -554,7 +549,7 @@ final class Observer : PropertyObserver {
 }
 ```
 
-### Usage
+### 用法
 
 ```swift
 var observerInstance = Observer()
@@ -563,13 +558,13 @@ testChambers.observer = observerInstance
 testChambers.testChamberNumber += 1
 ```
 
-🐉 State
+🐉 状态（State）
 ---------
 
-The state pattern is used to alter the behaviour of an object as its internal state changes.
-The pattern allows the class for an object to apparently change at run-time.
+在状态模式中，对象的行为是基于它的内部状态而改变的。
+这个模式允许某个类对象在运行时发生改变。
 
-### Example
+### 示例：
 
 ```swift
 final class Context {
@@ -614,7 +609,7 @@ class AuthorizedState: State {
 }
 ```
 
-### Usage
+### 用法
 
 ```swift
 let userContext = Context()
@@ -625,12 +620,15 @@ userContext.changeStateToUnauthorized()
 (userContext.isAuthorized, userContext.userId)
 ```
 
-💡 Strategy
------------
+💡 策略（Strategy）
+--------------
 
-The strategy pattern is used to create an interchangeable family of algorithms from which the required process is chosen at run-time.
+对象有某个行为，但是在不同的场景中，该行为有不同的实现算法。策略模式：
+* 定义了一族算法（业务规则）；
+* 封装了每个算法；
+* 这族的算法可互换代替（interchangeable）。
 
-### Example
+### 示例：
 
 ```swift
 
@@ -670,7 +668,7 @@ final class BladeRunner {
 
 ```
 
- ### Usage
+ ### 用法
  
 ```swift
 
@@ -687,12 +685,12 @@ let gaff = BladeRunner(test: GeneticTest())
 let isDeckardAndroid = gaff.testIfAndroid(rachel)
 ```
 
-🏃 Visitor
-----------
+🏃 访问者（Visitor）
+--------------
 
-The visitor pattern is used to separate a relatively complex set of structured data classes from the functionality that may be performed upon the data that they hold.
+封装某些作用于某种数据结构中各元素的操作，它可以在不改变数据结构的前提下定义作用于这些元素的新的操作。
 
-### Example
+### 示例：
 
 ```swift
 protocol PlanetVisitor {
@@ -733,7 +731,7 @@ final class NameVisitor: PlanetVisitor {
 
 ```
 
-### Usage
+### 用法
 
 ```swift
 let planets: [Planet] = [PlanetAlderaan(), PlanetCoruscant(), PlanetTatooine(), MoonJedha()]
@@ -749,25 +747,25 @@ names
 ```
 
 
-Creational
-==========
+ 创建型模式
+ ========
+ 
+ > 创建型模式是处理对象创建的设计模式，试图根据实际情况使用合适的方式创建对象。基本的对象创建方式可能会导致设计上的问题，或增加设计的复杂度。创建型模式通过以某种方式控制对象的创建来解决问题。
+ >
+ >**来源：** [维基百科](https://zh.wikipedia.org/wiki/%E5%89%B5%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F)
+ 
 
-> In software engineering, creational design patterns are design patterns that deal with object creation mechanisms, trying to create objects in a manner suitable to the situation. The basic form of object creation could result in design problems or added complexity to the design. Creational design patterns solve this problem by somehow controlling this object creation.
->
->**Source:** [wikipedia.org](http://en.wikipedia.org/wiki/Creational_pattern)
 
 
 
+🌰 抽象工厂（Abstract Factory）
+-------------
 
-🌰 Abstract Factory
--------------------
+抽象工厂模式提供了一种方式，可以将一组具有同一主题的单独的工厂封装起来。在正常使用中，客户端程序需要创建抽象工厂的具体实现，然后使用抽象工厂作为接口来创建这一主题的具体对象。
 
-The abstract factory pattern is used to provide a client with a set of related or dependant objects. 
-The "family" of objects created by the factory are determined at run-time.
+### 示例：
 
-### Example
-
-Protocols
+协议
 
 ```swift
 
@@ -783,7 +781,7 @@ protocol BurgerMaking {
     func make() -> BurgerDescribing
 }
 
-// Number implementations with factory methods
+// 工厂方法实现
 
 final class BigKahunaBurger: BurgerMaking {
     func make() -> BurgerDescribing {
@@ -799,7 +797,7 @@ final class JackInTheBox: BurgerMaking {
 
 ```
 
-Abstract factory
+抽象工厂
 
 ```swift
 
@@ -819,20 +817,19 @@ enum BurgerFactoryType: BurgerMaking {
 }
 ```
 
-### Usage
+### 用法
 
 ```swift
 let bigKahuna = BurgerFactoryType.bigKahuna.make()
 let jackInTheBox = BurgerFactoryType.jackInTheBox.make()
 ```
 
-👷 Builder
-----------
+👷 生成器（Builder）
+--------------
 
-The builder pattern is used to create complex objects with constituent parts that must be created in the same order or using a specific algorithm. 
-An external class controls the construction algorithm.
+一种对象构建模式。它可以将复杂对象的建造过程抽象出来（抽象类别），使这个抽象过程的不同实现方法可以构造出不同表现（属性）的对象。
 
-### Example
+### 示例：
 
 ```swift
 final class DeathStarBuilder {
@@ -871,7 +868,7 @@ struct DeathStar : CustomStringConvertible {
 }
 ```
 
-### Usage
+### 用法
 
 ```swift
 let empire = DeathStarBuilder { builder in
@@ -883,12 +880,12 @@ let empire = DeathStarBuilder { builder in
 let deathStar = DeathStar(builder:empire)
 ```
 
-🏭 Factory Method
------------------
+🏭 工厂方法（Factory Method）
+-----------------------
 
-The factory pattern is used to replace class constructors, abstracting the process of object generation so that the type of the object instantiated can be determined at run-time.
+定义一个创建对象的接口，但让实现这个接口的类来决定实例化哪个类。工厂方法让类的实例化推迟到子类中进行。
 
-### Example
+### 示例：
 
 ```swift
 protocol CurrencyDescribing {
@@ -939,7 +936,7 @@ enum CurrencyFactory {
 }
 ```
 
-### Usage
+### 用法
 
 ```swift
 let noCurrencyCode = "No Currency Code Available"
@@ -950,13 +947,12 @@ CurrencyFactory.currency(for: .unitedStates)?.code ?? noCurrencyCode
 CurrencyFactory.currency(for: .uk)?.code ?? noCurrencyCode
 ```
 
-🃏 Prototype
-------------
+🃏 原型（Prototype）
+--------------
 
-The prototype pattern is used to instantiate a new object by copying all of the properties of an existing object, creating an independent clone. 
-This practise is particularly useful when the construction of a new object is inefficient.
+通过“复制”一个已经存在的实例来返回新的实例,而不是新建实例。被复制的实例就是我们所称的“原型”，这个原型是可定制的。
 
-### Example
+### 示例：
 
 ```swift
 struct MoonWorker {
@@ -974,7 +970,7 @@ struct MoonWorker {
 }
 ```
 
-### Usage
+### 用法
 
 ```swift
 let prototype = MoonWorker(name: "Sam Bell")
@@ -989,14 +985,12 @@ var bell3 = prototype.clone()
 bell3.health = 0
 ```
 
-💍 Singleton
-------------
+💍 单例（Singleton）
+--------------
 
-The singleton pattern ensures that only one object of a particular class is ever created.
-All further references to objects of the singleton class refer to the same underlying instance.
-There are very few applications, do not overuse this pattern!
+单例对象的类必须保证只有一个实例存在。许多时候整个系统只需要拥有一个的全局对象，这样有利于我们协调系统整体的行为
 
-### Example:
+### 示例：
 
 ```swift
 final class ElonMusk {
@@ -1009,29 +1003,29 @@ final class ElonMusk {
 }
 ```
 
-### Usage:
+### 用法
 
 ```swift
 let elon = ElonMusk.shared // There is only one Elon Musk folks.
 ```
 
 
-Structural
-==========
+结构型模式（Structural）
+====================
 
->In software engineering, structural design patterns are design patterns that ease the design by identifying a simple way to realize relationships between entities.
+> 在软件工程中结构型模式是设计模式，借由一以贯之的方式来了解元件间的关系，以简化设计。
 >
->**Source:** [wikipedia.org](http://en.wikipedia.org/wiki/Structural_pattern)
+>**来源：** [维基百科](https://zh.wikipedia.org/wiki/%E7%B5%90%E6%A7%8B%E5%9E%8B%E6%A8%A1%E5%BC%8F)
 
 
 
 
-🔌 Adapter
-----------
+🔌 适配器（Adapter）
+--------------
 
-The adapter pattern is used to provide a link between two otherwise incompatible types by wrapping the "adaptee" with a class that supports the interface required by the client.
+适配器模式有时候也称包装样式或者包装(wrapper)。将一个类的接口转接成用户所期待的。一个适配使得因接口不兼容而不能在一起工作的类工作在一起，做法是将类自己的接口包裹在一个已存在的类中。
 
-### Example
+### 示例：
 
 ```swift
 protocol NewDeathStarSuperLaserAiming {
@@ -1040,7 +1034,7 @@ protocol NewDeathStarSuperLaserAiming {
 }
 ```
 
-**Adaptee**
+**被适配者**
 
 ```swift
 struct OldDeathStarSuperlaserTarget {
@@ -1054,7 +1048,7 @@ struct OldDeathStarSuperlaserTarget {
 }
 ```
 
-**Adapter**
+**适配器**
 
 ```swift
 struct NewDeathStarSuperlaserTarget: NewDeathStarSuperLaserAiming {
@@ -1075,7 +1069,7 @@ struct NewDeathStarSuperlaserTarget: NewDeathStarSuperLaserAiming {
 }
 ```
 
-### Usage
+### 用法
 
 ```swift
 let target = OldDeathStarSuperlaserTarget(angleHorizontal: 14.0, angleVertical: 12.0)
@@ -1085,12 +1079,12 @@ newFormat.angleH
 newFormat.angleV
 ```
 
-🌉 Bridge
-----------
+🌉 桥接（Bridge）
+-----------
 
-The bridge pattern is used to separate the abstract elements of a class from the implementation details, providing the means to replace the implementation details without modifying the abstraction.
+桥接模式将抽象部分与实现部分分离，使它们都可以独立的变化。
 
-### Example
+### 示例：
 
 ```swift
 protocol Switch {
@@ -1127,7 +1121,7 @@ final class VacuumCleaner: Appliance {
 }
 ```
 
-### Usage
+### 用法
 
 ```swift
 let tvRemoteControl = RemoteControl(appliance: TV())
@@ -1137,14 +1131,14 @@ let fancyVacuumCleanerRemoteControl = RemoteControl(appliance: VacuumCleaner())
 fancyVacuumCleanerRemoteControl.turnOn()
 ```
 
-🌿 Composite
--------------
+🌿 组合（Composite）
+--------------
 
-The composite pattern is used to create hierarchical, recursive tree structures of related objects where any element of the structure may be accessed and utilised in a standard manner.
+将对象组合成树形结构以表示‘部分-整体’的层次结构。组合模式使得用户对单个对象和组合对象的使用具有一致性。
 
-### Example
+### 示例：
 
-Component
+组件（Component）
 
 ```swift
 protocol Shape {
@@ -1152,7 +1146,7 @@ protocol Shape {
 }
 ```
 
-Leafs
+叶子节点（Leafs）
 
 ```swift
 final class Square: Shape {
@@ -1169,7 +1163,7 @@ final class Circle: Shape {
 
 ```
 
-Composite
+组合
 
 ```swift
 final class Whiteboard: Shape {
@@ -1188,20 +1182,20 @@ final class Whiteboard: Shape {
 }
 ```
 
-### Usage:
+### 用法
 
 ```swift
 var whiteboard = Whiteboard(Circle(), Square())
 whiteboard.draw(fillColor: "Red")
 ```
 
-🍧 Decorator
-------------
+🍧 修饰（Decorator）
+--------------
 
-The decorator pattern is used to extend or alter the functionality of objects at run- time by wrapping them in an object of a decorator class. 
-This provides a flexible alternative to using inheritance to modify behaviour.
+修饰模式，是面向对象编程领域中，一种动态地往一个类中添加新的行为的设计模式。
+就功能而言，修饰模式相比生成子类更为灵活，这样可以给某个对象而不是整个类添加一些功能。
 
-### Example
+### 示例：
 
 ```swift
 protocol CostHaving {
@@ -1250,7 +1244,7 @@ struct WhipCoffee: BeverageHaving {
 }
 ```
 
-### Usage:
+### 用法
 
 ```swift
 var someCoffee: BeverageDataHaving = SimpleCoffee()
@@ -1261,12 +1255,12 @@ someCoffee = WhipCoffee(beverage: someCoffee)
 print("Cost: \(someCoffee.cost); Ingredients: \(someCoffee.ingredients)")
 ```
 
-🎁 Façade
----------
+🎁 外观（Facade）
+-----------
 
-The facade pattern is used to define a simplified interface to a more complex subsystem.
+外观模式为子系统中的一组接口提供一个统一的高层接口，使得子系统更容易使用。
 
-### Example
+### 示例：
 
 ```swift
 final class Defaults {
@@ -1289,7 +1283,7 @@ final class Defaults {
 }
 ```
 
-### Usage
+### 用法
 
 ```swift
 let storage = Defaults()
@@ -1315,7 +1309,7 @@ protocol CoffeeSearching {
     func search(origin: String) -> SpecialityCoffee?
 }
 
-// Menu acts as a factory and cache for SpecialityCoffee flyweight objects
+// 菜单充当特制咖啡享元对象的工厂和缓存
 final class Menu: CoffeeSearching {
 
     private var coffeeAvailable: [String: SpecialityCoffee] = [:]
@@ -1349,7 +1343,7 @@ final class CoffeeShop {
 }
 ```
 
-### Usage
+### 用法
 
 ```swift
 let coffeeShop = CoffeeShop(menu: Menu())
@@ -1360,13 +1354,13 @@ coffeeShop.takeOrder(origin: "Buziraguhindwa, Burundi", table: 3)
 coffeeShop.serve()
 ```
 
-☔ Protection Proxy
+☔ 保护代理模式（Protection Proxy）
 ------------------
 
-The proxy pattern is used to provide a surrogate or placeholder object, which references an underlying object. 
-Protection proxy is restricting access.
+在代理模式中，创建一个类代表另一个底层类的功能。
+保护代理用于限制访问。
 
-### Example
+### 示例：
 
 ```swift
 protocol DoorOpening {
@@ -1404,7 +1398,7 @@ final class CurrentComputer: DoorOpening {
 }
 ```
 
-### Usage
+### 用法
 
 ```swift
 let computer = CurrentComputer()
@@ -1416,13 +1410,13 @@ computer.authenticate(password: "pass")
 computer.open(doors: podBay)
 ```
 
-🍬 Virtual Proxy
+🍬 虚拟代理（Virtual Proxy）
 ----------------
 
-The proxy pattern is used to provide a surrogate or placeholder object, which references an underlying object.
-Virtual proxy is used for loading object on demand.
+在代理模式中，创建一个类代表另一个底层类的功能。
+虚拟代理用于对象的需时加载。
 
-### Example
+### 示例：
 
 ```swift
 protocol HEVSuitMedicalAid {
@@ -1445,7 +1439,7 @@ final class HEVSuitHumanInterface: HEVSuitMedicalAid {
 }
 ```
 
-### Usage
+### 用法
 
 ```swift
 let humanInterface = HEVSuitHumanInterface()
