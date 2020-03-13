@@ -57,6 +57,7 @@ zip -r -X Design-Patterns.playground.zip ./Design-Patterns.playground
 echo "" > README.md
 
 readme Index
+cat source/contentsReadme.md >> README.md
 readme Behavioral
 readme Creational
 readme Structural
