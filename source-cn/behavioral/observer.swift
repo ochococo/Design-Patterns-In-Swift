@@ -1,11 +1,10 @@
 /*:
-👓 Observer
------------
+👓 观察者（Observer）
+---------------
 
-The observer pattern is used to allow an object to publish changes to its state.
-Other objects subscribe to be immediately notified of any changes.
+一个目标对象管理所有相依于它的观察者对象，并且在它本身的状态改变时主动发出通知
 
-### Example
+### 示例：
 */
 protocol PropertyObserver : class {
     func willChange(propertyName: String, newPropertyValue: Any?)
@@ -42,7 +41,7 @@ final class Observer : PropertyObserver {
     }
 }
 /*:
-### Usage
+### 用法
 */
 var observerInstance = Observer()
 var testChambers = TestChambers()

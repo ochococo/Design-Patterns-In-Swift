@@ -1,10 +1,10 @@
 /*:
-🏃 Visitor
-----------
+🏃 访问者（Visitor）
+--------------
 
-The visitor pattern is used to separate a relatively complex set of structured data classes from the functionality that may be performed upon the data that they hold.
+封装某些作用于某种数据结构中各元素的操作，它可以在不改变数据结构的前提下定义作用于这些元素的新的操作。
 
-### Example
+### 示例：
 */
 protocol PlanetVisitor {
 	func visit(planet: PlanetAlderaan)
@@ -43,7 +43,7 @@ final class NameVisitor: PlanetVisitor {
 }
 
 /*:
-### Usage
+### 用法
 */
 let planets: [Planet] = [PlanetAlderaan(), PlanetCoruscant(), PlanetTatooine(), MoonJedha()]
 

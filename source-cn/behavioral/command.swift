@@ -1,10 +1,11 @@
 /*:
-👫 Command
-----------
-
-The command pattern is used to express a request, including the call to be made and all of its required parameters, in a command object. The command may then be executed immediately or held for later use.
-
-### Example:
+👫 命令（Command）
+ ------------
+ 命令模式是一种设计模式，它尝试以对象来代表实际行动。命令对象可以把行动(action) 及其参数封装起来，于是这些行动可以被：
+ * 重复多次
+ * 取消（如果该对象有实现的话）
+ * 取消后又再重做
+ ### 示例：
 */
 protocol DoorCommand {
     func execute() -> String
@@ -52,7 +53,7 @@ final class HAL9000DoorsOperations {
     }
 }
 /*:
-### Usage:
+### 用法
 */
 let podBayDoors = "Pod Bay Doors"
 let doorModule = HAL9000DoorsOperations(doors:podBayDoors)

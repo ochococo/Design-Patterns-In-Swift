@@ -1,9 +1,7 @@
 
-Design Patterns implemented in Swift 5.0
+设计模式（Swift 5.0 实现）
 ========================================
 
-A short cheat-sheet with Xcode 10.2 Playground ([Design-Patterns.playground.zip](https://raw.githubusercontent.com/ochococo/Design-Patterns-In-Swift/master/Design-Patterns.playground.zip)).
+👷 源项目由 [@nsmeme](http://twitter.com/nsmeme) (Oktawian Chojnacki) 维护。
 
-👷 Project maintained by: [@nsmeme](http://twitter.com/nsmeme) (Oktawian Chojnacki)
-
-🚀 How to generate README, Playground and zip from source: [GENERATE.md](https://github.com/ochococo/Design-Patterns-In-Swift/blob/master/GENERATE.md)
+🇨🇳 中文版由 [@binglogo](https://twitter.com/binglogo) 整理翻译。

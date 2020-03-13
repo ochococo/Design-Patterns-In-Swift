@@ -1,10 +1,10 @@
 /*:
-🎶 Interpreter
---------------
+🎶 解释器（Interpreter）
+ ------------------
 
-The interpreter pattern is used to evaluate sentences in a language.
+ 给定一种语言，定义他的文法的一种表示，并定义一个解释器，该解释器使用该表示来解释语言中句子。
 
-### Example
+ ### 示例：
 */
 
 protocol IntegerExpression {
@@ -72,7 +72,7 @@ final class AddExpression: IntegerExpression {
     }
 }
 /*:
-### Usage
+### 用法
 */
 var context = IntegerContext()
 

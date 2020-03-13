@@ -1,10 +1,10 @@
 /*:
-💐 Mediator
------------
+💐 中介者（Mediator）
+ ---------------
 
-The mediator pattern is used to reduce coupling between classes that communicate with each other. Instead of classes communicating directly, and thus requiring knowledge of their implementation, the classes send messages via a mediator object.
+ 用一个中介者对象封装一系列的对象交互，中介者使各对象不需要显示地相互作用，从而使耦合松散，而且可以独立地改变它们之间的交互。
 
-### Example
+ ### 示例：
 */
 protocol Receiver {
     associatedtype MessageType
@@ -47,7 +47,7 @@ final class MessageMediator: Sender {
 }
 
 /*:
-### Usage
+### 用法
 */
 func spamMonster(message: String, worker: MessageMediator) {
     worker.send(message: message)

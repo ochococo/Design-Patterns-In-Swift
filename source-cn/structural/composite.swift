@@ -1,18 +1,18 @@
 /*:
-🌿 Composite
--------------
+🌿 组合（Composite）
+--------------
 
-The composite pattern is used to create hierarchical, recursive tree structures of related objects where any element of the structure may be accessed and utilised in a standard manner.
+将对象组合成树形结构以表示‘部分-整体’的层次结构。组合模式使得用户对单个对象和组合对象的使用具有一致性。
 
-### Example
+### 示例：
 
-Component
+组件（Component）
 */
 protocol Shape {
     func draw(fillColor: String)
 }
 /*:
-Leafs
+叶子节点（Leafs）
 */
 final class Square: Shape {
     func draw(fillColor: String) {
@@ -27,7 +27,7 @@ final class Circle: Shape {
 }
 
 /*:
-Composite
+组合
 */
 final class Whiteboard: Shape {
 
@@ -44,7 +44,7 @@ final class Whiteboard: Shape {
     }
 }
 /*:
-### Usage:
+### 用法
 */
 var whiteboard = Whiteboard(Circle(), Square())
 whiteboard.draw(fillColor: "Red")

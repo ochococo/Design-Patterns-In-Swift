@@ -12,7 +12,7 @@ protocol CoffeeSearching {
     func search(origin: String) -> SpecialityCoffee?
 }
 
-// Menu acts as a factory and cache for SpecialityCoffee flyweight objects
+// 菜单充当特制咖啡享元对象的工厂和缓存
 final class Menu: CoffeeSearching {
 
     private var coffeeAvailable: [String: SpecialityCoffee] = [:]
@@ -45,7 +45,7 @@ final class CoffeeShop {
     }
 }
 /*:
-### Usage
+### 用法
 */
 let coffeeShop = CoffeeShop(menu: Menu())
 

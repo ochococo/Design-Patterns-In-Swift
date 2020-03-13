@@ -1,11 +1,10 @@
 /*:
-🃏 Prototype
-------------
+🃏 原型（Prototype）
+--------------
 
-The prototype pattern is used to instantiate a new object by copying all of the properties of an existing object, creating an independent clone. 
-This practise is particularly useful when the construction of a new object is inefficient.
+通过“复制”一个已经存在的实例来返回新的实例,而不是新建实例。被复制的实例就是我们所称的“原型”，这个原型是可定制的。
 
-### Example
+### 示例：
 */
 struct MoonWorker {
 
@@ -21,7 +20,7 @@ struct MoonWorker {
     }
 }
 /*:
-### Usage
+### 用法
 */
 let prototype = MoonWorker(name: "Sam Bell")
 
