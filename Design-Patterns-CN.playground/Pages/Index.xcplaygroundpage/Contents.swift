@@ -1,21 +1,20 @@
 /*:
 
-Design Patterns implemented in Swift 5.0
-========================================
+设计模式（Swift 5.0 实现）
+======================
 
-A short cheat-sheet with Xcode 10.2 Playground ([Design-Patterns.playground.zip](https://raw.githubusercontent.com/ochococo/Design-Patterns-In-Swift/master/Design-Patterns.playground.zip)).
+([Design-Patterns-CN.playground.zip](https://raw.githubusercontent.com/ochococo/Design-Patterns-In-Swift/master/Design-Patterns-CN.playground.zip)).
 
-👷 Project maintained by: [@nsmeme](http://twitter.com/nsmeme) (Oktawian Chojnacki)
+👷 源项目由 [@nsmeme](http://twitter.com/nsmeme) (Oktawian Chojnacki) 维护。
 
-🚀 How to generate README, Playground and zip from source: [GENERATE.md](https://github.com/ochococo/Design-Patterns-In-Swift/blob/master/GENERATE.md)
+🇨🇳 中文版由 [@binglogo](https://twitter.com/binglogo) 整理翻译。
 
-## Table of Contents
+## 目录
 
-* [Behavioral](Behavioral)
-* [Creational](Creational)
-* [Structural](Structural)
-
+* [行为型模式](Behavioral)
+* [创建型模式](Creational)
+* [结构型模式](Structural)
 */
 import Foundation
 
-print("Welcome!")
+print("您好！")

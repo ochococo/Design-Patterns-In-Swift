@@ -1,30 +1,28 @@
 /*:
 
-Creational
-==========
+ 创建型模式
+ ========
+ 
+ > 创建型模式是处理对象创建的设计模式，试图根据实际情况使用合适的方式创建对象。基本的对象创建方式可能会导致设计上的问题，或增加设计的复杂度。创建型模式通过以某种方式控制对象的创建来解决问题。
+ >
+ >**来源：** [维基百科](https://zh.wikipedia.org/wiki/%E5%89%B5%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F)
+ 
+## 目录
 
-> In software engineering, creational design patterns are design patterns that deal with object creation mechanisms, trying to create objects in a manner suitable to the situation. The basic form of object creation could result in design problems or added complexity to the design. Creational design patterns solve this problem by somehow controlling this object creation.
->
->**Source:** [wikipedia.org](http://en.wikipedia.org/wiki/Creational_pattern)
-
-## Table of Contents
-
-* [Behavioral](Behavioral)
-* [Creational](Creational)
-* [Structural](Structural)
-
+* [行为型模式](Behavioral)
+* [创建型模式](Creational)
+* [结构型模式](Structural)
 */
 import Foundation
 /*:
-🌰 Abstract Factory
--------------------
+🌰 抽象工厂（Abstract Factory）
+-------------
 
-The abstract factory pattern is used to provide a client with a set of related or dependant objects. 
-The "family" of objects created by the factory are determined at run-time.
+抽象工厂模式提供了一种方式，可以将一组具有同一主题的单独的工厂封装起来。在正常使用中，客户端程序需要创建抽象工厂的具体实现，然后使用抽象工厂作为接口来创建这一主题的具体对象。
 
-### Example
+### 示例：
 
-Protocols
+协议
 */
 
 protocol BurgerDescribing {
@@ -39,7 +37,7 @@ protocol BurgerMaking {
     func make() -> BurgerDescribing
 }
 
-// Number implementations with factory methods
+// 工厂方法实现
 
 final class BigKahunaBurger: BurgerMaking {
     func make() -> BurgerDescribing {
@@ -54,7 +52,7 @@ final class JackInTheBox: BurgerMaking {
 }
 
 /*:
-Abstract factory
+抽象工厂
 */
 
 enum BurgerFactoryType: BurgerMaking {
@@ -72,18 +70,17 @@ enum BurgerFactoryType: BurgerMaking {
     }
 }
 /*:
-### Usage
+### 用法
 */
 let bigKahuna = BurgerFactoryType.bigKahuna.make()
 let jackInTheBox = BurgerFactoryType.jackInTheBox.make()
 /*:
-👷 Builder
-----------
+👷 生成器（Builder）
+--------------
 
-The builder pattern is used to create complex objects with constituent parts that must be created in the same order or using a specific algorithm. 
-An external class controls the construction algorithm.
+一种对象构建模式。它可以将复杂对象的建造过程抽象出来（抽象类别），使这个抽象过程的不同实现方法可以构造出不同表现（属性）的对象。
 
-### Example
+### 示例：
 */
 final class DeathStarBuilder {
 
@@ -120,7 +117,7 @@ struct DeathStar : CustomStringConvertible {
     }
 }
 /*:
-### Usage
+### 用法
 */
 let empire = DeathStarBuilder { builder in
     builder.x = 0.1
@@ -130,12 +127,12 @@ let empire = DeathStarBuilder { builder in
 
 let deathStar = DeathStar(builder:empire)
 /*:
-🏭 Factory Method
------------------
+🏭 工厂方法（Factory Method）
+-----------------------
 
-The factory pattern is used to replace class constructors, abstracting the process of object generation so that the type of the object instantiated can be determined at run-time.
+定义一个创建对象的接口，但让实现这个接口的类来决定实例化哪个类。工厂方法让类的实例化推迟到子类中进行。
 
-### Example
+### 示例：
 */
 protocol CurrencyDescribing {
     var symbol: String { get }
@@ -184,7 +181,7 @@ enum CurrencyFactory {
     }
 }
 /*:
-### Usage
+### 用法
 */
 let noCurrencyCode = "No Currency Code Available"
 
@@ -193,13 +190,12 @@ CurrencyFactory.currency(for: .spain)?.code ?? noCurrencyCode
 CurrencyFactory.currency(for: .unitedStates)?.code ?? noCurrencyCode
 CurrencyFactory.currency(for: .uk)?.code ?? noCurrencyCode
 /*:
-🃏 Prototype
-------------
+🃏 原型（Prototype）
+--------------
 
-The prototype pattern is used to instantiate a new object by copying all of the properties of an existing object, creating an independent clone. 
-This practise is particularly useful when the construction of a new object is inefficient.
+通过“复制”一个已经存在的实例来返回新的实例,而不是新建实例。被复制的实例就是我们所称的“原型”，这个原型是可定制的。
 
-### Example
+### 示例：
 */
 struct MoonWorker {
 
@@ -215,7 +211,7 @@ struct MoonWorker {
     }
 }
 /*:
-### Usage
+### 用法
 */
 let prototype = MoonWorker(name: "Sam Bell")
 
@@ -228,14 +224,12 @@ bell2.health = 23
 var bell3 = prototype.clone()
 bell3.health = 0
 /*:
-💍 Singleton
-------------
+💍 单例（Singleton）
+--------------
 
-The singleton pattern ensures that only one object of a particular class is ever created.
-All further references to objects of the singleton class refer to the same underlying instance.
-There are very few applications, do not overuse this pattern!
+单例对象的类必须保证只有一个实例存在。许多时候整个系统只需要拥有一个的全局对象，这样有利于我们协调系统整体的行为
 
-### Example:
+### 示例：
 */
 final class ElonMusk {
 
@@ -246,6 +240,6 @@ final class ElonMusk {
     }
 }
 /*:
-### Usage:
+### 用法
 */
 let elon = ElonMusk.shared // There is only one Elon Musk folks.

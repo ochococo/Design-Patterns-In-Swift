@@ -1,34 +1,33 @@
 /*:
 
-Structural
-==========
+结构型模式（Structural）
+====================
 
->In software engineering, structural design patterns are design patterns that ease the design by identifying a simple way to realize relationships between entities.
+> 在软件工程中结构型模式是设计模式，借由一以贯之的方式来了解元件间的关系，以简化设计。
 >
->**Source:** [wikipedia.org](http://en.wikipedia.org/wiki/Structural_pattern)
+>**来源：** [维基百科](https://zh.wikipedia.org/wiki/%E7%B5%90%E6%A7%8B%E5%9E%8B%E6%A8%A1%E5%BC%8F)
 
-## Table of Contents
+## 目录
 
-* [Behavioral](Behavioral)
-* [Creational](Creational)
-* [Structural](Structural)
-
+* [行为型模式](Behavioral)
+* [创建型模式](Creational)
+* [结构型模式](Structural)
 */
 import Foundation
 /*:
-🔌 Adapter
-----------
+🔌 适配器（Adapter）
+--------------
 
-The adapter pattern is used to provide a link between two otherwise incompatible types by wrapping the "adaptee" with a class that supports the interface required by the client.
+适配器模式有时候也称包装样式或者包装(wrapper)。将一个类的接口转接成用户所期待的。一个适配使得因接口不兼容而不能在一起工作的类工作在一起，做法是将类自己的接口包裹在一个已存在的类中。
 
-### Example
+### 示例：
 */
 protocol NewDeathStarSuperLaserAiming {
     var angleV: Double { get }
     var angleH: Double { get }
 }
 /*:
-**Adaptee**
+**被适配者**
 */
 struct OldDeathStarSuperlaserTarget {
     let angleHorizontal: Float
@@ -40,7 +39,7 @@ struct OldDeathStarSuperlaserTarget {
     }
 }
 /*:
-**Adapter**
+**适配器**
 */
 struct NewDeathStarSuperlaserTarget: NewDeathStarSuperLaserAiming {
 
@@ -59,7 +58,7 @@ struct NewDeathStarSuperlaserTarget: NewDeathStarSuperLaserAiming {
     }
 }
 /*:
-### Usage
+### 用法
 */
 let target = OldDeathStarSuperlaserTarget(angleHorizontal: 14.0, angleVertical: 12.0)
 let newFormat = NewDeathStarSuperlaserTarget(target)
@@ -67,12 +66,12 @@ let newFormat = NewDeathStarSuperlaserTarget(target)
 newFormat.angleH
 newFormat.angleV
 /*:
-🌉 Bridge
-----------
+🌉 桥接（Bridge）
+-----------
 
-The bridge pattern is used to separate the abstract elements of a class from the implementation details, providing the means to replace the implementation details without modifying the abstraction.
+桥接模式将抽象部分与实现部分分离，使它们都可以独立的变化。
 
-### Example
+### 示例：
 */
 protocol Switch {
     var appliance: Appliance { get set }
@@ -107,7 +106,7 @@ final class VacuumCleaner: Appliance {
     }
 }
 /*:
-### Usage
+### 用法
 */
 let tvRemoteControl = RemoteControl(appliance: TV())
 tvRemoteControl.turnOn()
@@ -115,20 +114,20 @@ tvRemoteControl.turnOn()
 let fancyVacuumCleanerRemoteControl = RemoteControl(appliance: VacuumCleaner())
 fancyVacuumCleanerRemoteControl.turnOn()
 /*:
-🌿 Composite
--------------
+🌿 组合（Composite）
+--------------
 
-The composite pattern is used to create hierarchical, recursive tree structures of related objects where any element of the structure may be accessed and utilised in a standard manner.
+将对象组合成树形结构以表示‘部分-整体’的层次结构。组合模式使得用户对单个对象和组合对象的使用具有一致性。
 
-### Example
+### 示例：
 
-Component
+组件（Component）
 */
 protocol Shape {
     func draw(fillColor: String)
 }
 /*:
-Leafs
+叶子节点（Leafs）
 */
 final class Square: Shape {
     func draw(fillColor: String) {
@@ -143,7 +142,7 @@ final class Circle: Shape {
 }
 
 /*:
-Composite
+组合
 */
 final class Whiteboard: Shape {
 
@@ -160,18 +159,18 @@ final class Whiteboard: Shape {
     }
 }
 /*:
-### Usage:
+### 用法
 */
 var whiteboard = Whiteboard(Circle(), Square())
 whiteboard.draw(fillColor: "Red")
 /*:
-🍧 Decorator
-------------
+🍧 修饰（Decorator）
+--------------
 
-The decorator pattern is used to extend or alter the functionality of objects at run- time by wrapping them in an object of a decorator class. 
-This provides a flexible alternative to using inheritance to modify behaviour.
+修饰模式，是面向对象编程领域中，一种动态地往一个类中添加新的行为的设计模式。
+就功能而言，修饰模式相比生成子类更为灵活，这样可以给某个对象而不是整个类添加一些功能。
 
-### Example
+### 示例：
 */
 protocol CostHaving {
     var cost: Double { get }
@@ -218,7 +217,7 @@ struct WhipCoffee: BeverageHaving {
     }
 }
 /*:
-### Usage:
+### 用法
 */
 var someCoffee: BeverageDataHaving = SimpleCoffee()
 print("Cost: \(someCoffee.cost); Ingredients: \(someCoffee.ingredients)")
@@ -227,12 +226,12 @@ print("Cost: \(someCoffee.cost); Ingredients: \(someCoffee.ingredients)")
 someCoffee = WhipCoffee(beverage: someCoffee)
 print("Cost: \(someCoffee.cost); Ingredients: \(someCoffee.ingredients)")
 /*:
-🎁 Façade
----------
+🎁 外观（Facade）
+-----------
 
-The facade pattern is used to define a simplified interface to a more complex subsystem.
+外观模式为子系统中的一组接口提供一个统一的高层接口，使得子系统更容易使用。
 
-### Example
+### 示例：
 */
 final class Defaults {
 
@@ -253,7 +252,7 @@ final class Defaults {
     }
 }
 /*:
-### Usage
+### 用法
 */
 let storage = Defaults()
 
@@ -263,11 +262,14 @@ storage["Bishop"] = "Disconnect me. I’d rather be nothing"
 // Read
 storage["Bishop"]
 /*:
-## 🍃 Flyweight
-The flyweight pattern is used to minimize memory usage or computational expenses by sharing as much as possible with other similar objects.
-### Example
+🍃 享元（Flyweight）
+--------------
+
+使用共享物件，用来尽可能减少内存使用量以及分享资讯给尽可能多的相似物件；它适合用于当大量物件只是重复因而导致无法令人接受的使用大量内存。
+
+### 示例：
 */
-// Instances of SpecialityCoffee will be the Flyweights
+// 特指咖啡生成的对象会是享元
 struct SpecialityCoffee {
     let origin: String
 }
@@ -276,7 +278,7 @@ protocol CoffeeSearching {
     func search(origin: String) -> SpecialityCoffee?
 }
 
-// Menu acts as a factory and cache for SpecialityCoffee flyweight objects
+// 菜单充当特制咖啡享元对象的工厂和缓存
 final class Menu: CoffeeSearching {
 
     private var coffeeAvailable: [String: SpecialityCoffee] = [:]
@@ -309,7 +311,7 @@ final class CoffeeShop {
     }
 }
 /*:
-### Usage
+### 用法
 */
 let coffeeShop = CoffeeShop(menu: Menu())
 
@@ -318,13 +320,13 @@ coffeeShop.takeOrder(origin: "Buziraguhindwa, Burundi", table: 3)
 
 coffeeShop.serve()
 /*:
-☔ Protection Proxy
+☔ 保护代理模式（Protection Proxy）
 ------------------
 
-The proxy pattern is used to provide a surrogate or placeholder object, which references an underlying object. 
-Protection proxy is restricting access.
+在代理模式中，创建一个类代表另一个底层类的功能。
+保护代理用于限制访问。
 
-### Example
+### 示例：
 */
 protocol DoorOpening {
     func open(doors: String) -> String
@@ -360,7 +362,7 @@ final class CurrentComputer: DoorOpening {
     }
 }
 /*:
-### Usage
+### 用法
 */
 let computer = CurrentComputer()
 let podBay = "Pod Bay Doors"
@@ -370,13 +372,13 @@ computer.open(doors: podBay)
 computer.authenticate(password: "pass")
 computer.open(doors: podBay)
 /*:
-🍬 Virtual Proxy
+🍬 虚拟代理（Virtual Proxy）
 ----------------
 
-The proxy pattern is used to provide a surrogate or placeholder object, which references an underlying object.
-Virtual proxy is used for loading object on demand.
+在代理模式中，创建一个类代表另一个底层类的功能。
+虚拟代理用于对象的需时加载。
 
-### Example
+### 示例：
 */
 protocol HEVSuitMedicalAid {
     func administerMorphine() -> String
@@ -397,7 +399,7 @@ final class HEVSuitHumanInterface: HEVSuitMedicalAid {
     }
 }
 /*:
-### Usage
+### 用法
 */
 let humanInterface = HEVSuitHumanInterface()
 humanInterface.administerMorphine()

@@ -1,2 +1,2 @@
 
-print("Welcome!")
+print("您好！")

@@ -1,27 +1,26 @@
 /*:
 
-Behavioral
-==========
+ 行为型模式
+ ========
+ 
+ >在软件工程中， 行为型模式为设计模式的一种类型，用来识别对象之间的常用交流模式并加以实现。如此，可在进行这些交流活动时增强弹性。
+ >
+ >**来源：** [维基百科](https://zh.wikipedia.org/wiki/%E8%A1%8C%E7%82%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F)
 
->In software engineering, behavioral design patterns are design patterns that identify common communication patterns between objects and realize these patterns. By doing so, these patterns increase flexibility in carrying out this communication.
->
->**Source:** [wikipedia.org](http://en.wikipedia.org/wiki/Behavioral_pattern)
+## 目录
 
-## Table of Contents
-
-* [Behavioral](Behavioral)
-* [Creational](Creational)
-* [Structural](Structural)
-
+* [行为型模式](Behavioral)
+* [创建型模式](Creational)
+* [结构型模式](Structural)
 */
 import Foundation
 /*:
-🐝 Chain Of Responsibility
---------------------------
+🐝 责任链（Chain Of Responsibility）
+------------------------------
 
-The chain of responsibility pattern is used to process varied requests, each of which may be dealt with by a different handler.
+责任链模式在面向对象程式设计里是一种软件设计模式，它包含了一些命令对象和一系列的处理对象。每一个处理对象决定它能处理哪些命令对象，它也知道如何将它不能处理的命令对象传递给该链中的下一个处理对象。
 
-### Example:
+### 示例：
 */
 
 protocol Withdrawing {
@@ -99,25 +98,26 @@ final class ATM: Withdrawing {
     }
 }
 /*:
-### Usage
-*/
-// Create piles of money and link them together 10 < 20 < 50 < 100.**
+ ### 用法
+ */
+// 创建一系列的钱堆，并将其链接起来：10<20<50<100
 let ten = MoneyPile(value: 10, quantity: 6, next: nil)
 let twenty = MoneyPile(value: 20, quantity: 2, next: ten)
 let fifty = MoneyPile(value: 50, quantity: 2, next: twenty)
 let hundred = MoneyPile(value: 100, quantity: 1, next: fifty)
 
-// Build ATM.
+// 创建 ATM 实例
 var atm = ATM(hundred: hundred, fifty: fifty, twenty: twenty, ten: ten)
 atm.withdraw(amount: 310) // Cannot because ATM has only 300
 atm.withdraw(amount: 100) // Can withdraw - 1x100
 /*:
-👫 Command
-----------
-
-The command pattern is used to express a request, including the call to be made and all of its required parameters, in a command object. The command may then be executed immediately or held for later use.
-
-### Example:
+👫 命令（Command）
+ ------------
+ 命令模式是一种设计模式，它尝试以对象来代表实际行动。命令对象可以把行动(action) 及其参数封装起来，于是这些行动可以被：
+ * 重复多次
+ * 取消（如果该对象有实现的话）
+ * 取消后又再重做
+ ### 示例：
 */
 protocol DoorCommand {
     func execute() -> String
@@ -165,7 +165,7 @@ final class HAL9000DoorsOperations {
     }
 }
 /*:
-### Usage:
+### 用法
 */
 let podBayDoors = "Pod Bay Doors"
 let doorModule = HAL9000DoorsOperations(doors:podBayDoors)
@@ -173,12 +173,12 @@ let doorModule = HAL9000DoorsOperations(doors:podBayDoors)
 doorModule.open()
 doorModule.close()
 /*:
-🎶 Interpreter
---------------
+🎶 解释器（Interpreter）
+ ------------------
 
-The interpreter pattern is used to evaluate sentences in a language.
+ 给定一种语言，定义他的文法的一种表示，并定义一个解释器，该解释器使用该表示来解释语言中句子。
 
-### Example
+ ### 示例：
 */
 
 protocol IntegerExpression {
@@ -246,7 +246,7 @@ final class AddExpression: IntegerExpression {
     }
 }
 /*:
-### Usage
+### 用法
 */
 var context = IntegerContext()
 
@@ -262,12 +262,12 @@ context.assign(expression: c, value: 3)
 
 var result = expression.evaluate(context)
 /*:
-🍫 Iterator
------------
+🍫 迭代器（Iterator）
+ ---------------
 
-The iterator pattern is used to provide a standard interface for traversing a collection of items in an aggregate object without the need to understand its underlying structure.
-
-### Example:
+ 迭代器模式可以让用户通过特定的接口巡访容器中的每一个元素而不用了解底层的实现。
+ 
+ ### 示例：
 */
 struct Novella {
     let name: String
@@ -298,7 +298,7 @@ extension Novellas: Sequence {
     }
 }
 /*:
-### Usage
+### 用法
 */
 let greatNovellas = Novellas(novellas: [Novella(name: "The Mist")] )
 
@@ -306,12 +306,12 @@ for novella in greatNovellas {
     print("I've read: \(novella)")
 }
 /*:
-💐 Mediator
------------
+💐 中介者（Mediator）
+ ---------------
 
-The mediator pattern is used to reduce coupling between classes that communicate with each other. Instead of classes communicating directly, and thus requiring knowledge of their implementation, the classes send messages via a mediator object.
+ 用一个中介者对象封装一系列的对象交互，中介者使各对象不需要显示地相互作用，从而使耦合松散，而且可以独立地改变它们之间的交互。
 
-### Example
+ ### 示例：
 */
 protocol Receiver {
     associatedtype MessageType
@@ -354,7 +354,7 @@ final class MessageMediator: Sender {
 }
 
 /*:
-### Usage
+### 用法
 */
 func spamMonster(message: String, worker: MessageMediator) {
     worker.send(message: message)
@@ -370,16 +370,16 @@ messagesMediator.add(recipient: user1)
 spamMonster(message: "I'd Like to Add you to My Professional Network", worker: messagesMediator)
 
 /*:
-💾 Memento
-----------
+💾 备忘录（Memento）
+--------------
 
-The memento pattern is used to capture the current state of an object and store it in such a manner that it can be restored at a later time without breaking the rules of encapsulation.
+在不破坏封装性的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态。这样就可以将该对象恢复到原先保存的状态
 
-### Example
+### 示例：
 */
 typealias Memento = [String: String]
 /*:
-Originator
+发起人（Originator）
 */
 protocol MementoConvertible {
     var memento: Memento { get }
@@ -416,7 +416,7 @@ struct GameState: MementoConvertible {
     }
 }
 /*:
-Caretaker
+管理者（Caretaker）
 */
 enum CheckPoint {
 
@@ -432,7 +432,7 @@ enum CheckPoint {
     }
 }
 /*:
-### Usage
+### 用法
 */
 var gameState = GameState(chapter: "Black Mesa Inbound", weapon: "Crowbar")
 
@@ -453,13 +453,12 @@ if let memento = CheckPoint.restore(saveName: "gameState1") as? Memento {
     dump(finalState)
 }
 /*:
-👓 Observer
------------
+👓 观察者（Observer）
+---------------
 
-The observer pattern is used to allow an object to publish changes to its state.
-Other objects subscribe to be immediately notified of any changes.
+一个目标对象管理所有相依于它的观察者对象，并且在它本身的状态改变时主动发出通知
 
-### Example
+### 示例：
 */
 protocol PropertyObserver : class {
     func willChange(propertyName: String, newPropertyValue: Any?)
@@ -496,20 +495,20 @@ final class Observer : PropertyObserver {
     }
 }
 /*:
-### Usage
+### 用法
 */
 var observerInstance = Observer()
 var testChambers = TestChambers()
 testChambers.observer = observerInstance
 testChambers.testChamberNumber += 1
 /*:
-🐉 State
+🐉 状态（State）
 ---------
 
-The state pattern is used to alter the behaviour of an object as its internal state changes.
-The pattern allows the class for an object to apparently change at run-time.
+在状态模式中，对象的行为是基于它的内部状态而改变的。
+这个模式允许某个类对象在运行时发生改变。
 
-### Example
+### 示例：
 */
 final class Context {
 	private var state: State = UnauthorizedState()
@@ -552,7 +551,7 @@ class AuthorizedState: State {
 	func userId(context: Context) -> String? { return userId }
 }
 /*:
-### Usage
+### 用法
 */
 let userContext = Context()
 (userContext.isAuthorized, userContext.userId)
@@ -561,12 +560,15 @@ userContext.changeStateToAuthorized(userId: "admin")
 userContext.changeStateToUnauthorized()
 (userContext.isAuthorized, userContext.userId)
 /*:
-💡 Strategy
------------
+💡 策略（Strategy）
+--------------
 
-The strategy pattern is used to create an interchangeable family of algorithms from which the required process is chosen at run-time.
+对象有某个行为，但是在不同的场景中，该行为有不同的实现算法。策略模式：
+* 定义了一族算法（业务规则）；
+* 封装了每个算法；
+* 这族的算法可互换代替（interchangeable）。
 
-### Example
+### 示例：
 */
 
 struct TestSubject {
@@ -604,7 +606,7 @@ final class BladeRunner {
 }
 
 /*:
- ### Usage
+ ### 用法
  */
 
 let rachel = TestSubject(pupilDiameter: 30.2,
@@ -619,12 +621,12 @@ let isRachelAndroid = deckard.testIfAndroid(rachel)
 let gaff = BladeRunner(test: GeneticTest())
 let isDeckardAndroid = gaff.testIfAndroid(rachel)
 /*:
-🏃 Visitor
-----------
+🏃 访问者（Visitor）
+--------------
 
-The visitor pattern is used to separate a relatively complex set of structured data classes from the functionality that may be performed upon the data that they hold.
+封装某些作用于某种数据结构中各元素的操作，它可以在不改变数据结构的前提下定义作用于这些元素的新的操作。
 
-### Example
+### 示例：
 */
 protocol PlanetVisitor {
 	func visit(planet: PlanetAlderaan)
@@ -663,7 +665,7 @@ final class NameVisitor: PlanetVisitor {
 }
 
 /*:
-### Usage
+### 用法
 */
 let planets: [Planet] = [PlanetAlderaan(), PlanetCoruscant(), PlanetTatooine(), MoonJedha()]
 
