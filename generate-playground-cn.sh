@@ -18,7 +18,7 @@ move() {
 }
 
 playground() {
-	combineSwift source-cn/$1 $1.swift 
+	combineSwiftCN source-cn/$1 $1.swift 
 	move $1
 }
 
@@ -39,7 +39,7 @@ combineMarkdown() {
 
 	{ rm $2 && awk '{gsub("```swift```", "", $0); print}' > $2; } < $2
 
-	cat $2 >> README.md
+	cat $2 >> README-CN.md
 	rm $2
 }
 
@@ -54,11 +54,11 @@ playground Structural
 
 zip -r -X Design-Patterns-CN.playground.zip ./Design-Patterns-CN.playground
 
-echo "" > README.md
+echo "" > README-CN.md
 
 readme Index
-cat source-cn/contentsReadme.md >> README.md
+cat source-cn/contentsReadme.md >> README-CN.md
 readme Behavioral
 readme Creational
 readme Structural
-cat source-cn/footer.md  >> README.md
+cat source-cn/footer.md  >> README-CN.md
