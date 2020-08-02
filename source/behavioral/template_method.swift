@@ -27,6 +27,18 @@ final class RoseGarden: Garden {
     func prepare() {
         prepareGarden()
     }
+
+    func prepareSoil() {
+        // Implementation
+    }
+
+    func plantSeeds() {
+        // Implementation
+    }
+
+    func waterPlants() {
+        // Implementation
+    }
 }
 
 /*:
