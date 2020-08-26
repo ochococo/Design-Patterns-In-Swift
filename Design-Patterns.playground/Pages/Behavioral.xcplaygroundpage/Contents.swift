@@ -424,7 +424,6 @@ enum CheckPoint {
 
     static func save(_ state: MementoConvertible, saveName: String) {
         defaults.set(state.memento, forKey: saveName)
-        defaults.synchronize()
     }
 
     static func restore(saveName: String) -> Any? {
