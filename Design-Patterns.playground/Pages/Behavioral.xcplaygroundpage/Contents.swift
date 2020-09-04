@@ -636,9 +636,9 @@ protocol Garden {
 extension Garden {
 
     func prepareGarden() {
-        prepareSoil()
-        plantSeeds()
-        waterPlants()
+        func prepareSoil()
+        func plantSeeds()
+        func waterPlants()
     }
 }
 
@@ -649,15 +649,15 @@ final class RoseGarden: Garden {
     }
 
     func prepareSoil() {
-        print("prepareSoil for Rose Garden")
+        // Implementation
     }
 
     func plantSeeds() {
-        print("Plant Seeds for Rose Garden")
+        // Implementation
     }
 
     func waterPlants() {
-        print("Water the Rose Garden")
+        // Implementation
     }
 }
 
