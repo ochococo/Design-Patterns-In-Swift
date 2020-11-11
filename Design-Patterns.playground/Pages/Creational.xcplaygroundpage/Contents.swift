@@ -196,9 +196,7 @@ CurrencyFactory.currency(for: .uk)?.code ?? noCurrencyCode
  🔂 Monostate
  ------------
 
- The monostate pattern is a alternativa to singleton, so in that case monostate still
- the state as static instead of all object as singleton. You can use a protocol to apply
- dependency inversion helping you on unit tests.
+ The monostate pattern is an alternative to singleton, so in that case, monostate saves the state as static instead of the entire instance as a singleton. You can use a protocol to apply dependency inversion helping you on unit tests.
 
 ### Example:
 */
@@ -224,10 +222,10 @@ struct Settings {
 let settings = Settings() // Starts using theme .old
 settings.theme = .new // Change theme to .new
 
-//On Screen 1
+//On screen 1
 let screenColor: Color = Settings().theme == .old ? .gray : .white
 
-//On Screen 2
+//On screen 2
 let screenTitle: String = Settings().theme == .old ? "Itunes Connect" : "App Store Connect"
 /*:
 🃏 Prototype

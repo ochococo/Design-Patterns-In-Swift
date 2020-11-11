@@ -7,7 +7,7 @@
 | [👫 Command](#-command)                                 | [👷 Builder](#-builder)                   | [🌉 Bridge](#-bridge)                     |
 | [🎶 Interpreter](#-interpreter)                         | [🏭 Factory Method](#-factory-method)     | [🌿 Composite](#-composite)               |
 | [🍫 Iterator](#-iterator)                               | [🃏 Prototype](#-prototype)               | [🍧 Decorator](#-decorator)               |
-| [💐 Mediator](#-mediator)                               | [💍 Singleton](#-singleton)               | [🎁 Façade](#-fa-ade)                     |
+| [💐 Mediator](#-mediator)                               | [💍 Singleton](#-singleton)               || [🔂 Monostate](#-monostate)               | [🎁 Façade](#-fa-ade)                     |
 | [💾 Memento](#-memento)                                 |                                          | [🍃 Flyweight](#-flyweight)               |
 | [👓 Observer](#-observer)                               |                                          | [☔ Protection Proxy](#-protection-proxy) |
 | [🐉 State](#-state)                                     |                                          | [🍬 Virtual Proxy](#-virtual-proxy)       |
