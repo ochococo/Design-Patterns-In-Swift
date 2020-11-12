@@ -1036,13 +1036,13 @@ struct Settings {
 
 // When change the theme
 let settings = Settings() // Starts using theme .old
-settings.theme = .new // Change theme to .new
+settings.currentTheme = .new // Change theme to .new
 
 //On screen 1
-let screenColor: Color = Settings().theme == .old ? .gray : .white
+let screenColor: Color = Settings().currentTheme == .old ? .gray : .white
 
 //On screen 2
-let screenTitle: String = Settings().theme == .old ? "Itunes Connect" : "App Store Connect"
+let screenTitle: String = Settings().currentTheme == .old ? "Itunes Connect" : "App Store Connect"
 ```
 
 🃏 Prototype
