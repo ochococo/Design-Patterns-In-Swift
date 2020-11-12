@@ -1007,7 +1007,9 @@ CurrencyFactory.currency(for: .uk)?.code ?? noCurrencyCode
  🔂 Monostate
  ------------
 
- The monostate pattern is an alternative to singleton, so in that case, monostate saves the state as static instead of the entire instance as a singleton. You can use a protocol to apply dependency inversion helping you on unit tests.
+ The monostate pattern is another way to achieve singularity. It works through a completely different mechanism, it enforces the behavior of singularity without imposing structural constraints. 
+ So in that case, monostate saves the state as static instead of the entire instance as a singleton.
+ [SINGLETON and MONOSTATE - Robert C. Martin](http://staff.cs.utu.fi/~jounsmed/doos_06/material/SingletonAndMonostate.pdf)
 
 ### Example:
 
