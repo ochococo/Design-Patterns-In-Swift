@@ -33,7 +33,7 @@ print("您好！")
 
  行为型模式
  ========
- 
+
  >在软件工程中， 行为型模式为设计模式的一种类型，用来识别对象之间的常用交流模式并加以实现。如此，可在进行这些交流活动时增强弹性。
  >
  >**来源：** [维基百科](https://zh.wikipedia.org/wiki/%E8%A1%8C%E7%82%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F)
@@ -127,7 +127,7 @@ final class ATM: Withdrawing {
 ```
 
  ### 用法
- 
+
 ```swift
 // 创建一系列的钱堆，并将其链接起来：10<20<50<100
 let ten = MoneyPile(value: 10, quantity: 6, next: nil)
@@ -304,7 +304,7 @@ var result = expression.evaluate(context)
  ---------------
 
  迭代器模式可以让用户通过特定的接口巡访容器中的每一个元素而不用了解底层的实现。
- 
+
  ### 示例：
 
 ```swift
@@ -570,7 +570,7 @@ testChambers.testChamberNumber += 1
 
 ```swift
 final class Context {
-	private var state: State = UnauthorizedState()
+    private var state: State = UnauthorizedState()
 
     var isAuthorized: Bool {
         get { return state.isAuthorized(context: self) }
@@ -580,34 +580,34 @@ final class Context {
         get { return state.userId(context: self) }
     }
 
-	func changeStateToAuthorized(userId: String) {
-		state = AuthorizedState(userId: userId)
-	}
+    func changeStateToAuthorized(userId: String) {
+        state = AuthorizedState(userId: userId)
+    }
 
-	func changeStateToUnauthorized() {
-		state = UnauthorizedState()
-	}
+    func changeStateToUnauthorized() {
+        state = UnauthorizedState()
+    }
 }
 
 protocol State {
-	func isAuthorized(context: Context) -> Bool
-	func userId(context: Context) -> String?
+    func isAuthorized(context: Context) -> Bool
+    func userId(context: Context) -> String?
 }
 
 class UnauthorizedState: State {
-	func isAuthorized(context: Context) -> Bool { return false }
+    func isAuthorized(context: Context) -> Bool { return false }
 
-	func userId(context: Context) -> String? { return nil }
+    func userId(context: Context) -> String? { return nil }
 }
 
 class AuthorizedState: State {
-	let userId: String
+    let userId: String
 
-	init(userId: String) { self.userId = userId }
+    init(userId: String) { self.userId = userId }
 
-	func isAuthorized(context: Context) -> Bool { return true }
+    func isAuthorized(context: Context) -> Bool { return true }
 
-	func userId(context: Context) -> String? { return userId }
+    func userId(context: Context) -> String? { return userId }
 }
 ```
 
@@ -671,7 +671,7 @@ final class BladeRunner {
 ```
 
  ### 用法
- 
+
 ```swift
 
 let rachel = TestSubject(pupilDiameter: 30.2,
@@ -696,14 +696,14 @@ let isDeckardAndroid = gaff.testIfAndroid(rachel)
 
 ```swift
 protocol PlanetVisitor {
-	func visit(planet: PlanetAlderaan)
-	func visit(planet: PlanetCoruscant)
-	func visit(planet: PlanetTatooine)
+    func visit(planet: PlanetAlderaan)
+    func visit(planet: PlanetCoruscant)
+    func visit(planet: PlanetTatooine)
     func visit(planet: MoonJedha)
 }
 
 protocol Planet {
-	func accept(visitor: PlanetVisitor)
+    func accept(visitor: PlanetVisitor)
 }
 
 final class MoonJedha: Planet {
@@ -715,20 +715,20 @@ final class PlanetAlderaan: Planet {
 }
 
 final class PlanetCoruscant: Planet {
-	func accept(visitor: PlanetVisitor) { visitor.visit(planet: self) }
+    func accept(visitor: PlanetVisitor) { visitor.visit(planet: self) }
 }
 
 final class PlanetTatooine: Planet {
-	func accept(visitor: PlanetVisitor) { visitor.visit(planet: self) }
+    func accept(visitor: PlanetVisitor) { visitor.visit(planet: self) }
 }
 
 final class NameVisitor: PlanetVisitor {
-	var name = ""
+    var name = ""
 
-	func visit(planet: PlanetAlderaan)  { name = "Alderaan" }
-	func visit(planet: PlanetCoruscant) { name = "Coruscant" }
-	func visit(planet: PlanetTatooine)  { name = "Tatooine" }
-    func visit(planet: MoonJedha)     	{ name = "Jedha" }
+    func visit(planet: PlanetAlderaan)  { name = "Alderaan" }
+    func visit(planet: PlanetCoruscant) { name = "Coruscant" }
+    func visit(planet: PlanetTatooine)  { name = "Tatooine" }
+    func visit(planet: MoonJedha)       { name = "Jedha" }
 }
 
 ```
@@ -739,7 +739,7 @@ final class NameVisitor: PlanetVisitor {
 let planets: [Planet] = [PlanetAlderaan(), PlanetCoruscant(), PlanetTatooine(), MoonJedha()]
 
 let names = planets.map { (planet: Planet) -> String in
-	let visitor = NameVisitor()
+    let visitor = NameVisitor()
     planet.accept(visitor: visitor)
 
     return visitor.name
@@ -751,11 +751,11 @@ names
 
  创建型模式
  ========
- 
+
  > 创建型模式是处理对象创建的设计模式，试图根据实际情况使用合适的方式创建对象。基本的对象创建方式可能会导致设计上的问题，或增加设计的复杂度。创建型模式通过以某种方式控制对象的创建来解决问题。
  >
  >**来源：** [维基百科](https://zh.wikipedia.org/wiki/%E5%89%B5%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F)
- 
+
 
 
 
