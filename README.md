@@ -579,15 +579,15 @@ final class Context {
     var isAuthorized: Bool {
         get { return state.isAuthorized(context: self) }
     }
-
+    
     var userId: String? {
         get { return state.userId(context: self) }
     }
-
+    
     func changeStateToAuthorized(userId: String) {
         state = AuthorizedState(userId: userId)
     }
-
+    
     func changeStateToUnauthorized() {
         state = UnauthorizedState()
     }
@@ -672,7 +672,7 @@ final class BladeRunner {
 ```
 
  ### Usage
-
+ 
 ```swift
 
 let rachel = TestSubject(pupilDiameter: 30.2,
