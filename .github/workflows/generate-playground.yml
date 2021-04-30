@@ -1,4 +1,4 @@
-name: Generate Playground Files
+name: Generate Playground Files and READMES
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
@@ -9,7 +9,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  generate-english-playground:
+  generate-playgrounds:
     # The type of runner that the job will run on
     runs-on: macos-latest
 
@@ -18,10 +18,11 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      # Checkout to chinese branch & Generate Chinese
-      - name: Generate English Readme
+      # Checkout & Generate
+      - name: Generate playgrounds and readmes
         run: |
           ./generate-playground.sh
+          ./generate-playground-cn.sh
 
       # Commit
       - name: Commit files
@@ -38,8 +39,8 @@ jobs:
           force: false
 
  # This workflow contains a single job called "build"
-  generate-chinese-playground-and-branch:
-    needs: generate-english-playground
+  generate-chinese-branch:
+    needs: generate-playgrounds
     # The type of runner that the job will run on
     runs-on: macos-latest
 
@@ -48,7 +49,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      # Checkout to chinese branch & Generate Chinese
+      # Checkout & Generate
       - name: Generate Chinese Readme
         run: |
           ./generate-playground-cn.sh
