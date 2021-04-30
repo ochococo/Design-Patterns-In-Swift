@@ -22,9 +22,9 @@ print("您好！")
 | [🐝 责任链 Chain Of Responsibility](#-责任链chain-of-responsibility) | [🌰 抽象工厂 Abstract Factory](#-抽象工厂abstract-factory) | [🔌 适配器 Adapter](#-适配器adapter)                          |
 | [👫 命令 Command](#-命令command)                              | [👷 生成器 Builder](#-生成器builder)                       | [🌉 桥接 Bridge](#-桥接bridge)                                |
 | [🎶 解释器 Interpreter](#-解释器interpreter)                  | [🏭 工厂方法 Factory Method](#-工厂方法factory-method)     | [🌿 组合 Composite](#-组合composite)                          |
-| [🍫 迭代器 Iterator](#-迭代器iterator)                        | [🃏 原型 Prototype](#-原型prototype)                       | [🍧 修饰 Decorator](#-修饰decorator)                          |
-| [💐 中介者 Mediator](#-中介者mediator)                        | [💍 单例 Singleton](#-单例singleton)                       | [🎁 外观 Façade](#-外观facade)                                |
-| [💾 备忘录 Memento](#-备忘录memento)                          |                                                           | [🍃 享元 Flyweight](#-享元flyweight)                          |
+| [🍫 迭代器 Iterator](#-迭代器iterator)                        | [🔂 单态 Monostate](#-单态monostate)                       | [🍧 修饰 Decorator](#-修饰decorator)                          |
+| [💐 中介者 Mediator](#-中介者mediator)                        | [🃏 原型 Prototype](#-原型prototype)                       | [🎁 外观 Façade](#-外观facade)                                |
+| [💾 备忘录 Memento](#-备忘录memento)                          | [💍 单例 Singleton](#-单例singleton)                       | [🍃 享元 Flyweight](#-享元flyweight)                          |
 | [👓 观察者 Observer](#-观察者observer)                        |                                                           | [☔ 保护代理 Protection Proxy](#-保护代理模式protection-proxy) |
 | [🐉 状态 State](#-状态state)                                  |                                                           | [🍬 虚拟代理 Virtual Proxy](#-虚拟代理virtual-proxy)          |
 | [💡 策略 Strategy](#-策略strategy)                            |                                                           |                                                              |
@@ -687,6 +687,59 @@ let gaff = BladeRunner(test: GeneticTest())
 let isDeckardAndroid = gaff.testIfAndroid(rachel)
 ```
 
+📝 Template Method
+-----------
+
+ The template method pattern defines the steps of an algorithm and allows the redefinition of one or more of these steps. In this way, the template method protects the algorithm, the order of execution and provides abstract methods that can be implemented by concrete types.
+
+### Example
+
+```swift
+protocol Garden {
+    func prepareSoil()
+    func plantSeeds()
+    func waterPlants()
+    func prepareGarden()
+}
+
+extension Garden {
+
+    func prepareGarden() {
+        prepareSoil()
+        plantSeeds()
+        waterPlants()
+    }
+}
+
+final class RoseGarden: Garden {
+
+    func prepare() {
+        prepareGarden()
+    }
+
+    func prepareSoil() {
+        print ("prepare soil for rose garden")
+    }
+
+    func plantSeeds() {
+        print ("plant seeds for rose garden")
+    }
+
+    func waterPlants() {
+       print ("water the rose garden")
+    }
+}
+
+```
+
+### Usage
+
+```swift
+
+let roseGarden = RoseGarden()
+roseGarden.prepare()
+```
+
 🏃 访问者（Visitor）
 --------------
 
@@ -947,6 +1000,49 @@ CurrencyFactory.currency(for: .greece)?.code ?? noCurrencyCode
 CurrencyFactory.currency(for: .spain)?.code ?? noCurrencyCode
 CurrencyFactory.currency(for: .unitedStates)?.code ?? noCurrencyCode
 CurrencyFactory.currency(for: .uk)?.code ?? noCurrencyCode
+```
+
+ 🔂 单态（Monostate）
+ ------------
+
+  单态模式是实现单一共享的另一种方法。不同于单例模式，它通过完全不同的机制，在不限制构造方法的情况下实现单一共享特性。
+  因此，在这种情况下，单态会将状态保存为静态，而不是将整个实例保存为单例。
+ [单例和单态 - Robert C. Martin](http://staff.cs.utu.fi/~jounsmed/doos_06/material/SingletonAndMonostate.pdf)
+
+### 示例:
+
+```swift
+class Settings {
+
+    enum Theme {
+        case `default`
+        case old
+        case new
+    }
+
+    private static var theme: Theme?
+
+    var currentTheme: Theme {
+        get { Settings.theme ?? .default }
+        set(newTheme) { Settings.theme = newTheme }
+    }
+}
+```
+
+### 用法:
+
+```swift
+import SwiftUI
+
+// 改变主题
+let settings = Settings() // 开始使用主题 .old
+settings.currentTheme = .new // 改变主题为 .new
+
+// 界面一
+let screenColor: Color = Settings().currentTheme == .old ? .gray : .white
+
+// 界面二
+let screenTitle: String = Settings().currentTheme == .old ? "Itunes Connect" : "App Store Connect"
 ```
 
 🃏 原型（Prototype）
