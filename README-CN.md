@@ -29,6 +29,7 @@ print("您好！")
 | [🐉 状态 State](#-状态state)                                  |                                                           | [🍬 虚拟代理 Virtual Proxy](#-虚拟代理virtual-proxy)          |
 | [💡 策略 Strategy](#-策略strategy)                            |                                                           |                                                              |
 | [🏃 访问者 Visitor](#-访问者visitor)                          |                                                           |                                                              |
+| [📝 模板方法 Templdate Method](#-template-method)             |                                                           |                                                              |
 
 
  行为型模式
@@ -687,12 +688,12 @@ let gaff = BladeRunner(test: GeneticTest())
 let isDeckardAndroid = gaff.testIfAndroid(rachel)
 ```
 
-📝 Template Method
+📝 模板方法模式
 -----------
 
- The template method pattern defines the steps of an algorithm and allows the redefinition of one or more of these steps. In this way, the template method protects the algorithm, the order of execution and provides abstract methods that can be implemented by concrete types.
+ 模板方法模式是一种行为设计模式， 它通过父类/协议中定义了一个算法的框架， 允许子类/具体实现对象在不修改结构的情况下重写算法的特定步骤。
 
-### Example
+### 示例：
 
 ```swift
 protocol Garden {
@@ -732,7 +733,7 @@ final class RoseGarden: Garden {
 
 ```
 
-### Usage
+### 用法
 
 ```swift
 
