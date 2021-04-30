@@ -29,6 +29,10 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
+          git add Design-Patterns-CN.playground.zip
+          git add Design-Patterns.playground.zip
+          git add README.md
+          git add README-CN.md
           git commit -m "Generate Playground"
       ## Push changes to master branch
       - name: Push changes
