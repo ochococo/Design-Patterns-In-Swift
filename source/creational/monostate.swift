@@ -8,17 +8,18 @@
 
 ### Example:
 */
-struct Settings {
+class Settings {
 
     enum Theme {
-        case .old
-        case .new
+        case `default`
+        case old
+        case new
     }
 
-    private static var theme: Theme
+    private static var theme: Theme?
 
     var currentTheme: Theme {
-        get { Settings.theme }
+        get { Settings.theme ?? .default }
         set(newTheme) { Settings.theme = newTheme }
     }
 }
@@ -26,12 +27,14 @@ struct Settings {
 ### Usage:
 */
 
+import SwiftUI
+
 // When change the theme
 let settings = Settings() // Starts using theme .old
 settings.currentTheme = .new // Change theme to .new
 
-//On screen 1
+// On screen 1
 let screenColor: Color = Settings().currentTheme == .old ? .gray : .white
 
-//On screen 2
+// On screen 2
 let screenTitle: String = Settings().currentTheme == .old ? "Itunes Connect" : "App Store Connect"
