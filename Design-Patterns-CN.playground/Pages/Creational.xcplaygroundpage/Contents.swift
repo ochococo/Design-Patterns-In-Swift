@@ -236,7 +236,7 @@ let screenTitle: String = Settings().currentTheme == .old ? "Itunes Connect" : "
 
 ### 示例：
 */
-struct MoonWorker {
+class MoonWorker {
 
     let name: String
     var health: Int = 100
