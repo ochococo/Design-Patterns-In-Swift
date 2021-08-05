@@ -1058,7 +1058,7 @@ This practise is particularly useful when the construction of a new object is in
 ### Example
 
 ```swift
-struct MoonWorker {
+class MoonWorker {
 
     let name: String
     var health: Int = 100
