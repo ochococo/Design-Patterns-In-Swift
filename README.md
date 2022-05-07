@@ -27,7 +27,7 @@ print("Welcome!")
 | [👫 Command](#-command)                                 | [👷 Builder](#-builder)                   | [🌉 Bridge](#-bridge)                     |
 | [🎶 Interpreter](#-interpreter)                         | [🏭 Factory Method](#-factory-method)     | [🌿 Composite](#-composite)               |
 | [🍫 Iterator](#-iterator)                               | [🔂 Monostate](#-monostate)               | [🍧 Decorator](#-decorator)               |
-| [💐 Mediator](#-mediator)                               | [🃏 Prototype](#-prototype)               | [🎁 Façade](#-fa-ade)                     |
+| [💐 Mediator](#-mediator)                               | [🃏 Prototype](#-prototype)               | [🎁 Façade](#-façade)                     |
 | [💾 Memento](#-memento)                                 | [💍 Singleton](#-singleton)               | [🍃 Flyweight](#-flyweight)               |
 | [👓 Observer](#-observer)                               |                                          | [☔ Protection Proxy](#-protection-proxy) |
 | [🐉 State](#-state)                                     |                                          | [🍬 Virtual Proxy](#-virtual-proxy)       |
