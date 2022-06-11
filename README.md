@@ -17,7 +17,7 @@ A short cheat-sheet with Xcode 10.2 Playground ([Design-Patterns.playground.zip]
 ```swift
 print("Welcome!")
 ```
-
+This is for PR
 
 ## Table of Contents
 
