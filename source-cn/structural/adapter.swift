@@ -13,7 +13,7 @@ protocol NewDeathStarSuperLaserAiming {
 /*:
 **被适配者**
 */
-struct OldDeathStarSuperlaserTarget {
+struct OldDeathStarSuperLaserTarget {
     let angleHorizontal: Float
     let angleVertical: Float
 
@@ -25,9 +25,9 @@ struct OldDeathStarSuperlaserTarget {
 /*:
 **适配器**
 */
-struct NewDeathStarSuperlaserTarget: NewDeathStarSuperLaserAiming {
+struct NewDeathStarSuperLaserTarget: NewDeathStarSuperLaserAiming {
 
-    private let target: OldDeathStarSuperlaserTarget
+    private let target: OldDeathStarSuperLaserTarget
 
     var angleV: Double {
         return Double(target.angleVertical)
@@ -37,15 +37,15 @@ struct NewDeathStarSuperlaserTarget: NewDeathStarSuperLaserAiming {
         return Double(target.angleHorizontal)
     }
 
-    init(_ target: OldDeathStarSuperlaserTarget) {
+    init(_ target: OldDeathStarSuperLaserTarget) {
         self.target = target
     }
 }
 /*:
 ### 用法
 */
-let target = OldDeathStarSuperlaserTarget(angleHorizontal: 14.0, angleVertical: 12.0)
-let newFormat = NewDeathStarSuperlaserTarget(target)
+let target = OldDeathStarSuperLaserTarget(angleHorizontal: 14.0, angleVertical: 12.0)
+let newFormat = NewDeathStarSuperLaserTarget(target)
 
 newFormat.angleH
 newFormat.angleV
