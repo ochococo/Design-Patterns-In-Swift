@@ -27,14 +27,10 @@ struct DeathStar : CustomStringConvertible {
     let z: Double
 
     init?(builder: DeathStarBuilder) {
-
-        if let x = builder.x, let y = builder.y, let z = builder.z {
-            self.x = x
-            self.y = y
-            self.z = z
-        } else {
-            return nil
-        }
+        guard let x = builder.x, let y = builder.y, let z = builder.z else { return nil }
+        self.x = x
+        self.y = y
+        self.z = z
     }
 
     var description:String {
