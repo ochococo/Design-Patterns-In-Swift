@@ -12,6 +12,5 @@
 | [👓 观察者 Observer](#-观察者observer)                        |                                                           | [☔ 保护代理 Protection Proxy](#-保护代理模式protection-proxy) |
 | [🐉 状态 State](#-状态state)                                  |                                                           | [🍬 虚拟代理 Virtual Proxy](#-虚拟代理virtual-proxy)          |
 | [💡 策略 Strategy](#-策略strategy)                            |                                                           |                                                              |
-| [🏃 访问者 Visitor](#-访问者visitor)                          |                                                           |                                                              |
 | [📝 模板方法 Templdate Method](#-template-method)             |                                                           |                                                              |
-
+| [🏃 访问者 Visitor](#-访问者visitor)                          |                                                           |                                                              |
