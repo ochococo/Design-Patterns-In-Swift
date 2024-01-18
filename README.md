@@ -32,9 +32,8 @@ print("Welcome!")
 | [👓 Observer](#-observer)                               |                                          | [☔ Protection Proxy](#-protection-proxy) |
 | [🐉 State](#-state)                                     |                                          | [🍬 Virtual Proxy](#-virtual-proxy)       |
 | [💡 Strategy](#-strategy)                               |                                          |                                          |
-| [🏃 Visitor](#-visitor)                                 |                                          |                                          |
 | [📝 Template Method](#-template-method)                 |                                          |                                          |
-
+| [🏃 Visitor](#-visitor)                                 |                                          |                                          |
 
 Behavioral
 ==========
