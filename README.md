@@ -95,7 +95,7 @@ final class MoneyPile: Withdrawing {
             return true
         }
 
-        if let next = self.next {
+        if let next {
             return next.withdraw(amount: amount)
         }
 
