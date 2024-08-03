@@ -17,8 +17,6 @@ A short cheat-sheet with Xcode 10.2 Playground ([Design-Patterns.playground.zip]
 ```swift
 print("Welcome!")
 ```
-Remember that each pattern has its own trade-offs. And you need to pay attention more to why you're choosing a certain pattern than to how to implement it.
-
 ## Table of Contents
 
 | [Behavioral](#behavioral)                              | [Creational](#creational)                | [Structural](#structural)                |
