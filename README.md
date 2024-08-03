@@ -17,8 +17,6 @@ A short cheat-sheet with Xcode 10.2 Playground ([Design-Patterns.playground.zip]
 ```swift
 print("Welcome!")
 ```
-
-
 ## Table of Contents
 
 | [Behavioral](#behavioral)                              | [Creational](#creational)                | [Structural](#structural)                |
