@@ -81,6 +81,6 @@ let fifty = MoneyPile(value: 50, quantity: 2, next: twenty)
 let hundred = MoneyPile(value: 100, quantity: 1, next: fifty)
 
 // Build ATM.
-var atm = ATM(moneyPiles: [hundred, fifty, twenty, ten)
+var atm = ATM(moneyPiles: [hundred, fifty, twenty, ten])
 atm.withdraw(amount: 310) // Cannot because ATM has only 300
 atm.withdraw(amount: 100) // Can withdraw - 1x100
