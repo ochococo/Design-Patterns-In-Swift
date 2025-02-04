@@ -57,24 +57,14 @@ final class MoneyPile: Withdrawing {
 
 final class ATM: Withdrawing {
 
-    private var hundred: Withdrawing
-    private var fifty: Withdrawing
-    private var twenty: Withdrawing
-    private var ten: Withdrawing
+    private var moneyPiles: [Withdrawing]
 
     private var startPile: Withdrawing {
-        return self.hundred
+        return self.moneyPiles.first!
     }
 
-    init(hundred: Withdrawing,
-           fifty: Withdrawing,
-          twenty: Withdrawing,
-             ten: Withdrawing) {
-
-        self.hundred = hundred
-        self.fifty = fifty
-        self.twenty = twenty
-        self.ten = ten
+    init(moneyPiles: [Withdrawing]) {
+        self.moneyPiles = moneyPiles
     }
 
     func withdraw(amount: Int) -> Bool {
@@ -91,6 +81,6 @@ let fifty = MoneyPile(value: 50, quantity: 2, next: twenty)
 let hundred = MoneyPile(value: 100, quantity: 1, next: fifty)
 
 // Build ATM.
-var atm = ATM(hundred: hundred, fifty: fifty, twenty: twenty, ten: ten)
+var atm = ATM(moneyPiles: [hundred, fifty, twenty, ten)
 atm.withdraw(amount: 310) // Cannot because ATM has only 300
 atm.withdraw(amount: 100) // Can withdraw - 1x100
